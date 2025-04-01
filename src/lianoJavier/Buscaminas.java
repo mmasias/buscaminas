@@ -18,6 +18,6 @@ public class Buscaminas {
         do {
             jugador.jugar(tablero);
             tablero.mostrar();
-        } while (!tablero.resuelto() && jugador.vivo());
+        } while (!tablero.resuelto() && jugador.isVivo());
     }
 }
