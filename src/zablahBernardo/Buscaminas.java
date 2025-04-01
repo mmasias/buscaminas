@@ -1,21 +1,22 @@
 package zablahBernardo;
 
-import java.util.Scanner;
-
 public class Buscaminas {
 
     private Tablero tablero;
-    private boolean juegoTerminado;
-    private Scanner scanner;
+    private Jugador jugador;
 
     public Buscaminas() {
-        this.tablero = new Tablero(5, 5, 5);
-        this.juegoTerminado = false;
-        this.scanner = new Scanner(System.in);
+        tablero = new Tablero();
+        jugador = new Jugador();
     }
 
     public void jugar() {
-        
+
+        do {
+            tablero.mostrar();
+            jugador.jugar(tablero);
+        } while (!tablero.finalizado());
+
     }
 
 }
