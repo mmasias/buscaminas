@@ -34,3 +34,22 @@ class Tablero {
             }
         }
     }
+
+    private void calcularMinasCercanas() {
+        int[] dx = {-1, -1, -1, 0, 0, 1, 1, 1};
+        int[] dy = {-1, 0, 1, -1, 1, -1, 0, 1};
+
+        for (int i = 0; i < filas; i++) {
+            for (int j = 0; j < columnas; j++) {
+                if (celdas[i][j].tieneMina) continue;
+                int contador = 0;
+                for (int d = 0; d < 8; d++) {
+                    int ni = i + dx[d], nj = j + dy[d];
+                    if (ni >= 0 && ni < filas && nj >= 0 && nj < columnas && celdas[ni][nj].tieneMina) {
+                        contador++;
+                    }
+                }
+                celdas[i][j].minasCercanas = contador;
+            }
+        }
+    }
