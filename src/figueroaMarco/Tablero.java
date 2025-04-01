@@ -6,7 +6,7 @@ package figueroaMarco;
  */
 
 
-class tablero {
+class Tablero {
 
     static boolean juegoTerminado() {
         throw new UnsupportedOperationException("Not supported yet.");

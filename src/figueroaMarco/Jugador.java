@@ -6,6 +6,6 @@ package figueroaMarco;
  */
 
 
-class jugador {
+class Jugador {
 
 }
