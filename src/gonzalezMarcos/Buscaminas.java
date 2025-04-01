@@ -1,4 +1,4 @@
-package gonzalezMarcos 
+package gonzalezMarcos;
 
 public class Buscaminas{
 
