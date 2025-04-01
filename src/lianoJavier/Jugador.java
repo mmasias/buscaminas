@@ -5,7 +5,7 @@ public class Jugador {
     private boolean estaVivo;
 
     public void jugar(Tablero tablero) {
-        Coordenada coordenada = pedirCoordenada();
+        Coordenada coordenada = new Coordenada().pedirCoordenada();
         tablero.seleccionarCasilla(coordenada);
         estaVivo = !tablero.hayBomba();
     }
