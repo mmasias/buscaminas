@@ -4,10 +4,10 @@ public class Juego {
 
     public void jugar() {
 
-    do{
-        tablero.mostrar();
-        jugador.jugar(tablero);
+        do{
+            tablero.mostrar();
+            jugador.jugar(tablero);
 
-    }while (!tablero.resuelto() && jugador.vivo());
+        }while (!tablero.resuelto() && jugador.vivo());
     }
 }
