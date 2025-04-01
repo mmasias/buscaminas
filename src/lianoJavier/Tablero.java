@@ -75,7 +75,11 @@ public class Tablero {
     }
 
     public void seleccionarCasilla(Coordenada coordenada) {
-        tablero[coordenada.getFila()][coordenada.getColumna()] *= -1;
+        int fila = coordenada.getFila();
+        int columna = coordenada.getColumna();
+        if (tablero[fila][columna] < 0) {
+            tablero[fila][columna] *= -1;
+        }
     }
 
     public boolean hayBomba() {
