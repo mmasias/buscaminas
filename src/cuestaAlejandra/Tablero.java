@@ -21,3 +21,16 @@ class Tablero {
             }
         }
     }
+
+    private void colocarMinas() {
+        Random rand = new Random();
+        int colocadas = 0;
+        while (colocadas < numMinas) {
+            int x = rand.nextInt(filas);
+            int y = rand.nextInt(columnas);
+            if (!celdas[x][y].tieneMina) {
+                celdas[x][y].tieneMina = true;
+                colocadas++;
+            }
+        }
+    }
