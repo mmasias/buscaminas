@@ -10,5 +10,14 @@ public class Jugador {
     public Jugador(int x, int y) {
         this.coordenada = new Coordenada(x, y);
     }
+
+    public void jugador(Tablero tablero) {
+       
+    }
+
+    public boolean vivo() {
+        
+        return true;
+    }
     
 }

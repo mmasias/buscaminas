@@ -14,13 +14,30 @@ public class Tablero {
         this.tablero = new int[filas][columnas];
         inicializarTablero();
     }
+
+    public void mostrar() {
+        for (int i = 0; i < filas; i++) {
+            for (int j = 0; j < columnas; j++) {
+                if (tablero[i][j] == -1) {
+                    System.out.print("* ");
+                } else {
+                    System.out.print(tablero[i][j] + " ");
+                }
+            }
+            System.out.println();
+        }
+    }
     
-    private void inicializarTablero() {
+    public void inicializarTablero() {
         
     }
 
 
     public void colocarMinas() {
         
+    }
+
+    public boolean despejado() {
+        return true;
     }
 }
