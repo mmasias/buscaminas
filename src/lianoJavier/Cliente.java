@@ -1,6 +1,8 @@
 package lianoJavier;
 
 public class Cliente {
-    Buscaminas buscaminas = new Buscaminas();
-    buscaminas.jugar();
+    public static void main(String[] args) {
+        Buscaminas buscaminas = new Buscaminas();
+        buscaminas.jugar();
+    }
 }
