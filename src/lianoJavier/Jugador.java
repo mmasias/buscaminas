@@ -2,14 +2,16 @@ package lianoJavier;
 
 public class Jugador {
 
+    private boolean estaVivo;
+
     public void jugar(Tablero tablero) {
         Coordenada coordenada = pedirCoordenada();
-        tablero.despe
+        tablero.seleccionarCasilla(coordenada);
+        estaVivo = !tablero.hayBomba();
     }
 
-    public boolean vivo() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'vivo'");
+    public boolean isVivo() {
+        return estaVivo;
     }
 
 }
