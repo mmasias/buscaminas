@@ -8,6 +8,7 @@ class Juego {
         this.juegoTerminado = false;
         this.scanner = new Scanner(System.in);
     }
+    
     public void iniciar() {
         while (!juegoTerminado) {
             tablero.mostrarTablero();
