@@ -1,12 +1,16 @@
 package lianoJavier;
 
+import java.util.Random;
 public class Tablero {
 
     private int[][] tablero;
+    private Random random;
 
     public Tablero(int[] dimensiones, int minasIniciales) {
         tablero = crearTablero(dimensiones);
+        random = new Random();
         poblarTablero();
+        poblarMinas(minasIniciales);
     }
 
     public Tablero (int dimensiones, int minasIniciales) {
@@ -19,6 +23,20 @@ public class Tablero {
                 tablero[fila][columna] = -1;
             }
         }
+    }
+    
+    private void poblarMinas(int minasIniciales) {
+        for (int i = 0; i < minasIniciales; i++) {
+            int columna = Random(0, tablero[0].length - 1);
+            int fila = Random(0, tablero.length - 1);
+            if (tablero[fila][columna] != -2) {
+                tablero[fila][columna] = -2;
+            };
+        }
+    }
+
+    private int Random(int min, int max) {
+        return random.nextInt((max - min) + 1) + min;
     }
 
     private int[][] crearTablero(int[] dimensiones) {
