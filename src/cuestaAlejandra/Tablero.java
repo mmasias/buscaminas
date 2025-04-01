@@ -13,3 +13,11 @@ class Tablero {
         colocarMinas();
         calcularMinasCercanas();
     }
+
+     private void inicializarTablero() {
+        for (int i = 0; i < filas; i++) {
+            for (int j = 0; j < columnas; j++) {
+                celdas[i][j] = new Celda();
+            }
+        }
+    }
