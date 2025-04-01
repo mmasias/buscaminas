@@ -12,11 +12,11 @@ public class Tablero {
         poblarTablero();
         poblarMinas(minasIniciales);
     }
-
-    public Tablero (int dimensiones, int minasIniciales) {
-        this(new int[] {dimensiones, dimensiones}, minasIniciales);
+    
+    public Tablero(int dimensiones, int minasIniciales) {
+        this(new int[] { dimensiones, dimensiones }, minasIniciales);
     }
-
+    
     private void poblarTablero() {
         for (int fila = 0; fila < tablero.length; fila++) {
             for (int columna = 0; columna < tablero[fila].length; columna++) {
@@ -66,7 +66,8 @@ public class Tablero {
     public boolean resuelto() {
         for (int fila = 0; fila < tablero.length; fila++) {
             for (int columna = 0; columna < tablero[fila].length; columna++) {
-                if (tablero[fila][columna] < 0 ) return false;
+                if (tablero[fila][columna] < 0)
+                    return false;
             }
         }
         return true;
@@ -79,18 +80,19 @@ public class Tablero {
     public boolean hayBomba() {
         for (int fila = 0; fila < tablero.length; fila++) {
             for (int columna = 0; columna < tablero[fila].length; columna++) {
-                if (tablero[fila][columna] == 2 ) return true;
+                if (tablero[fila][columna] == 2)
+                    return true;
             }
         }
         return false;
     }
 
     public int[] getExtremosFila() {
-        return new int[]{0, tablero.length};
+        return new int[] { 0, tablero.length };
     }
 
     public int[] getExtremosColumna() {
-        return new int[]{0, tablero[0].length};
+        return new int[] { 0, tablero[0].length };
     }
 
 }
