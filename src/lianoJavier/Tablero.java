@@ -67,4 +67,12 @@ public class Tablero {
         return false;
     }
 
+    public int[] getExtremosFila() {
+        return new int[]{0, tablero.length};
+    }
+
+    public int[] getExtremosColumna() {
+        return new int[]{0, tablero[0].length};
+    }
+
 }
