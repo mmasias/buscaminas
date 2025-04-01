@@ -53,3 +53,15 @@ class Tablero {
             }
         }
     }
+
+    public boolean revelarCelda(int x, int y) {
+        if (x < 0 || x >= filas || y < 0 || y >= columnas || celdas[x][y].revelada) {
+            return false;
+        }
+        celdas[x][y].revelada = true;
+        if (celdas[x][y].tieneMina) {
+            return true;
+        }
+        return false;
+    }
+
