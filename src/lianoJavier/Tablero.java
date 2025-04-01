@@ -48,11 +48,12 @@ public class Tablero {
             for (int columna = 0; columna < tablero[fila].length; columna++) {
                 imprimirFicha(tablero[fila][columna]);
             }
+            System.out.println();
         }
     }
 
     private void imprimirFicha(int simbolo) {
-        System.out.println(parse(simbolo));
+        System.out.print(parse(simbolo));
     }
 
     private String parse(int simbolo) {
