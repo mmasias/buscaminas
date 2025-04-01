@@ -43,6 +43,7 @@ class Tablero {
             for (int j = 0; j < columnas; j++) {
                 if (celdas[i][j].tieneMina) continue;
                 int contador = 0;
+      
                 for (int d = 0; d < 8; d++) {
                     int ni = i + dx[d], nj = j + dy[d];
                     if (ni >= 0 && ni < filas && nj >= 0 && nj < columnas && celdas[ni][nj].tieneMina) {
