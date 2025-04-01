@@ -65,3 +65,18 @@ class Tablero {
         return false;
     }
 
+     public void mostrarTablero() {
+        for (int i = 0; i < filas; i++) {
+            for (int j = 0; j < columnas; j++) {
+                if (!celdas[i][j].revelada) {
+                    System.out.print("■ ");
+                } else if (celdas[i][j].tieneMina) {
+                    System.out.print("* ");
+                } else {
+                    System.out.print(celdas[i][j].minasCercanas + " ");
+                }
+            }
+            System.out.println();
+        }
+    }
+}
