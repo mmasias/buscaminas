@@ -1,7 +1,9 @@
 package doaltoBienvenido;
 
-public class Buscaminas {
+import java.util.Scanner;
 
+public class Buscaminas {
+    Scanner scanner = new Scanner(System.in);
     private Tablero tablero;
     private Jugador jugador;
 
@@ -12,9 +14,25 @@ public class Buscaminas {
 
     public void jugar() {
         do {
-            tablero.mostrar();
-            jugador.jugar(tablero);
-        } while (!tablero.finalizado() && jugador.sigueVivo());
+            reiniciar();
+            do {
+                tablero.mostrar();
+                jugador.jugar(tablero);
+            } while (!tablero.finalizado() && jugador.sigueVivo());
+
+        } while (juegoNuevo());
+
+    }
+
+    private boolean juegoNuevo() {
+        System.out.println("Jugar de nuevo? (si/no)");
+        String respuesta = scanner.next().toLowerCase();
+        return respuesta.equals("si");
+    }
+
+    private void reiniciar() {
+        tablero = new Tablero();
+        jugador = new Jugador();
     }
 
 }

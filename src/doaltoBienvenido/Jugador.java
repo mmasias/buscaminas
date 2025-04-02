@@ -13,7 +13,7 @@ public class Jugador {
         int fila = scanner.nextInt() - 1;
         int columna = scanner.nextInt() - 1;
 
-        if (fila < 0 || fila >= 6 || columna < 0 || columna >= 6) {
+        if (!tablero.coordenadaValida(fila, columna)) {
             System.out.println("Coordenada invalida, vuelva a introducirla");
             return;
         }
@@ -30,5 +30,4 @@ public class Jugador {
     public boolean sigueVivo() {
         return vivo;
     }
-
 }

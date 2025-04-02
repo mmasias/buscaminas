@@ -11,29 +11,29 @@ class Tablero {
     private final char MINA = 'M';
     private final char DESPEJADA = 'D';
     private char casillas[][];
-    private boolean mostrarMinas = false; 
+    private boolean mostrarMinas = false;
 
     public Tablero() {
         casillas = new char[NUM_FILAS][NUM_COLUMNAS];
         generarTablero();
         ponerMinasTablero();
     }
-    
+
     private void ponerMinasTablero() {
         Random random = new Random();
         int minasColocadas = 0;
-    
+
         while (minasColocadas < NUM_MINAS) {
             int fila = random.nextInt(NUM_FILAS);
             int columna = random.nextInt(NUM_COLUMNAS);
-    
+
             if (casillas[fila][columna] != MINA) {
                 casillas[fila][columna] = MINA;
                 minasColocadas++;
             }
         }
     }
-    
+
     private void generarTablero() {
         for (int i = 0; i < casillas.length; i++) {
             for (int j = 0; j < casillas[i].length; j++) {
@@ -43,17 +43,17 @@ class Tablero {
     }
 
     public void mostrar() {
-        System.out.print("  "); 
+        System.out.print("  ");
         for (int i = 1; i <= NUM_COLUMNAS; i++) {
             System.out.print(i + " ");
         }
         System.out.println();
 
         for (int i = 0; i < NUM_FILAS; i++) {
-            System.out.print((i + 1) + " ");  
+            System.out.print((i + 1) + " ");
             for (int j = 0; j < NUM_COLUMNAS; j++) {
                 if (casillas[i][j] == MINA && !mostrarMinas) {
-                    System.out.print(CASILLA_VACIA + " ");  
+                    System.out.print(CASILLA_VACIA + " ");
                 } else {
                     System.out.print(casillas[i][j] + " ");
                 }
@@ -85,7 +85,11 @@ class Tablero {
     }
 
     public void mostrarMina(int fila, int columna) {
-        mostrarMinas = true; 
+        mostrarMinas = true;
         mostrar();
+    }
+
+    public boolean coordenadaValida(int fila, int columna) {
+        return fila >= 0 && fila < NUM_FILAS && columna >= 0 && columna < NUM_COLUMNAS;
     }
 }
