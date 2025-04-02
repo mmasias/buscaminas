@@ -20,6 +20,10 @@ public class Buscaminas {
                 jugador.jugar(tablero);
             } while (!tablero.finalizado() && jugador.sigueVivo());
 
+            if (tablero.finalizado()) {
+                System.out.println("Has despejado todas las casillas, Ganaste!!");
+            }
+
         } while (juegoNuevo());
 
     }
@@ -34,5 +38,4 @@ public class Buscaminas {
         tablero = new Tablero();
         jugador = new Jugador();
     }
-
 }
