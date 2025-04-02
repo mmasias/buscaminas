@@ -18,12 +18,12 @@ public class Jugador {
             return;
         }
 
-        if (tablero.esMina(fila,columna)) {
+        if (tablero.esMina(fila, columna)) {
             System.out.println("BOOM!!, Explotaste una mina y perdiste!");
-            tablero.mostrarMina(fila,columna);
+            tablero.mostrarMina(fila, columna);
             vivo = false;
-        }else{
-            tablero.despejarCasilla(fila,columna);
+        } else {
+            tablero.despejarCasilla(fila, columna);
         }
     }
 
