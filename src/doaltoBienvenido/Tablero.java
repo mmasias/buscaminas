@@ -11,30 +11,30 @@ class Tablero {
     private final char MINA = 'M';
     private final char DESPEJADA = 'D';
     private char casillas[][];
+    private boolean mostrarMinas = false; 
 
     public Tablero() {
         casillas = new char[NUM_FILAS][NUM_COLUMNAS];
-        generarTablero(casillas);
-        ponerMinasTablero(casillas, NUM_MINAS);
-
+        generarTablero();
+        ponerMinasTablero();
     }
-
-    private void ponerMinasTablero(char[][] casillas, int nUM_MINAS) {
+    
+    private void ponerMinasTablero() {
         Random random = new Random();
         int minasColocadas = 0;
-
+    
         while (minasColocadas < NUM_MINAS) {
             int fila = random.nextInt(NUM_FILAS);
             int columna = random.nextInt(NUM_COLUMNAS);
-
+    
             if (casillas[fila][columna] != MINA) {
                 casillas[fila][columna] = MINA;
                 minasColocadas++;
             }
         }
     }
-
-    private void generarTablero(char[][] casillas) {
+    
+    private void generarTablero() {
         for (int i = 0; i < casillas.length; i++) {
             for (int j = 0; j < casillas[i].length; j++) {
                 casillas[i][j] = CASILLA_VACIA;
@@ -43,25 +43,25 @@ class Tablero {
     }
 
     public void mostrar() {
-        System.out.print("  ");
+        System.out.print("  "); 
         for (int i = 1; i <= NUM_COLUMNAS; i++) {
             System.out.print(i + " ");
         }
         System.out.println();
 
         for (int i = 0; i < NUM_FILAS; i++) {
-            System.out.println(i + 1 + " ");
+            System.out.print((i + 1) + " ");  
             for (int j = 0; j < NUM_COLUMNAS; j++) {
-                if (casillas[i][j] == MINA) {
-                    System.out.print(CASILLA_VACIA + " ");
+                if (casillas[i][j] == MINA && !mostrarMinas) {
+                    System.out.print(CASILLA_VACIA + " ");  
                 } else {
                     System.out.print(casillas[i][j] + " ");
                 }
             }
+            System.out.println();
         }
         System.out.println();
     }
-
 
     public boolean finalizado() {
         for (int i = 0; i < NUM_FILAS; i++) {
@@ -85,7 +85,7 @@ class Tablero {
     }
 
     public void mostrarMina(int fila, int columna) {
-        casillas[fila][columna] = MINA;
+        mostrarMinas = true; 
         mostrar();
     }
 }
