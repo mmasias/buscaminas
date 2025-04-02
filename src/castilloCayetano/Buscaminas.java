@@ -12,13 +12,15 @@ public class Buscaminas {
 
     public void jugar() {
         do {
-            tablero.mostrar();
+            tablero.mostrar(false);
             jugador.jugador(tablero);
-
         } while (!tablero.despejado() && jugador.vivo());
-
+    
+        tablero.mostrar(true);
         if (tablero.despejado()) {
-            System.out.println("Has ganado!");
+            System.out.println("¡Has ganado!");
+        } else {
+            System.out.println("¡Has perdido!");
         }
     }
 }
