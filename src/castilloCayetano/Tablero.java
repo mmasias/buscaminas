@@ -84,16 +84,27 @@ public class Tablero {
         for (int i = 0; i < filas; i++) {
             System.out.print(i + " ");
             for (int j = 0; j < columnas; j++) {
-                if (revelarMinas && tablero[i][j] == -1) {
-                    System.out.print("* ");
-                } else if (marcado[i][j]) {
-                    System.out.print("M ");
-                } else if (!revelado[i][j]) {
-                    System.out.print("- ");
-                } else if (tablero[i][j] == 0) {
-                    System.out.print("  ");
-                } else {
-                    System.out.print(tablero[i][j] + " ");
+                int estado = (revelarMinas && tablero[i][j] == -1) ? -1 :
+                             (marcado[i][j] ? 1 :
+                             (!revelado[i][j] ? 2 :
+                             (tablero[i][j] == 0 ? 3 : 4)));
+        
+                switch (estado) {
+                    case -1:
+                        System.out.print("* ");
+                        break;
+                    case 1:
+                        System.out.print("M ");
+                        break;
+                    case 2:
+                        System.out.print("- ");
+                        break;
+                    case 3:
+                        System.out.print("  ");
+                        break;
+                    case 4:
+                        System.out.print(tablero[i][j] + " ");
+                        break;
                 }
             }
             System.out.println();
