@@ -19,7 +19,7 @@ class Tablero {
 
     }
 
-    private void ponerMinasTablero(char[][] casillas2, int nUM_MINAS2) {
+    private void ponerMinasTablero(char[][] casillas, int nUM_MINAS) {
         Random random = new Random();
         int minasColocadas = 0;
 
@@ -34,7 +34,7 @@ class Tablero {
         }
     }
 
-    private void generarTablero(char[][] casillas2) {
+    private void generarTablero(char[][] casillas) {
 
         for (int i = 0; i < casillas.length; i++) {
             for (int j = 0; j < casillas[i].length; j++) {
@@ -64,7 +64,13 @@ class Tablero {
     }
 
     public boolean finalizado() {
-        return ;
+        for (int i = 0; i < NUM_FILAS; i++) {
+            for (int j = 0; j < NUM_COLUMNAS; j++) {
+                if (casillas[i][j] != MINA && casillas[i][j] != DESPEJADA) {
+                    return false; 
+                }
+            }
+        }
+        return true;
     }
-
 }
