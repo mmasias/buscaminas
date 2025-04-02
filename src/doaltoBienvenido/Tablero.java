@@ -35,42 +35,57 @@ class Tablero {
     }
 
     private void generarTablero(char[][] casillas) {
-
         for (int i = 0; i < casillas.length; i++) {
             for (int j = 0; j < casillas[i].length; j++) {
-                System.out.print(CASILLA_VACIA);
+                casillas[i][j] = CASILLA_VACIA;
             }
-            System.out.println();
         }
     }
 
     public void mostrar() {
+        System.out.print("  ");
         for (int i = 1; i <= NUM_COLUMNAS; i++) {
             System.out.print(i + " ");
         }
         System.out.println();
 
         for (int i = 0; i < NUM_FILAS; i++) {
-            System.out.print(i + 1 + " ");
+            System.out.println(i + 1 + " ");
             for (int j = 0; j < NUM_COLUMNAS; j++) {
                 if (casillas[i][j] == MINA) {
-                    System.out.print(CASILLA_VACIA);  
+                    System.out.print(CASILLA_VACIA + " ");
                 } else {
-                    System.out.print(casillas[i][j] + CASILLA_VACIA);
+                    System.out.print(casillas[i][j] + " ");
                 }
             }
-            System.out.println();
         }
+        System.out.println();
     }
+
 
     public boolean finalizado() {
         for (int i = 0; i < NUM_FILAS; i++) {
             for (int j = 0; j < NUM_COLUMNAS; j++) {
                 if (casillas[i][j] != MINA && casillas[i][j] != DESPEJADA) {
-                    return false; 
+                    return false;
                 }
             }
         }
         return true;
+    }
+
+    public boolean esMina(int fila, int columna) {
+        return casillas[fila][columna] == MINA;
+    }
+
+    public void despejarCasilla(int fila, int columna) {
+        if (casillas[fila][columna] != MINA) {
+            casillas[fila][columna] = DESPEJADA;
+        }
+    }
+
+    public void mostrarMina(int fila, int columna) {
+        casillas[fila][columna] = MINA;
+        mostrar();
     }
 }

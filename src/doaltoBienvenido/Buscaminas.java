@@ -14,9 +14,8 @@ public class Buscaminas {
         do {
             tablero.mostrar();
             jugador.jugar(tablero);
-
         } while (!tablero.finalizado() && jugador.sigueVivo());
-
+        tablero.mostrar();
     }
 
 }
