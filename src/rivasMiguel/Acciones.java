@@ -1,3 +1,4 @@
+package rivasMiguel;
 import java.util.Scanner;
 
 public class Acciones {
@@ -11,7 +12,7 @@ public class Acciones {
         return accion;
     }
 
-    private int[] pedirCoordenadas() {
+    public int[] pedirCoordenadas() {
         Scanner sc = new Scanner(System.in);
         int[] coordenadas = new int[2];
 
@@ -24,11 +25,11 @@ public class Acciones {
         return coordenadas;
     }
 
-    private void actualizarTablero(Tablero tablero, char accion, int fila, int columna) {
+    public void actualizarTablero(Tablero tablero, char accion, int fila, int columna) {
         if (accion == 'D') {
-            tablero.getTablero()[fila][columna] = 'D';
+            tablero.tablero[fila][columna] = 'D';
         } else if (accion == 'M') {
-            tablero.getTablero()[fila][columna] = 'M';
+            tablero.tablero[fila][columna] = 'M';
         }
     }
 }
