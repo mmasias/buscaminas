@@ -1,6 +1,8 @@
+package rivasMiguel;
+
 public class Tablero {
-    private char[][] tablero;
-    private int[][] minas;
+    char[][] tablero;
+    int[][] minas;
 
     public Tablero(int filas, int columnas, int minas) {
         this.tablero = generarTablero(filas, columnas);
@@ -63,8 +65,47 @@ public class Tablero {
         }
     }
 
-    public static void main(String[] args) {
-        Tablero t = new Tablero(6, 6, 6);
-        t.mostrarTablero();
+    public boolean comprobarDerrota(int fila, int columna, char accion) {
+        if (accion == 'M') { 
+            return false;
+        }
+
+        for (int[] mina : minas) {
+            if (mina[0] == fila && mina[1] == columna) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+
+    public void hasPerdido() {
+        for (int[] m : minas) {
+            tablero[m[0]][m[1]] = '*';
+        }
+
+        mostrarTablero();
+
+        System.out.println("\n💥 ¡Mina! ¡Has perdido! 💥");
+    }
+
+    public boolean comprobarVictoria(int filas, int columnas, int minas) {
+        int totalDespejadas = 0;
+        int objetivo = (filas * columnas) - minas;
+
+        for (int i = 1; i <= filas; i++) {
+            for (int j = 1; j <= columnas; j++) {
+                if (tablero[i][j] == 'D') {
+                    totalDespejadas++;
+                }
+            }
+        }
+
+        return totalDespejadas == objetivo;
+    }
+
+    public void celebrarVictoria() {
+        System.out.println("\n🎉 ¡Has ganado! 🎉");
+        mostrarTablero();
     }
 }
