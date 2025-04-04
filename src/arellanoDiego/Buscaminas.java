@@ -1,4 +1,4 @@
-package masiasManuel;
+package arellanoDiego;
 
 public class Buscaminas {
     private Tablero tablero;

@@ -1,4 +1,4 @@
-package masiasManuel;
+package arellanoDiego;
 
 public class Juego {
     public static void main(String[] args) {
