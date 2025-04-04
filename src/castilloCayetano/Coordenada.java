@@ -1,8 +1,8 @@
 package castilloCayetano;
 
 public class Coordenada {
-    public int x;
-    public int y;
+    private int x;
+    private int y;
     public Coordenada() {
         this.x = 0;
         this.y = 0;   
