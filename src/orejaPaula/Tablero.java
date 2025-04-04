@@ -1,5 +1,6 @@
 package orejaPaula;
 
+import java.util.Random;
 public class Tablero {
     private final int filas;
     private final int columnas;
@@ -22,3 +23,17 @@ public class Tablero {
         }
     }
 }
+private void colocarMinas() {
+    Random rand = new Random();
+    int minasColocadas = 0;
+    while (minasColocadas < minas) {
+        int r = rand.nextInt(filas);
+        int c = rand.nextInt(columnas);
+        if (!cuadricula[r][c].esMina) {
+            cuadricula[r][c].esMina = true;
+            minasColocadas++;
+        }
+    }
+}
+
+
