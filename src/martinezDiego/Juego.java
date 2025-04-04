@@ -1,8 +1,12 @@
-package masiasManuel;
+package martinezDiego;
 
-public class Juego {
+
+class Juego {
+
     public static void main(String[] args) {
         Buscaminas buscaminas = new Buscaminas();
         buscaminas.jugar();
     }
+
+    
 }
