@@ -54,5 +54,24 @@ private void calcularAdyacencias() {
         }
     }
 }
+public void revelarCelda(int r, int c) {
+    if (r < 0 || r >= filas || c < 0 || c >= columnas || cuadricula[r][c].estaRevelada) {
+        return;
+    }
+    cuadricula[r][c].estaRevelada = true;
+    if (cuadricula[r][c].esMina) {
+        System.out.println("¡Has perdido!");
+        return;
+    }
+    if (cuadricula[r][c].minasAdyacentes == 0) {
+        for (int dr = -1; dr <= 1; dr++) {
+            for (int dc = -1; dc <= 1; dc++) {
+                if (dr != 0 || dc != 0) {
+                    revelarCelda(r + dr, c + dc);
+                }
+            }
+        }
+    }
+}
 
 
