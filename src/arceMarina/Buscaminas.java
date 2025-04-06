@@ -17,7 +17,16 @@ public class Buscaminas {
         System.out.println("=== Bienvenido a Buscaminas 6x6 ===");
         boolean continuar = true;
         while (continuar) {
-            
         }
+
+    private void reiniciar() {
+        tablero = new Tablero();
+        jugador = new Jugador();
+    }
+
+    private boolean jugarDeNuevo() {
+        System.out.print("¿Quieres jugar otra vez? (si/no): ");
+        String respuesta = scanner.next().toLowerCase();
+        return respuesta.equals("si");
     }
  }
