@@ -73,5 +73,20 @@ public void revelarCelda(int r, int c) {
         }
     }
 }
+public void imprimirTablero() {
+    System.out.println("Tablero:");
+    for (int i = 0; i < filas; i++) {
+        for (int j = 0; j < columnas; j++) {
+            if (!cuadricula[i][j].estaRevelada) {
+                System.out.print("[ ]");
+            } else if (cuadricula[i][j].esMina) {
+                System.out.print("[*]");
+            } else {
+                System.out.print("[" + cuadricula[i][j].minasAdyacentes + "]");
+            }
+        }
+        System.out.println();
+    }
+}
 
 
