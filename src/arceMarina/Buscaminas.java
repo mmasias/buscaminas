@@ -16,8 +16,29 @@ public class Buscaminas {
     public void jugar(){
         System.out.println("=== Bienvenido a Buscaminas 6x6 ===");
         boolean continuar = true;
-        while (continuar) {
+
+        while (continuar && jugador.sigueVivo() && !tablero.juegoTerminado()) {
+            tablero.mostrarTablero(false);
+            jugador.jugar(tablero);
         }
+
+        tablero.mostrarTablero(true); 
+
+        if (!jugador.sigueVivo()) {
+            System.out.println("Juego terminado. Has perdido.");
+        } else if (tablero.juegoTerminado()) {
+            System.out.println("¡Felicidades! Has despejado todas las casillas sin minas.");
+        }
+
+        continuar = jugarDeNuevo();
+        if (continuar) {
+            reiniciar();
+            jugar();
+        } else {
+            System.out.println("Gracias por jugar. ¡Hasta la próxima!");
+            scanner.close();
+        }
+    }
 
     private void reiniciar() {
         tablero = new Tablero();
@@ -29,4 +50,4 @@ public class Buscaminas {
         String respuesta = scanner.next().toLowerCase();
         return respuesta.equals("si");
     }
- }
+}
