@@ -1,8 +1,17 @@
 package arceMarina;
 
-public class Buscaminas {
+import java.util.Scanner;
 
-    public void jugar() {
-        
+public class Buscaminas {
+    private Tablero tablero;
+    private Jugador jugador;
+    private Scanner scanner;
+
+    public Buscaminas() {
+        scanner = new Scanner(System.in);
     }
-}
+
+    public void jugar(){
+
+    }
+ }
