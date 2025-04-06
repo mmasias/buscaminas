@@ -85,10 +85,16 @@ class Tablero {
     public void despejarCasilla(int fila, int columna) {
         if (coordenadaValida(fila, columna) && !reveladas[fila][columna]) {
             reveladas[fila][columna] = true; 
+            casillas[fila][columna] = DESPEJADA;
         }
     }
 
     public boolean coordenadaValida(int fila, int columna) {
         return fila >= 0 && fila < NUM_FILAS && columna >= 0 && columna < NUM_COLUMNAS; 
+    }
+
+    public void mostrarMina(int fila, int columna) {
+        reveladas[fila][columna] = true;
+        casillas[fila][columna] = MINA;
     }
 }

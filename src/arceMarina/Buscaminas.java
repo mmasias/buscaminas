@@ -19,7 +19,7 @@ public class Buscaminas {
 
         while (continuar && jugador.sigueVivo() && !tablero.juegoTerminado()) {
             tablero.mostrarTablero(false);
-            jugador.jugar(tablero);
+            jugador.jugar(tablero, scanner);
         }
 
         tablero.mostrarTablero(true); 
