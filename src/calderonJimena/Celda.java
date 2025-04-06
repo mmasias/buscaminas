@@ -31,4 +31,28 @@ public class Celda {
 
     public int obtenerCantidadMinasAlrededor() {
         return cantidadMinasAlrededor;
-    }}
+    }
+
+    public void establecerCantidadMinasAlrededor(int cantidad) {
+        cantidadMinasAlrededor = cantidad;
+    }
+
+    public void marcar() {
+        if (!estaDescubierta) {
+            estaMarcada = true;
+        }
+    }
+
+    public String toString() {
+        if (estaMarcada) {
+            return "M"; 
+        }
+        if (!estaDescubierta) {
+            return "_"; 
+        }
+        if (tieneMina) {
+            return "*"; 
+        }
+        return cantidadMinasAlrededor == 0 ? " " : String.valueOf(cantidadMinasAlrededor); 
+    }
+}
