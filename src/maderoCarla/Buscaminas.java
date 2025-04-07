@@ -30,7 +30,7 @@ class Buscaminas {
                 accion = scanner.nextLine().trim().toUpperCase();
             }
 
-            /
+            
             Coordenada coordenada = new Coordenada();
             coordenada.pedir();
 
