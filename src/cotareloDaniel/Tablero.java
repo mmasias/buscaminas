@@ -68,4 +68,17 @@ public class Tablero {
         System.out.println();
     }
 
+    public boolean hayMina(int fila, int columna) {
+        return tableroMinas[fila][columna] == 'M';
+    }
+    
+    public void marcar(int fila, int columna) {
+        tableroVisible[fila][columna] = 'M';
+    }
+    
+    public void despejar(int fila, int columna) {
+        tableroVisible[fila][columna] = 'D';
+    }
+    
+
 }
