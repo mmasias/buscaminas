@@ -75,15 +75,15 @@ public class Tablero {
 
     public void mostrarTablero() {
         System.out.print("   ");
-        for (int col = 1; col <= COLUMNAS; col++) {
-            System.out.print(col + " ");
+        for (int columna = 1; columna <= COLUMNAS; columna++) {
+            System.out.print(columna + " ");
         }
         System.out.println();
 
         for (int fila = 0; fila < FILAS; fila++) {
             System.out.print((fila + 1) + "  ");
-            for (int col = 0; col < COLUMNAS; col++) {
-                System.out.print(celdas[fila][col].mostrar() + " ");
+            for (int columna = 0; columna < COLUMNAS; columna++) {
+                System.out.print(celdas[fila][columna].mostrar() + " ");
             }
             System.out.println();
         }

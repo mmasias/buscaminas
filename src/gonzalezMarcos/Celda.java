@@ -39,15 +39,15 @@ public class Celda {
         }
     }
 
-    public char mostrar() {
+    public String mostrar() {
         if (estaMarcada) {
-            return 'M';
+            return "🚩";
         } else if (!estaRevelada) {
-            return '#';
+            return "☁️";
         } else if (tieneMina) {
-            return '*';
+            return "💣";
         } else {
-            return ' ';
+            return " ";
         }
     }
 }
