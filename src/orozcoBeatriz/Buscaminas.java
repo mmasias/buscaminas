@@ -17,7 +17,8 @@ public class Buscaminas {
     }
 
     public void jugar() {
-        while (true) {
+        boolean juegoTerminado = false;
+        while (!juegoTerminado) {
             imprimirTablero(false);
             String opcion = "";
             while (!opcion.equals("D") && !opcion.equals("M")) {
@@ -35,27 +36,25 @@ public class Buscaminas {
             int col = scanner.nextInt() - 1;
             scanner.nextLine();
 
-            if (!coordenadaValida(fila, col)) {
-                System.out.println("Las coordenadas introducidas están fuera del tablero.");
-                continue;
-            }
-
-            if (opcion.equals("D")) {
-                if (tablero[fila][col].tieneMina) {
-                    imprimirTablero(true);
-                    System.out.println("¡Has pisado una mina! DERROTA.");
-                    break;
+            if (coordenadaValida(fila, col)) {
+                if (opcion.equals("D")) {
+                    if (tablero[fila][col].tieneMina) {
+                        imprimirTablero(true);
+                        System.out.println("¡Has pisado una mina! DERROTA.");
+                        juegoTerminado = true;
+                    } else {
+                        tablero[fila][col].estaDescubierta = true;
+                        if (verificarVictoria()) {
+                            imprimirTablero(true);
+                            System.out.println("¡Enhorabuena! ¡Has ganado!");
+                            juegoTerminado = true;
+                        }
+                    }
+                } else if (opcion.equals("M")) {
+                    tablero[fila][col].estaMarcada = !tablero[fila][col].estaMarcada;
                 }
-                tablero[fila][col].estaDescubierta = true;
-                if (verificarVictoria()) {
-                    imprimirTablero(true);
-                    System.out.println("¡Enhorabuena! ¡Has ganado!");
-                    break;
-                }
-            } else if (opcion.equals("M")) {
-                tablero[fila][col].estaMarcada = !tablero[fila][col].estaMarcada;
             } else {
-                System.out.println("Opción no válida.");
+                System.out.println("Las coordenadas introducidas están fuera del tablero.");
             }
         }
     }
