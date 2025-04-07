@@ -1,103 +1,134 @@
 package lianoJavier;
 
-import java.util.Random;
 public class Tablero {
 
-    private int[][] tablero;
-    private Random random;
+        private int[][] tableroMinas;
+        private int[][] tableroEstado;
+        private int dimensiones;
 
-    public Tablero(int[] dimensiones, int minasIniciales) {
-        tablero = crearTablero(dimensiones);
-        random = new Random();
-        poblarTablero();
-        poblarMinas(minasIniciales);
-    }
-    
-    public Tablero(int dimensiones, int minasIniciales) {
-        this(new int[] { dimensiones, dimensiones }, minasIniciales);
-    }
-    
-    private void poblarTablero() {
-        for (int fila = 0; fila < tablero.length; fila++) {
-            for (int columna = 0; columna < tablero[fila].length; columna++) {
-                tablero[fila][columna] = -1;
-            }
+        private final String MARCADO = "[P]";
+        private final String SIN_MOSTRAR = "[ ]";
+        private final String MINA = "[*]";
+        private final String DESPEJADO = "[D]";
+
+        public Tablero(int dimensiones, int minasIniciales) {
+                this.dimensiones = dimensiones;
+                tableroMinas = new int[dimensiones][dimensiones];
+                tableroEstado = new int[dimensiones][dimensiones];
+                crearTablero();
+                colocarMinas(minasIniciales);
         }
-    }
-    
-    private void poblarMinas(int minasIniciales) {
-        for (int i = 0; i < minasIniciales; i++) {
-            int columna = Random(0, tablero[0].length - 1);
-            int fila = Random(0, tablero.length - 1);
-            if (tablero[fila][columna] != -2) {
-                tablero[fila][columna] = -2;
-            };
+
+        private void crearTablero() {
+                int casillaVacia = -1;
+                for (int fila = 0; fila < dimensiones; fila++) {
+                        for (int columna = 0; columna < dimensiones; columna++) {
+                                tableroMinas[fila][columna] = casillaVacia;
+                                tableroEstado[fila][columna] = casillaVacia;
+                        }
+                }
         }
-    }
 
-    private int Random(int min, int max) {
-        return random.nextInt((max - min) + 1) + min;
-    }
-
-    private int[][] crearTablero(int[] dimensiones) {
-        return new int[dimensiones[0]][dimensiones[1]];
-    }
-
-    public void mostrar() {
-        for (int fila = 0; fila < tablero.length; fila++) {
-            for (int columna = 0; columna < tablero[fila].length; columna++) {
-                imprimirFicha(tablero[fila][columna]);
-            }
-            System.out.println();
+        private void colocarMinas(int minasIniciales) {
+                int minasPuestas = 0;
+                int tieneMina = 1;
+                while (minasPuestas < minasIniciales) {
+                        int fila = (int) (Math.random() * dimensiones);
+                        int columna = (int) (Math.random() * dimensiones);
+                        if (tableroMinas[fila][columna] != tieneMina) {
+                                tableroMinas[fila][columna] = tieneMina;
+                                minasPuestas++;
+                        }
+                }
         }
-    }
 
-    private void imprimirFicha(int simbolo) {
-        System.out.print(parse(simbolo));
-    }
-
-    private String parse(int simbolo) {
-        return switch (simbolo) {
-            case 1 -> "[P]";
-            case 2 -> "[M]";
-            default -> "[ ]";
-        };
-    }
-
-    public boolean resuelto() {
-        for (int fila = 0; fila < tablero.length; fila++) {
-            for (int columna = 0; columna < tablero[fila].length; columna++) {
-                if (tablero[fila][columna] < 0)
-                    return false;
-            }
+        public void mostrarEstadoActual() {
+                for (int fila = 0; fila < tableroMinas.length; fila++) {
+                        for (int columna = 0; columna < tableroMinas[fila].length; columna++) {
+                                String icon = " ";
+                                if (tableroEstado[fila][columna] == -1) {
+                                        icon = SIN_MOSTRAR;
+                                } else if (tableroEstado[fila][columna] == 1) {
+                                        icon = MARCADO;
+                                } else if (tableroMinas[fila][columna] == -1) {
+                                        icon = DESPEJADO;
+                                } else if (tableroMinas[fila][columna] == 1) {
+                                        icon = MINA;
+                                }
+                                System.out.print(icon);
+                        }
+                        System.out.println();
+                }
         }
-        return true;
-    }
 
-    public void seleccionarCasilla(Coordenada coordenada) {
-        int fila = coordenada.getFila();
-        int columna = coordenada.getColumna();
-        if (tablero[fila][columna] < 0) {
-            tablero[fila][columna] *= -1;
+        public boolean estaCompleto() {
+                for (int i = 0; i < dimensiones; i++) {
+                        for (int j = 0; j < dimensiones; j++) {
+                                if (tableroMinas[i][j] != 1 && tableroEstado[i][j] == -1) {
+                                        return false;
+                                }
+                        }
+                }
+                return true;
         }
-    }
 
-    public boolean hayBomba() {
-        for (int fila = 0; fila < tablero.length; fila++) {
-            for (int columna = 0; columna < tablero[fila].length; columna++) {
-                if (tablero[fila][columna] == 2)
-                    return true;
-            }
+        public String[] getExtremosColumna() {
+                return new String[]{"0", String.valueOf(dimensiones - 1)};
         }
-        return false;
-    }
 
-    public int[] getExtremosFila() {
-        return new int[] { 0, tablero.length };
-    }
+        public String[] getExtremosFila() {
+                return new String[]{"0", String.valueOf(dimensiones - 1)};
+        }
 
-    public int[] getExtremosColumna() {
-        return new int[] { 0, tablero[0].length };
-    }
+        public void seleccionarCasilla(Coordenada coordenada) {
+                int fila = coordenada.getFila();
+                int columna = coordenada.getColumna();
+                tableroEstado[fila][columna] = 0;
+        }
+
+        public boolean hayBomba() {
+                for (int i = 0; i < dimensiones; i++) {
+                        for (int j = 0; j < dimensiones; j++) {
+                                if (tableroEstado[i][j] == 0 && tableroMinas[i][j] == 1) {
+                                        return true;
+                                }
+                        }
+                }
+                return false;
+        }
+
+        public void marcarCasilla(Coordenada coordenada) {
+                int fila = coordenada.getFila();
+                int columna = coordenada.getColumna();
+                
+                if (tableroEstado[fila][columna] == -1) {
+                        tableroEstado[fila][columna] = 1; // Marcado
+                } else if (tableroEstado[fila][columna] == 1) {
+                        tableroEstado[fila][columna] = -1; // Desmarcado
+                }
+        }
+
+        public void revelarTodasLasMinas() {
+                for (int fila = 0; fila < tableroMinas.length; fila++) {
+                        for (int columna = 0; columna < tableroMinas[fila].length; columna++) {
+                                if (tableroMinas[fila][columna] == 1) {
+                                        System.out.print(MINA);
+                                } else {
+                                        System.out.print(SIN_MOSTRAR);
+                                }
+                        }
+                        System.out.println();
+                }
+        }
+
+        public void mostrarPosicionesMinas() {
+                System.out.println("Posiciones de las minas (modo desarrollo):");
+                for (int fila = 0; fila < tableroMinas.length; fila++) {
+                        for (int columna = 0; columna < tableroMinas[fila].length; columna++) {
+                                System.out.print(tableroMinas[fila][columna] == 1 ? MINA : SIN_MOSTRAR);
+                        }
+                        System.out.println();
+                }
+        }
 
 }
