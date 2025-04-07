@@ -32,8 +32,12 @@ public class Celda {
         return casillaMarcada;
     }
 
-     public void alternarMarca() {
+    public void alternarMarca() {
         casillaMarcada = !casillaMarcada;
+    }
+
+     public void colocarMinasCercanas(int cantidad) {
+        this.minasCercanas = cantidad;
     }
 
 }
