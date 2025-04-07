@@ -88,12 +88,6 @@ public class Board {
             } else if (board[row - 1] [column - 1] == FLAG){
                 board[row - 1][column - 1] = HIDDEN_CELL;
             }
-
-            if(board[row - 1][column - 1] == HIDDEN_CELL){
-                board[row - 1][column - 1] = CLEARED_CELL;
-            }
-
-            return true;
         }
     }
 }
