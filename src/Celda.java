@@ -36,8 +36,24 @@ public class Celda {
         casillaMarcada = !casillaMarcada;
     }
 
-     public void colocarMinasCercanas(int cantidad) {
+    public void colocarMinasCercanas(int cantidad) {
         this.minasCercanas = cantidad;
+    }
+
+     public int obtenerMinasCercanas() {
+        return minasCercanas;
+    }
+
+    public String toString() {
+        if (casillaMarcada) {
+            return "M";
+        } else if (!casillaRevelada) {
+            return "_";
+        } else if (tieneMina) {
+            return "*";
+        } else {
+            return minasCercanas > 0 ? Integer.toString(minasCercanas) : "D";
+        }
     }
 
 }
