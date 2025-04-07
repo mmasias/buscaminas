@@ -106,5 +106,16 @@ private boolean enRango(int fila, int columna) {
          return fila >= 0 && fila < totalFilas && columna >= 0 && columna < totalColumnas;
 }
 
+public boolean jugadorGano() {
+    for (int fila = 0; fila < totalFilas; fila++) {
+        for (int columna = 0; columna < totalColumnas; columna++) {
+            if (!tablero[fila][columna].tieneMina() && !tablero[fila][columna].casillaRevelada()) {
+                return false;
+            }
+        }
+    }
+    return true;
+}
+
 }
 
