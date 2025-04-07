@@ -29,15 +29,15 @@ private void colocarMinasAleatoriamente(){
         int columna = random.nextInt(totalColumnas);
         if (!celdas[fila][columna].tieneMina()) {
 
-            celdas[fila][columna].ponerMina(true);
+            celdas[fila][columna].ponerMina();
             minasColocadas++;
         }
     }
 }
 
 private void calcularMinasCercanas(){
-    for (int fila = 0; fila < totalFilas; i++) {
-        for (int columna = 0; columna < totalColumnas; cowlumna++) {
+    for (int fila = 0; fila < totalFilas; fila++) {
+        for (int columna = 0; columna < totalColumnas; columna++) {
             if (!celdas[fila][columna].tieneMina()) {
                 int minasCercanas = contarMinasCercanas(fila, columna);
                 celdas[fila][columna].colocarMinasCercanas(minasCercanas);
@@ -85,15 +85,19 @@ private int contarMinasCercanas(int fila, int columna) {
 
 public void mostrarTablero(){
 
-         System.out.println("   0 1 2 3 4 5");
-         for (int fila = 0; fila < totalFilas; fila++) {
-             System.out.print(fila + " |");
-             for (int columna = 0; columna < totalColumnas; columna++) {
-                 System.out.print(celdas[fila][columna] + " ");
-             }
-             System.out.println();
-         }
- 
+   System.out.println("BUSCAMINAS");
+    System.out.print("  ");
+    for (int i = 1; i <= totalColumnas; i++) {
+        System.out.print(i + " ");
+    }
+    System.out.println();
+    for (int fila = 0; fila < totalFilas; fila++) {
+        System.out.print((fila + 1) + " ");
+        for (int columna = 0; columna < totalColumnas; columna++) {
+            System.out.print(celdas[fila][columna] + " ");
+        }
+        System.out.println();
+    }
 }
 
 private boolean enRango(int fila, int columna) {
