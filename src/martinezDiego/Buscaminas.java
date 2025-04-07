@@ -1,33 +1,22 @@
 package martinezDiego;
 
 public class Buscaminas {
-    private Tablero tablero;
-    private Jugador jugador;
 
-    public Buscaminas() {
-        tablero = new Tablero();
-        jugador = new Jugador();
-    }
+    Tablero tablero = new Tablero();
+    Jugador jugador = new Jugador();
 
-   
-   
-   
     public void jugar() {
 
-        while(!tablero.hasGanado() || !tablero.hasPerdido()) {
-
-            tablero.imprimir();
-            tablero.seleccionarCasilla();
-            tablero.generarMinas();
-            tablero.plantarBandera();
-            tablero.seleccionarCasilla();
-            tablero.revelarMinas();
-            
+        while (!tablero.partidaTerminada()) {
+            tablero.imprimirMapaVisible();
+            jugador.jugarTurno(tablero);
         }
 
-
-       
-       
+        tablero.imprimirMapaVisible();
+        if (tablero.jugadorPerdio()) {
+            System.out.println("Has pisado una mina");
+        } else {
+            System.out.println("Has ganado la partida");
+        }
     }
-
 }

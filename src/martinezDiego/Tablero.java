@@ -1,95 +1,92 @@
 package martinezDiego;
 
-import java.util.Random;
-import java.util.Scanner;
-
 public class Tablero {
+    private String[][] mapaReal = new String[10][10];
+    private String[][] mapaVisible = new String[10][10];
+    private boolean partidaPerdida = false;
 
-    private String[][] tablero = {
-            { ".", ".", ".", ".", ".", "." },
-            { ".", ".", ".", ".", ".", "." },
-            { ".", ".", ".", ".", ".", "." },
-            { ".", ".", ".", ".", ".", "." },
-            { ".", ".", ".", ".", ".", "." },
-    };
+    public Tablero() {
+        inicializarMapas();
+        generarMinas();
+        generarNumeros();
+    }
 
-    private boolean[][] minas = new boolean[5][6];
+    private void inicializarMapas() {
+        for (int i = 0; i < mapaReal.length; i++) {
+            for (int j = 0; j < mapaReal[i].length; j++) {
+                mapaReal[i][j] = " ";
+                mapaVisible[i][j] = "#";
+            }
+        }
+    }
 
-    public void mostrar() {
-        for (int i = 0; i < tablero.length; i++) {
-            for (int j = 0; j < tablero[i].length; j++) {
-                System.out.print(tablero[i][j] + " ");
+    public void imprimirMapaVisible() {
+        for (int i = 0; i < mapaVisible.length; i++) {
+            for (int j = 0; j < mapaVisible[i].length; j++) {
+                System.out.print(mapaVisible[i][j] + " ");
             }
             System.out.println();
         }
     }
 
-    public void imprimir() {
-        System.out.println("Tablero actual:");
-        mostrar();
+    private void generarMinas() {
+        int minas = 0;
+        while (minas < 10) {
+            int fila = (int) (Math.random() * 10);
+            int columna = (int) (Math.random() * 10);
+            if (!mapaReal[fila][columna].equals("M")) {
+                mapaReal[fila][columna] = "M";
+                minas++;
+            }
+        }
     }
 
-    public void seleccionarCasilla() {
-        Scanner sc = new Scanner(System.in);
-        System.out.print("Selecciona fila (0-4): ");
-        int fila = sc.nextInt();
-        System.out.print("Selecciona columna (0-5): ");
-        int columna = sc.nextInt();
+    private void generarNumeros() {
+        for (int i = 0; i < mapaReal.length; i++) {
+            for (int j = 0; j < mapaReal[i].length; j++) {
+                if (mapaReal[i][j].equals("M")) continue;
 
-        if (fila >= 0 && fila < 5 && columna >= 0 && columna < 6) {
-            if (minas[fila][columna]) {
-                tablero[fila][columna] = "*";
-                System.out.println("¡BOOM! Pisaste una mina.");
-            } else {
-                tablero[fila][columna] = "0";
-                System.out.println("Casilla segura.");
+                int minasCerca = 0;
+                for (int x = -1; x <= 1; x++) {
+                    for (int y = -1; y <= 1; y++) {
+                        int ni = i + x, nj = j + y;
+                        if (ni >= 0 && ni < 10 && nj >= 0 && nj < 10 && mapaReal[ni][nj].equals("M")) {
+                            minasCerca++;
+                        }
+                    }
+                }
+                if (minasCerca > 0) mapaReal[i][j] = String.valueOf(minasCerca);
             }
+        }
+    }
+
+    public void revelarCasilla(int fila, int columna) {
+        if (mapaReal[fila][columna].equals("M")) {
+            mapaVisible[fila][columna] = "M";
+            partidaPerdida = true;
         } else {
-            System.out.println("Coordenadas fuera de rango.");
+            mapaVisible[fila][columna] = mapaReal[fila][columna];
         }
     }
 
-    public void generarMinas() {
-        Random rand = new Random();
-        int minasGeneradas = 0;
-        while (minasGeneradas < 5) {
-            int fila = rand.nextInt(5);
-            int columna = rand.nextInt(6);
-            if (!minas[fila][columna]) {
-                minas[fila][columna] = true;
-                minasGeneradas++;
-            }
-        }
-        System.out.println("Minas generadas.");
+    public void colocarBandera(int fila, int columna) {
+        mapaVisible[fila][columna] = "7";
     }
 
-    public void plantarBandera() {
-        Scanner sc = new Scanner(System.in);
-        System.out.print("Fila para bandera (0-4): ");
-        int fila = sc.nextInt();
-        System.out.print("Columna para bandera (0-5): ");
-        int columna = sc.nextInt();
+    public boolean partidaTerminada() {
+        if (partidaPerdida) return true;
 
-        if (fila >= 0 && fila < 5 && columna >= 0 && columna < 6) {
-            if (tablero[fila][columna].equals(".")) {
-                tablero[fila][columna] = "F";
-                System.out.println("Bandera plantada.");
-            } else {
-                System.out.println("No puedes plantar bandera aquí.");
-            }
-        } else {
-            System.out.println("Coordenadas fuera de rango.");
-        }
-    }
-
-    public void revelarMinas() {
-        for (int i = 0; i < minas.length; i++) {
-            for (int j = 0; j < minas[i].length; j++) {
-                if (minas[i][j]) {
-                    tablero[i][j] = "*";
+        for (int i = 0; i < mapaVisible.length; i++) {
+            for (int j = 0; j < mapaVisible[i].length; j++) {
+                if (mapaVisible[i][j].equals("#") && !mapaReal[i][j].equals("M")) {
+                    return false;
                 }
             }
         }
-        System.out.println("Minas reveladas.");
+        return true;
+    }
+
+    public boolean jugadorPerdio() {
+        return partidaPerdida;
     }
 }
