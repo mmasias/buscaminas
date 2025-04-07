@@ -1,14 +1,28 @@
 package coboIsmael;
 
-import java.util.Scanner;
-
 public class Juego {
+    private Jugador jugador;
+    private Tablero tablero;
 
-    public Juego(Tablero tablero, Scanner scanner) {
+    public Juego() {
+        jugador = new Jugador();
+        tablero = new Tablero();
     }
 
     public void iniciar() {
-        throw new UnsupportedOperationException("Unimplemented method 'iniciar'");
+        System.out.println("¡Bienvenido al Buscaminas!");
+
+        while (!tablero.juegoTerminado(jugador)) {
+            tablero.mostrarTablero();
+            jugador.realizarJugada(tablero);
+        }
+
+        tablero.mostrarTablero();
+
+        if (tablero.ganoJugador(jugador)) {
+            System.out.println("¡Felicidades, has ganado!");
+        } else {
+            System.out.println("Has perdido. ¡Caiste en una mina!");
+        }
     }
-    
 }
