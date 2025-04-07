@@ -89,12 +89,3 @@ public class Tablero {
     }
 }
 
-Footer
-© 2025 GitHub, Inc.
-Footer navigation
-Terms
-Privacy
-Security
-Status
-Docs
-Contact
