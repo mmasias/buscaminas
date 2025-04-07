@@ -89,5 +89,19 @@ public class Board {
                 board[row - 1][column - 1] = HIDDEN_CELL;
             }
         }
+
+        public boolean isComplete(){
+            for(int row = 0; row < NUMBER_OF_ROWS; row++){
+                for(int column = 0; column < NUMBER_OF_COLUMS; column++){
+                    char cell = board[row][column];
+                    if (cell == HIDDEN_CELL || cell == FLAG){
+                        if(cell != MINE){
+                            return false;
+                        }
+                    }
+                }
+            }
+            return true;
+        }
     }
 }
