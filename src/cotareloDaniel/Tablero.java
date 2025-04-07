@@ -71,14 +71,24 @@ public class Tablero {
     public boolean hayMina(int fila, int columna) {
         return tableroMinas[fila][columna] == 'M';
     }
-    
+
     public void marcar(int fila, int columna) {
         tableroVisible[fila][columna] = 'M';
     }
-    
+
     public void despejar(int fila, int columna) {
         tableroVisible[fila][columna] = 'D';
     }
-    
+
+    public boolean verificarVictoria() {
+        for (int i = 0; i < tamaño; i++) {
+            for (int j = 0; j < tamaño; j++) {
+                if (tableroVisible[i][j] == '_' && tableroMinas[i][j] != 'M') {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
 
 }
