@@ -138,3 +138,27 @@ class Jugador {
                 System.out.println("Opcion no valida. Solo D o M en mayuscula.");
             }
         }
+
+        System.out.print("> Fila: ");
+        int fila = scanner.nextInt() - 1;
+        System.out.print("> Columna: ");
+        int col = scanner.nextInt() - 1;
+        scanner.nextLine();
+
+        if (!tablero.coordenadaValida(fila, col)) {
+            System.out.println("Coordenadas fuera del tablero.");
+            return;
+        }
+
+        if (opcion.equals("D")) {
+            boolean sigueVivo = tablero.descubrir(fila, col);
+            if (!sigueVivo) vivo = false;
+        } else if (opcion.equals("M")) {
+            tablero.marcar(fila, col);
+        }
+    }
+
+    public boolean vivo() {
+        return vivo;
+    }
+}
