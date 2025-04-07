@@ -6,8 +6,9 @@ public class Buscaminas {
 
     private Tablero tablero;
     private Scanner scanner;
+    private Jugador jugador;
 
-    public Buscaminas(int dimensiones, int minas) {
+    public Buscaminas(int[] dimensiones, int minas) {
         this.tablero = new Tablero(dimensiones, minas);
         this.scanner = new Scanner(System.in);
     }
