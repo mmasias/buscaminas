@@ -32,4 +32,8 @@ public class Celda {
         return casillaMarcada;
     }
 
+     public void alternarMarca() {
+        casillaMarcada = !casillaMarcada;
+    }
+
 }
