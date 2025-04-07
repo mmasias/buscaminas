@@ -13,9 +13,9 @@ public class BuscaMinas {
 
     public void jugar() {
         do {
-            tablero.mostrar();
+            tablero.mostrarTablero();
             jugador.jugar(tablero);
-        }while (!tablero.completado() && jugador.vivo());
+        }while (!tablero.juegoCompletado() && jugador.estaVivo());
     }
 
 }
