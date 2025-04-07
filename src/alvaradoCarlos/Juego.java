@@ -3,7 +3,8 @@ package alvaradoCarlos;
 public class Juego {
 
     public static void main(String[] args) {
-        Buscaminas buscaminas = new Buscaminas(6, 6);
+        int[] dimensiones = {6,6};
+        Buscaminas buscaminas = new Buscaminas(dimensiones, 36);
         buscaminas.jugar();
     }
 }
