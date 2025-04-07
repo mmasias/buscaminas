@@ -28,6 +28,25 @@ public class Buscaminas {
             int columna = entrada.nextInt() - 1;
             System.out.println();
 
+            if (accion == 'D' || accion == 'd') {
+                if (tablero.hayMina(fila, columna)) {
+                    System.out.println("¡BOOM! Pisaste una mina. Has perdido.");
+                    System.out.println();
+                    tablero.mostrarTableroMinas();
+                    juegoTerminado = true;
+                } else {
+                    tablero.despejar(fila, columna);
+                    System.out.println("Coordenada despejada");
+                    System.out.println();
+                    if (tablero.verificarVictoria()) {
+                        System.out.println("¡Felicidades! Has despejado todas las casillas. Has ganado.");
+                        System.out.println();
+                        tablero.mostrarTableroVisible();
+                        juegoTerminado = true;
+                    }
+                }
+            }
+
         }
         entrada.close();
     }
