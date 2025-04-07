@@ -24,4 +24,8 @@ public class Celda {
         this.casillaRevelada = true;
     }
 
+    public boolean casillaRevelada() {
+        return casillaRevelada;
+    }
+
 }
