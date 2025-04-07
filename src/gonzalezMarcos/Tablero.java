@@ -1,5 +1,3 @@
-import java.util.Random;
-
 public class Tablero {
     private final int FILAS = 6;
     private final int COLUMNAS = 6;
@@ -9,7 +7,7 @@ public class Tablero {
     public Tablero() {
         celdas = new Celda[FILAS][COLUMNAS];
         inicializarCeldas();
-        colocarMinas();
+        colocarMinasSinRandom();
     }
 
     private void inicializarCeldas() {
@@ -20,18 +18,25 @@ public class Tablero {
         }
     }
 
-    private void colocarMinas() {
-        Random rand = new Random();
-        int minasColocadas = 0;
+    private void colocarMinasSinRandom() {
+        int total = FILAS * COLUMNAS;
+        int[] posiciones = new int[total];
+        for (int i = 0; i < total; i++) {
+            posiciones[i] = i;
+        }
 
-        while (minasColocadas < NUM_MINAS) {
-            int fila = rand.nextInt(FILAS);
-            int col = rand.nextInt(COLUMNAS);
+        for (int i = 0; i < total - 1; i++) {
+            int j = (i * 3 + 7) % total; 
+            int temp = posiciones[i];
+            posiciones[i] = posiciones[j];
+            posiciones[j] = temp;
+        }
 
-            if (!celdas[fila][col].tieneMina()) {
-                celdas[fila][col] = new Celda(true);
-                minasColocadas++;
-            }
+        for (int i = 0; i < NUM_MINAS; i++) {
+            int pos = posiciones[i];
+            int fila = pos / COLUMNAS;
+            int col = pos % COLUMNAS;
+            celdas[fila][col] = new Celda(true);
         }
     }
 
@@ -43,7 +48,7 @@ public class Tablero {
             celda.revelar();
             return !celda.tieneMina();
         }
-        return true; // no pierde si es posición inválida
+        return true;
     }
 
     public void marcar(int fila, int columna) {
