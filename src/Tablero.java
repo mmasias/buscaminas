@@ -73,10 +73,6 @@ public class Tablero {
         System.out.println("  ");
     }
 
-    private boolean enRango(int fila, int columna) {
-        return fila >= 0 && fila < totalFilas && columna >= 0 && columna < totalColumnas;
-    }
-
     public boolean jugadorGano() {
         for (int fila = 0; fila < totalFilas; fila++) {
             for (int columna = 0; columna < totalColumnas; columna++) {
