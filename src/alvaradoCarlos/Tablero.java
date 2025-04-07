@@ -1,3 +1,5 @@
+package alvaradoCarlos;
+
 import java.util.Random;
 
 public class Tablero {
@@ -75,6 +77,88 @@ public class Tablero {
     }
 
     public void actualizarTablero(char opcion, int[] coordenadas) {
+        int fila = coordenadas[0] - 1;
+        int columna = coordenadas[1] - 1;
+    
+        if (fila < 0 || fila >= dimensiones[0] || columna < 0 || columna >= dimensiones[1]) {
+            System.out.println("Coordenadas fuera de rango. Intenta de nuevo.");
+            return;
+        }
+    
+        if (opcion == 'D') {
+            if (tablero[fila][columna] != '_') {
+                System.out.println("Esta celda ya está marcada o descubierta.");
+                return;
+            }
+    
+            if (minas[fila][columna]) {
+                tablero[fila][columna] = '*'; 
+                System.out.println("¡Has descubierto una mina!");
+                mostrarTablero();
+            } else {
+                int minasCercanas = contarMinasCercanas(fila, columna);
+                tablero[fila][columna] = (char) ('0' + minasCercanas);
+            }
+    
+        } else if (opcion == 'M') {
+            if (tablero[fila][columna] == '_') {
+                tablero[fila][columna] = 'M';
+            } else {
+                System.out.println("Esta celda ya está marcada o descubierta.");
+            }
+    
+        } else if (opcion == 'R') {
+            if (tablero[fila][columna] == 'M') {
+                tablero[fila][columna] = '_';
+            } else {
+                System.out.println("No hay marca en esta celda para retirar.");
+            }
+    
+        } else {
+            System.out.println("Opción no válida. Usa 'D' para descubrir, 'M' para marcar o 'R' para retirar marca.");
+        }
+    }
+    
+
+    private int contarMinasCercanas(int fila, int columna) {
+        int minasCercanas = 0;
+        int[] dx = {-1, -1, -1, 0, 0, 1, 1, 1};
+        int[] dy = {-1, 0, 1, -1, 1, -1, 0, 1};
+
+        for (int i = 0; i < dx.length; i++) {
+            int nuevaFila = fila + dx[i];
+            int nuevaColumna = columna + dy[i];
+
+            if (nuevaFila >= 0 && nuevaFila < dimensiones[0] && nuevaColumna >= 0 && nuevaColumna < dimensiones[1]) {
+                if (minas[nuevaFila][nuevaColumna]) {
+                    minasCercanas++;
+                }
+            }
+        }
+
+        return minasCercanas;
+    }
+
+    public boolean todasLasCeldasDescubiertas() {
+        for (int fila = 0; fila < dimensiones[0]; fila++) {
+            for (int columna = 0; columna < dimensiones[1]; columna++) {
+                if (!minas[fila][columna] && tablero[fila][columna] == '_') {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    public char mostrarCelda(int[] coordenadas) {
+        int fila = coordenadas[0] - 1;
+        int columna = coordenadas[1] - 1;
+
+        if (fila < 0 || fila >= dimensiones[0] || columna < 0 || columna >= dimensiones[1]) {
+            throw new IllegalArgumentException("Coordenadas fuera de rango.");
+        }
+
+        return tablero[fila][columna];
     }
     
 }
