@@ -14,6 +14,10 @@ public class Celda {
 
     public void ponerMina() {
         this.tieneMina = true;
-}
+    }
+
+    public boolean tieneMina() {
+        return tieneMina;
+    }
 
 }
