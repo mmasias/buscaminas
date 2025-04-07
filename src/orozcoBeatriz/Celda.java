@@ -1,3 +1,5 @@
+package orozcoBeatriz;
+
 class Celda {
     boolean tieneMina;
     boolean estaDescubierta;
