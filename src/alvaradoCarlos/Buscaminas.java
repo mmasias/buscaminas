@@ -10,6 +10,7 @@ public class Buscaminas {
 
     public Buscaminas(int[] dimensiones, int minas) {
         this.tablero = new Tablero(dimensiones, minas);
+        this.jugador = new Jugador(tablero);
         this.scanner = new Scanner(System.in);
     }
 
@@ -20,7 +21,7 @@ public class Buscaminas {
             char opcion = jugador.actuar();
             int[] coordenadas = jugador.pedirCoordenadas(scanner);
 
-            tablero.actualizarTablero(opcion, coordenadas);
+            jugador.actualizarTablero(opcion, coordenadas);
 
             if (jugador.perdio()) {
                 System.out.println("¡Perdiste!");
