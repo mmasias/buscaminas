@@ -14,7 +14,6 @@ public class Tablero {
             }
         }
         colocarMinasAleatoriamente();
-        calcularMinasCercanas();
     }
 
     private void colocarMinasAleatoriamente() {
@@ -31,16 +30,6 @@ public class Tablero {
         }
     }
 
-    private void calcularMinasCercanas() {
-        for (int fila = 0; fila < totalFilas; fila++) {
-            for (int columna = 0; columna < totalColumnas; columna++) {
-                if (!tablero[fila][columna].tieneMina()) {
-                    int minasCercanas = contarMinasCercanas(fila, columna);
-                    tablero[fila][columna].colocarMinasCercanas(minasCercanas);
-                }
-            }
-        }
-    }
 
     public boolean despejarCasilla(int fila, int columna) {
         if (tablero[fila][columna].casillaRevelada() || tablero[fila][columna].casillaMarcada()) {
@@ -65,22 +54,7 @@ public class Tablero {
         }
     }
 
-    private int contarMinasCercanas(int fila, int columna) {
-        int minasCercanas = 0;
-        for (int desplazamientoFila = -1; desplazamientoFila <= 1; desplazamientoFila++) {
-            for (int desplazamientoColumna = -1; desplazamientoColumna <= 1; desplazamientoColumna++) {
-                if (desplazamientoFila == 0 && desplazamientoColumna == 0) continue;
-                int nuevaFila = fila + desplazamientoFila;
-                int nuevaColumna = columna + desplazamientoColumna;
-                if (enRango(nuevaFila, nuevaColumna)) {
-                    if (tablero[nuevaFila][nuevaColumna].tieneMina()) {
-                        minasCercanas++;
-                    }
-                }
-            }
-        }
-        return minasCercanas;
-    }
+
 
     public void mostrarTablero() {
         System.out.println("  ");
