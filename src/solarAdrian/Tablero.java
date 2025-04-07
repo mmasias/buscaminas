@@ -1,85 +1,100 @@
 package solarAdrian;
 
-public class Tablero {
-    private Casilla[][] casillas;
-    private int filas;
-    private int columnas;
-    private int totalMinas;
+import java.util.Random;
 
-    public Tablero(int filas, int columnas, int totalMinas) {
-        this.filas = filas;
-        this.columnas = columnas;
-        this.totalMinas = totalMinas;
-        this.casillas = new Casilla[filas][columnas];
+class Tablero {
 
-        for (int i = 0; i < filas; i++) {
-            for (int j = 0; j < columnas; j++) {
-                casillas[i][j] = new Casilla();
+    private final int NUM_FILAS = 6;
+    private final int NUM_COLUMNAS = 6;
+    private final int NUM_MINAS = 6;
+    private final char CASILLA_VACIA = '_';
+    private final char MINA = 'M';
+    private final char DESPEJADA = 'D';
+    private char[][] casillas;
+    private boolean[][] reveladas; 
+
+    public Tablero() {
+        casillas = new char[NUM_FILAS][NUM_COLUMNAS];
+        reveladas = new boolean[NUM_FILAS][NUM_COLUMNAS]; 
+        inicializarTablero();
+        colocarMinas();
+    }
+
+    private void inicializarTablero() {
+        for (int i = 0; i < NUM_FILAS; i++) {
+            for (int j = 0; j < NUM_COLUMNAS; j++) {
+                casillas[i][j] = CASILLA_VACIA; 
+                reveladas[i][j] = false;
             }
         }
     }
 
-    public void colocarMinas() {
+    private void colocarMinas() {
+        Random random = new Random();
         int minasColocadas = 0;
-        while (minasColocadas < totalMinas) {
-            int filaRandom = (int) (Math.random() * filas);
-            int columnaRandom = (int) (Math.random() * columnas);
 
-            if (!casillas[filaRandom][columnaRandom].tieneMina()) {
-                casillas[filaRandom][columnaRandom].setTieneMina(true);
+        while (minasColocadas < NUM_MINAS) {
+            int fila = random.nextInt(NUM_FILAS);
+            int columna = random.nextInt(NUM_COLUMNAS);
+
+            if (casillas[fila][columna] != MINA) {
+                casillas[fila][columna] = MINA; 
                 minasColocadas++;
             }
         }
     }
 
-    public void calcularMinasAdyacentes() {
-        for (int i = 0; i < filas; i++) {
-            for (int j = 0; j < columnas; j++) {
-                if (!casillas[i][j].tieneMina()) {
-                    int contador = 0;
-
-                    for (int x = Math.max(0, i - 1); x <= Math.min(filas - 1, i + 1); x++) {
-                        for (int y = Math.max(0, j - 1); y <= Math.min(columnas - 1, j + 1); y++) {
-                            if (casillas[x][y].tieneMina()) {
-                                contador++;
-                            }
-                        }
-                    }
-
-                    casillas[i][j].setMinasAlrededor(contador);
-                }
-            }
+    public void mostrarTablero(boolean mostrarMinas) {
+        System.out.print("  ");
+        for (int i = 1; i <= NUM_COLUMNAS; i++) {
+            System.out.print(i + " ");
         }
-    }
+        System.out.println();
 
-    public void mostrarTablero() {
-        for (int i = 0; i < filas; i++) {
-            for (int j = 0; j < columnas; j++) {
-                if (casillas[i][j].estaRevelada()) {
-                    if (casillas[i][j].tieneMina()) {
-                        System.out.print(" * ");
-                    } else {
-                        System.out.print(" " + casillas[i][j].getMinasAlrededor() + " ");
-                    }
-                } else if (casillas[i][j].esBandera()) {
-                    System.out.print(" P ");
+        for (int i = 0; i < NUM_FILAS; i++) {
+            System.out.print((i + 1) + " ");
+            for (int j = 0; j < NUM_COLUMNAS; j++) {
+                if (reveladas[i][j]) {
+                    System.out.print(casillas[i][j] + " "); 
+                } else if (mostrarMinas && casillas[i][j] == MINA) {
+                    System.out.print(MINA + " "); 
                 } else {
-                    System.out.print(" - ");
+                    System.out.print(CASILLA_VACIA + " "); 
                 }
             }
             System.out.println();
         }
+        System.out.println();
     }
 
-    public Casilla getCasilla(int fila, int columna) {
-        return casillas[fila][columna];
+    public boolean juegoTerminado() {
+        for (int i = 0; i < NUM_FILAS; i++) {
+            for (int j = 0; j < NUM_COLUMNAS; j++) {
+                if (casillas[i][j] != MINA && !reveladas[i][j]) {
+                    return false; 
+                }
+            }
+        }
+        return true; 
     }
 
-    public int getFilas() {
-        return filas;
+    public boolean esMina(int fila, int columna) {
+        return casillas[fila][columna] == MINA;
     }
 
-    public int getColumnas() {
-        return columnas;
+    public void despejarCasilla(int fila, int columna) {
+        if (coordenadaValida(fila, columna) && !reveladas[fila][columna]) {
+            reveladas[fila][columna] = true; 
+            casillas[fila][columna] = DESPEJADA;
+        }
+    }
+
+    public boolean coordenadaValida(int fila, int columna) {
+        return fila >= 0 && fila < NUM_FILAS && columna >= 0 && columna < NUM_COLUMNAS; 
+    }
+
+    public void mostrarMina(int fila, int columna) {
+        reveladas[fila][columna] = true;
+        casillas[fila][columna] = MINA;
     }
 }
