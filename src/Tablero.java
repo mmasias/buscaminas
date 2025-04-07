@@ -80,7 +80,19 @@ public class Tablero {
         return minasCercanas;
     }
 
-    
+    public void juegoGanado(){
+
+        for (int fila = 0; fila < totalFilas; fila++) {
+            for (int columna = 0; columna < totalColumnas; columna++) {
+                if (!celdas[fila][columna].tieneMina() && !celdas[fila][columna].casillaRevelada()) {
+                    return;
+                }
+            }
+        }
+        System.out.println("¡Has ganado, Felicidades!");
+    }
+
+
     
 
 
