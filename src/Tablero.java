@@ -83,8 +83,8 @@ public class Tablero {
     }
 
     public void mostrarTablero() {
+        System.out.println("  ");
         System.out.println("BUSCAMINAS");
-        System.out.print("  ");
         for (int i = 1; i <= totalColumnas; i++) {
             System.out.print(i + " ");
         }
@@ -96,6 +96,7 @@ public class Tablero {
             }
             System.out.println();
         }
+        System.out.println("  ");
     }
 
     private boolean enRango(int fila, int columna) {

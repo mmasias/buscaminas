@@ -17,11 +17,14 @@ public class Buscaminas {
             tablero.mostrarTablero();
             System.out.println("[D]espejar o [M]arcar mina?");
             String accion = scanner.nextLine().trim().toUpperCase();
+            
 
             if (!accion.equals("D") && !accion.equals("M")) {
                 System.out.println("Acción inválida. Usa D o M.");
                 continue;
             }
+
+            System.out.println("");
 
             System.out.println("Elija coordenada:");
             System.out.print(" Fila: ");
