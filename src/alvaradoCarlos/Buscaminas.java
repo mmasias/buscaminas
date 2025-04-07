@@ -25,11 +25,9 @@ public class Buscaminas {
 
             if (jugador.perdio()) {
                 System.out.println("¡Perdiste!");
+            } else if (jugador.gano()){
+                System.out.println("Ganaste!");
             }
-        }
-
-        if (jugador.gano()) {
-            System.out.println("¡Ganaste!");
         }
     }
 }
