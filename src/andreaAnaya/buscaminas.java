@@ -62,3 +62,79 @@ class Tablero {
             }
         }
     }
+    public void mostrar() {
+        System.out.println("\nBUSCAMINAS");
+        System.out.print("  ");
+        for (int i = 1; i <= columnas; i++) System.out.print(i + " ");
+        System.out.println();
+        for (int i = 0; i < filas; i++) {
+            System.out.print((i + 1) + " ");
+            for (int j = 0; j < columnas; j++) {
+                Celda celda = celdas[i][j];
+                if (celda.estaDescubierta) {
+                    if (celda.tieneMina) System.out.print("* ");
+                    else System.out.print(contarMinasVecinas(i, j) + " ");
+                } else if (celda.estaMarcada) {
+                    System.out.print("M ");
+                } else {
+                    System.out.print("_ ");
+                }
+            }
+            System.out.println();
+        }
+    }
+    public boolean despejado() {
+        for (int i = 0; i < filas; i++) {
+            for (int j = 0; j < columnas; j++) {
+                if (!celdas[i][j].tieneMina && !celdas[i][j].estaDescubierta) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    public boolean descubrir(int f, int c) {
+        if (celdas[f][c].tieneMina) {
+            celdas[f][c].estaDescubierta = true;
+            return false;
+        }
+        celdas[f][c].estaDescubierta = true;
+        return true;
+    }
+
+    public void marcar(int f, int c) {
+        celdas[f][c].estaMarcada = !celdas[f][c].estaMarcada;
+    }
+
+    public int contarMinasVecinas(int f, int c) {
+        int minasCerca = 0;
+        for (int i = f - 1; i <= f + 1; i++) {
+            for (int j = c - 1; j <= c + 1; j++) {
+                if (coordenadaValida(i, j) && !(i == f && j == c) && celdas[i][j].tieneMina) {
+                    minasCerca++;
+                }
+            }
+        }
+        return minasCerca;
+    }
+}
+class Celda {
+    public boolean tieneMina = false;
+    public boolean estaDescubierta = false;
+    public boolean estaMarcada = false;
+}
+
+class Jugador {
+    private boolean vivo = true;
+    private Scanner scanner = new Scanner(System.in);
+
+    public void jugar(Tablero tablero) {
+        String opcion = "";
+        while (!opcion.equals("D") && !opcion.equals("M")) {
+            System.out.print("[D]espejar o [M]arcar mina?: ");
+            opcion = scanner.nextLine();
+            if (!opcion.equals("D") && !opcion.equals("M")) {
+                System.out.println("Opcion no valida. Solo D o M en mayuscula.");
+            }
+        }
