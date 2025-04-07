@@ -1,5 +1,4 @@
 
-import java.util.Scanner;
 import java.util.Random;
 
 
@@ -10,10 +9,10 @@ private final int totalColumnas = 6;
 private final int totalMinas = 6;
 
 public Tablero(){
-    celdas = new Celda[totalFilas][totalColumnas];
+    tablero = new Celda[totalFilas][totalColumnas];
     for (int fila = 0; fila < totalFilas; fila++) {
         for (int columna = 0; columna < totalColumnas; columna++) {
-            celdas[fila][columna] = new Celda();
+            tablero[fila][columna] = new Celda();
         }
     }
      colocarMinasAleatoriamente();
@@ -27,9 +26,9 @@ private void colocarMinasAleatoriamente(){
     while (minasColocadas < totalMinas) {
         int fila = random.nextInt(totalFilas);
         int columna = random.nextInt(totalColumnas);
-        if (!celdas[fila][columna].tieneMina()) {
+        if (!tablero[fila][columna].tieneMina()) {
 
-            celdas[fila][columna].ponerMina();
+            tablero[fila][columna].ponerMina();
             minasColocadas++;
         }
     }
@@ -38,9 +37,9 @@ private void colocarMinasAleatoriamente(){
 private void calcularMinasCercanas(){
     for (int fila = 0; fila < totalFilas; fila++) {
         for (int columna = 0; columna < totalColumnas; columna++) {
-            if (!celdas[fila][columna].tieneMina()) {
+            if (!tablero[fila][columna].tieneMina()) {
                 int minasCercanas = contarMinasCercanas(fila, columna);
-                celdas[fila][columna].colocarMinasCercanas(minasCercanas);
+                tablero[fila][columna].colocarMinasCercanas(minasCercanas);
             }
         }
     }
@@ -48,33 +47,31 @@ private void calcularMinasCercanas(){
 }
 
 public boolean despejarCasilla(int fila,int columna){
-  if (celdas[fila][columna].casillaRevelada() || celdas[fila][columna].casillaMarcada()) {
+  if (tablero[fila][columna].casillaRevelada() || tablero[fila][columna].casillaMarcada()) {
             return true;
         }
 
-        celdas[fila][columna].revelar();
-        return !celdas[fila][columna].tieneMina();
+        tablero[fila][columna].revelar();
+        return !tablero[fila][columna].tieneMina();
 
 }
 
 public void marcarCasilla(int fila, int columna) {
-        if (!celdas[fila][columna].casillaRevelada()) {
-            celdas[fila][columna].alternarMarca();
+        if (!tablero[fila][columna].casillaRevelada()) {
+            tablero[fila][columna].alternarMarca();
         }
     }
 
 
-}
-
 private int contarMinasCercanas(int fila, int columna) {
     int minasCercanas = 0;
-    for (int fila = -1; fila <= 1; fila++) {
-        for (int columna = -1; columna <= 1; columna++) {
-            if (fila == 0 && columna == 0) continue; 
-            int nuevaFila = fila + fila;
-            int nuevaColumna = columna + columna;
-            if (nuevaFila >= 0 && nuevaFila < totalFilas && nuevaColumna >= 0 && nuevaColumna < totalColumnas) {
-                if (celdas[nuevaFila][nuevaColumna].tieneMina()) {
+    for (int desplazamientoFila = -1; desplazamientoFila <= 1; desplazamientoFila++) {
+        for (int desplazamientoColumna = -1; desplazamientoColumna <= 1; desplazamientoColumna++) {
+            if (desplazamientoFila == 0 && desplazamientoColumna == 0) continue; 
+            int nuevaFila = fila + desplazamientoFila;
+            int nuevaColumna = columna + desplazamientoColumna;
+            if (enRango(nuevaFila, nuevaColumna)) {
+                if (tablero[nuevaFila][nuevaColumna].tieneMina()) {
                     minasCercanas++;
                 }
             }
@@ -82,6 +79,7 @@ private int contarMinasCercanas(int fila, int columna) {
     }
     return minasCercanas;
 }
+
 
 public void mostrarTablero(){
 
@@ -94,7 +92,7 @@ public void mostrarTablero(){
     for (int fila = 0; fila < totalFilas; fila++) {
         System.out.print((fila + 1) + " ");
         for (int columna = 0; columna < totalColumnas; columna++) {
-            System.out.print(celdas[fila][columna] + " ");
+            System.out.print (tablero[fila][columna] + " ");
         }
         System.out.println();
     }
@@ -102,5 +100,7 @@ public void mostrarTablero(){
 
 private boolean enRango(int fila, int columna) {
          return fila >= 0 && fila < totalFilas && columna >= 0 && columna < totalColumnas;
-     }
+}
+
+}
 
