@@ -1,0 +1,36 @@
+@startuml
+
+class Juego{
+    +  main(String[] args): void
+
+}
+
+class Buscaminas {
+  - tablero: Tablero
+  - jugador: Jugador
+  + jugar(): void
+}
+
+class Tablero {
+  - mapaReal: String[][]
+  - mapaVisible: String[][]
+  - partidaPerdida: boolean
+  + inicializarMapas(): void
+  + generarMinas(): void
+  + generarNumeros(): void
+  + revelarCasilla(fila: int, columna: int): void
+  + colocarBandera(fila: int, columna: int): void
+  + partidaTerminada(): boolean
+  + jugadorPerdio(): boolean
+}
+
+class Jugador {
+  - scanner: Scanner
+  + jugarTurno(tablero: Tablero): void
+}
+
+Buscaminas  -->  Tablero 
+Buscaminas  -->  Jugador 
+Juego --> Buscaminas
+
+@enduml
