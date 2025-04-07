@@ -12,4 +12,8 @@ public class Celda {
         minasCercanas = 0;
     }
 
+    public void ponerMina() {
+        this.tieneMina = true;
+}
+
 }
