@@ -117,5 +117,11 @@ public boolean jugadorGano() {
     return true;
 }
 
+public int obtenerColumnas() {
+    return totalColumnas;
+
+}
+
+
 }
 
