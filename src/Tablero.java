@@ -83,3 +83,16 @@ private int contarMinasCercanas(int fila, int columna) {
     return minasCercanas;
 }
 
+public void mostrarTablero(){
+
+         System.out.println("   0 1 2 3 4 5");
+         for (int fila = 0; fila < totalFilas; fila++) {
+             System.out.print(fila + " |");
+             for (int columna = 0; columna < totalColumnas; columna++) {
+                 System.out.print(celdas[fila][columna] + " ");
+             }
+             System.out.println();
+         }
+ 
+}
+
