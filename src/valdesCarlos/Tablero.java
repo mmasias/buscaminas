@@ -1,3 +1,5 @@
+package valdesCarlos;
+
 import java.util.Random;
 
 public class Tablero {

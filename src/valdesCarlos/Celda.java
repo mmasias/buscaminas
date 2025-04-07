@@ -1,4 +1,4 @@
-
+package valdesCarlos;
 
 public class Celda {
     private boolean tieneMina;
