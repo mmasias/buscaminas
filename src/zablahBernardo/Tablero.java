@@ -57,4 +57,13 @@ public class Tablero {
         System.out.flush();
     }
 
+    public boolean descubrir(int fila, int columna) {
+        if (casillas[fila][columna] == '*') {
+            return false; 
+        } else {
+            casillas[fila][columna] = '0'; 
+            return true;
+        }
+    }
+
 }

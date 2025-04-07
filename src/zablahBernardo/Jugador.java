@@ -1,15 +1,31 @@
 package zablahBernardo;
 
+import java.util.Scanner;
+
 public class Jugador {
 
+    private boolean vivo;
+
+    public Jugador() {
+        vivo = true;
+    }
+
     public void jugar(Tablero tablero) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'jugar'");
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Ingresa fila: ");
+        int fila = scanner.nextInt();
+        System.out.print("Ingresa columna: ");
+        int columna = scanner.nextInt();
+
+        boolean resultado = tablero.descubrir(fila, columna);
+        if (!resultado) {
+            vivo = false;
+            System.out.println("¡BOOM! Pisaste una mina ");
+        }
     }
 
     public boolean vivo() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'vivo'");
+        return vivo;
     }
 
 }
