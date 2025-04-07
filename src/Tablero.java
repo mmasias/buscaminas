@@ -40,24 +40,24 @@ private void calcularMinasCercanas(){
         for (int columna = 0; columna < totalColumnas; cowlumna++) {
             if (!celdas[fila][columna].tieneMina()) {
                 int minasCercanas = contarMinasCercanas(fila, columna);
-                celdas[fila][columna].setMinasCercanas(minasCercanas);
+                celdas[fila][columna].colocarMinasCercanas(minasCercanas);
             }
         }
     }
 
 }
 
-boolean despejarCasilla(int fila, int columna) {
+public boolean despejarCasilla(int fila,int columna){
+  if (celdas[fila][columna].casillaRevelada() || celdas[fila][columna].casillaMarcada()) {
+            return true;
+        }
 
-     if (celdas[fila][columna].casillaRevelada() || celdas[fila][columna].casillaMarcada()) {
-        return true;
-    }
+        celdas[fila][columna].revelar();
+        return !celdas[fila][columna].tieneMina();
 
-    celdas[fila][columna].revelar();
-    return !celdas[fila][columna].tieneMina();
 }
 
- public void marcarCasilla(int fila, int columna) {
+public void marcarCasilla(int fila, int columna) {
         if (!celdas[fila][columna].casillaRevelada()) {
             celdas[fila][columna].alternarMarca();
         }
