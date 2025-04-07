@@ -23,4 +23,12 @@ public class Board {
         placeMinesRandomly();
     }
 
+    private void initializeBoard(){
+        for (int row = 0; row < NUMBER_OF_ROWS; row++){
+            for (int column = 0; column < NUMBER_OF_COLUMS; column++){
+                instanceBoard[row][column] = HIDDEN_CELL;
+            }
+        }
+    }
+
 }
