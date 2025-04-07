@@ -33,4 +33,22 @@ public class Tablero {
             }
         }
     }
+
+    public void mostrarTableroVisible() {
+        System.out.println("BUSCAMINAS");
+        System.out.print("  ");
+        for (int i = 1; i <= tamaño; i++) {
+            System.out.print(i + " ");
+        }
+        System.out.println();
+        for (int i = 0; i < tamaño; i++) {
+            System.out.print((i + 1) + " ");
+            for (int j = 0; j < tamaño; j++) {
+                System.out.print(tableroVisible[i][j] + " ");
+            }
+            System.out.println();
+        }
+        System.out.println();
+    }
+
 }
