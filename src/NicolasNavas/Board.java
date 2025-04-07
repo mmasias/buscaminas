@@ -69,10 +69,24 @@ public class Board {
             System.err.println();
         }
 
-        public boolean clearCell(int row, int column){
+        public boolean clearCell(int row, int column) {
             if(board[row - 1][column - 1] == MINE){
                 hiddenCell = true;
                 return false;
+            }
+
+            if(board[row - 1][column - 1] == HIDDEN_CELL){
+                board[row - 1][column - 1] = CLEARED_CELL;
+            }
+
+            return true;
+        }
+
+        public void markFlag(int row, int column){
+            if(board[row - 1][column - 1] == HIDDEN_CELL){
+                board[row - 1][column - 1] = FLAG;
+            } else if (board[row - 1] [column - 1] == FLAG){
+                board[row - 1][column - 1] = HIDDEN_CELL;
             }
 
             if(board[row - 1][column - 1] == HIDDEN_CELL){
