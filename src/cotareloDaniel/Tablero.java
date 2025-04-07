@@ -51,4 +51,21 @@ public class Tablero {
         System.out.println();
     }
 
+    public void mostrarTableroMinas() {
+        System.out.println("BUSCAMINAS - MINAS");
+        System.out.print("  ");
+        for (int i = 1; i <= tamaño; i++) {
+            System.out.print(i + " ");
+        }
+        System.out.println();
+        for (int i = 0; i < tamaño; i++) {
+            System.out.print((i + 1) + " ");
+            for (int j = 0; j < tamaño; j++) {
+                System.out.print(tableroMinas[i][j] + " ");
+            }
+            System.out.println();
+        }
+        System.out.println();
+    }
+
 }
