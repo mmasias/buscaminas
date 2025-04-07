@@ -1,3 +1,5 @@
+package gonzalezMarcos;
+
 import java.util.Scanner;
 
 public class JuegoBuscaminas {

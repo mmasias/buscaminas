@@ -1,3 +1,5 @@
+package gonzalezMarcos;
+
 public class Tablero {
     private final int FILAS = 6;
     private final int COLUMNAS = 6;
@@ -12,8 +14,8 @@ public class Tablero {
 
     private void inicializarCeldas() {
         for (int fila = 0; fila < FILAS; fila++) {
-            for (int col = 0; col < COLUMNAS; col++) {
-                celdas[fila][col] = new Celda();
+            for (int columna = 0; columna < COLUMNAS; columna++) {
+                celdas[fila][columna] = new Celda();
             }
         }
     }
@@ -33,10 +35,10 @@ public class Tablero {
         }
 
         for (int i = 0; i < NUM_MINAS; i++) {
-            int pos = posiciones[i];
-            int fila = pos / COLUMNAS;
-            int col = pos % COLUMNAS;
-            celdas[fila][col] = new Celda(true);
+            int posicion = posiciones[i];
+            int fila = posicion / COLUMNAS;
+            int columna = posicion % COLUMNAS;
+            celdas[fila][columna] = new Celda(true);
         }
     }
 
@@ -61,8 +63,8 @@ public class Tablero {
 
     public boolean haGanado() {
         for (int fila = 0; fila < FILAS; fila++) {
-            for (int col = 0; col < COLUMNAS; col++) {
-                Celda celda = celdas[fila][col];
+            for (int columna = 0; columna < COLUMNAS; columna++) {
+                Celda celda = celdas[fila][columna];
                 if (!celda.tieneMina() && !celda.estaRevelada()) {
                     return false;
                 }
