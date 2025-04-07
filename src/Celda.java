@@ -20,4 +20,8 @@ public class Celda {
         return tieneMina;
     }
 
+    public void revelar() {
+        this.casillaRevelada = true;
+    }
+
 }
