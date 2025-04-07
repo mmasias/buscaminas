@@ -28,4 +28,8 @@ public class Celda {
         return casillaRevelada;
     }
 
+    public boolean casillaMarcada() {
+        return casillaMarcada;
+    }
+
 }
