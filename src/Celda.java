@@ -40,7 +40,7 @@ public class Celda {
         this.minasCercanas = cantidad;
     }
 
-     public int obtenerMinasCercanas() {
+    public int obtenerMinasCercanas() {
         return minasCercanas;
     }
 
@@ -55,5 +55,4 @@ public class Celda {
             return minasCercanas > 0 ? Integer.toString(minasCercanas) : "D";
         }
     }
-
 }
