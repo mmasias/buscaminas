@@ -11,7 +11,6 @@ public class Buscaminas {
     }
 
     public void jugar() {
-
         do {
             tablero.mostrar();
             jugador.jugar(tablero);
