@@ -50,3 +50,15 @@ class Tablero {
             }
         }
     }
+    private void colocarMinas() {
+        Random rand = new Random();
+        int colocadas = 0;
+        while (colocadas < minas) {
+            int f = rand.nextInt(filas);
+            int c = rand.nextInt(columnas);
+            if (!celdas[f][c].tieneMina) {
+                celdas[f][c].tieneMina = true;
+                colocadas++;
+            }
+        }
+    }
