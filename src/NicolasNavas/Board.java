@@ -103,5 +103,9 @@ public class Board {
             }
             return true;
         }
+
+        public boolean hasValidCoordinates(int row, int column) {
+            return row >= 1 && column <= NUMBER_OF_ROWS && column >= 1 && column <= NUMBER_OF_COLUMS; 
+        }
     }
 }
