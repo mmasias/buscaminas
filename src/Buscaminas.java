@@ -28,7 +28,7 @@ public class Buscaminas {
             int fila = scanner.nextInt();
             System.out.print(" Columna: ");
             int columna = scanner.nextInt();
-            scanner.nextLine(); // Limpiar buffer
+            scanner.nextLine(); 
 
             if (!coordenadaValida(fila, columna)) {
                 System.out.println(" Coordenadas inválidas. Intente de nuevo.");
