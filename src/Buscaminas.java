@@ -28,7 +28,7 @@ public class Buscaminas {
             int fila = scanner.nextInt();
             System.out.print(" Columna: ");
             int columna = scanner.nextInt();
-            scanner.nextLine(); 
+            scanner.nextLine(); // Limpiar buffer
 
             if (!coordenadaValida(fila, columna)) {
                 System.out.println(" Coordenadas inválidas. Intente de nuevo.");
@@ -38,31 +38,32 @@ public class Buscaminas {
             manejarAccionDeJuego(accion, fila - 1, columna - 1);
         }
 
-            scanner.close();
-        }
-    
-        private boolean coordenadaValida(int fila, int columna) {
-            return fila >= 1 && fila <= tablero.obtenerFilas() && columna >= 1 && columna <= tablero.obtenerColumnas();
-        }
-        
-        private void manejarAccionDeJuego(String accion, int fila, int columna) {
-            if (accion.equals("D")) {
-                if (!tablero.despejarCasilla(fila, columna)) {
-                    System.out.println(" ¡Pisaste una mina! Has perdido.");
-                    juegoTerminado = true;
-                } else {
-                    System.out.println("\nCoordenada despejada");
-                    if (tablero.jugadorGano()) {
-                        tablero.mostrarTablero();
-                        System.out.println(" ¡Felicidades! Has ganado.");
-                        juegoTerminado = true;
-                    }
-                }
-            } else if (accion.equals("M")) {
-                tablero.marcarCasilla(fila, columna);
-                System.out.println("\nCoordenada marcada");
+        scanner.close();
+    }
+
+    private boolean coordenadaValida(int fila, int columna) {
+        return fila >= 1 && fila <= tablero.obtenerFilas()
+            && columna >= 1 && columna <= tablero.obtenerColumnas();
+    }
+
+    private void manejarAccionDeJuego(String accion, int fila, int columna) {
+        if (accion.equals("D")) {
+            if (!tablero.despejarCasilla(fila, columna)) {
+                System.out.println(" ¡Pisaste una mina! Has perdido.");
+                juegoTerminado = true;
             } else {
-                System.out.println(" Acción inválida. Usa D o M.");
+                System.out.println("\nCoordenada despejada");
+                if (tablero.jugadorGano()) {
+                    tablero.mostrarTablero();
+                    System.out.println(" ¡Felicidades! Has ganado.");
+                    juegoTerminado = true;
+                }
+            }
+        } else if (accion.equals("M")) {
+            tablero.marcarCasilla(fila, columna);
+            System.out.println("\nCoordenada marcada");
+        } else {
+            System.out.println(" Acción inválida. Usa D o M.");
         }
     }
 }
