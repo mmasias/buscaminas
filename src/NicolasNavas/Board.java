@@ -31,4 +31,18 @@ public class Board {
         }
     }
 
+    private void placeMinesRandomly(){
+        Random generateRandom = new Random();
+        int placedMines = 0;
+
+        while (placedMines < NUMBER_OF_MINES) {
+            int randomRow = generateRandom.nextInt(NUMBER_OF_ROWS);
+            int randomColumn = generateRandom.nextInt(NUMBER_OF_COLUMS);
+
+            if (instanceBoard[randomRow][randomColumn] != MINE){
+                instanceBoard[randomRow][randomColumn] = MINE;
+                placedMines++;
+            }
+        }
+    }
 }
