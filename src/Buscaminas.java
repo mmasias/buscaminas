@@ -28,21 +28,21 @@ public class Buscaminas {
             int fila = scanner.nextInt();
             System.out.print(" Columna: ");
             int columna = scanner.nextInt();
-            scanner.nextLine(); // Limpiar buffer
+            scanner.nextLine(); 
 
             if (!coordenadaValida(fila, columna)) {
                 System.out.println(" Coordenadas inválidas. Intente de nuevo.");
                 continue;
             }
 
-            procesarAccion(accion, fila - 1, columna - 1);
+            manejarAccionDeJuego(accion, fila - 1, columna - 1);
         }
 
             scanner.close();
         }
     
         private boolean coordenadaValida(int fila, int columna) {
-            return fila >= 1 && fila <= tablero.getFilas() && columna >= 1 && columna <= tablero.getColumnas();
+            return fila >= 1 && fila <= tablero.obtenerFilas() && columna >= 1 && columna <= tablero.getColumnas();
         }
         
         private void manejarAccionDeJuego(String accion, int fila, int columna) {

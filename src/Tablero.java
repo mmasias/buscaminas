@@ -56,6 +56,10 @@ public boolean despejarCasilla(int fila,int columna){
 
 }
 
+public int obtenerFilas() {
+    return totalFilas;
+}
+
 public void marcarCasilla(int fila, int columna) {
         if (!tablero[fila][columna].casillaRevelada()) {
             tablero[fila][columna].alternarMarca();
