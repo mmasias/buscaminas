@@ -4,7 +4,7 @@ import java.util.Random;
 
 public class Tablero {
 
-    private Celda[][] celdas;
+    public Celda[][] celdas;
     private final int TAMANIO = 6;
     private final int MINAS = 6;
 
