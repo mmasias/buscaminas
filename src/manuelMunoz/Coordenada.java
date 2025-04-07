@@ -7,11 +7,11 @@ class Coordenada {
         this.coordenadaY = coordenadaY;
     }
 
-    public int CoordenadaX(){
+    public int coordenadaX(){
         return coordenadaX;
     }
 
-    public int CoordenadaY(){
+    public int coordenadaY(){
         return coordenadaY;
     }
 
