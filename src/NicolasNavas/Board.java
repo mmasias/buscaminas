@@ -14,7 +14,7 @@ public class Board {
     private final char MINE = '*';
     private final char CLEARED_CELL = '□';
 
-    private char instanceBoard;
+    private char[][] instanceBoard;
     private boolean hiddenCell = false;
 
     public Board() {
@@ -43,6 +43,30 @@ public class Board {
                 instanceBoard[randomRow][randomColumn] = MINE;
                 placedMines++;
             }
+        }
+    }
+
+    public void showBoard(){
+        System.out.println("   ");
+        for(int column = 1; column <= NUMBER_OF_COLUMS; column++){
+            System.out.print(column + " ");
+        }
+        System.out.println();
+
+        for (int row = 0; row < NUMBER_OF_ROWS; row++) {
+            System.err.println((row + 1) + "   ");
+            for (int column = 0; column < NUMBER_OF_COLUMS; column++){
+                char actualCell = instanceBoard[row][column];
+
+                if(actualCell == MINE && !hiddenCell){
+                    System.out.print(HIDDEN_CELL + " ");
+                } else if (actualCell == MINE && hiddenCell){
+                    System.out.print(MINE + " ");
+                } else {
+                    System.out.print(actualCell + " ");
+                }
+            }
+            System.err.println();
         }
     }
 }
