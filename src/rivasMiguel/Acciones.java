@@ -26,10 +26,6 @@ public class Acciones {
     }
 
     public void actualizarTablero(Tablero tablero, char accion, int fila, int columna) {
-        if (accion == 'D') {
-            tablero.tablero[fila][columna] = 'D';
-        } else if (accion == 'M') {
-            tablero.tablero[fila][columna] = 'M';
-        }
+        tablero.marcarCasilla(fila, columna, accion);
     }
 }

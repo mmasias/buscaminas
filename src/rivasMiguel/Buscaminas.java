@@ -7,8 +7,8 @@ public class Buscaminas {
     private Acciones acciones;
     private Scanner scanner;
 
-    public Buscaminas(int filas, int columnas, int cantidadMinas) {
-        this.tablero = new Tablero(filas, columnas, cantidadMinas);
+    public Buscaminas(int area, int cantidadMinas) {
+        this.tablero = new Tablero(area, cantidadMinas);
         this.acciones = new Acciones();
         this.scanner = new Scanner(System.in);
     }
@@ -18,7 +18,7 @@ public class Buscaminas {
 
         while (jugando) {
             tablero.mostrarTablero();
-            
+
             char accion = acciones.pedirAccion();
             int[] coordenadas = acciones.pedirCoordenadas();
             int fila = coordenadas[0];
@@ -28,9 +28,8 @@ public class Buscaminas {
 
             if (tablero.comprobarDerrota(fila, columna, accion)) {
                 tablero.hasPerdido();
-                jugando = false; 
-            } 
-            else if (tablero.comprobarVictoria(tablero.tablero.length - 1, tablero.tablero[0].length - 1, tablero.minas.length)) {
+                jugando = false;
+            } else if (tablero.comprobarVictoria(tablero.getCantidadMinas())) {
                 tablero.celebrarVictoria();
                 jugando = false;
             }

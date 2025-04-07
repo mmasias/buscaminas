@@ -1,24 +1,26 @@
 package rivasMiguel;
 
 public class Tablero {
-    char[][] tablero;
-    int[][] minas;
+    private char[][] tablero;
+    private int[][] minas;
+    private int area;
 
-    public Tablero(int filas, int columnas, int minas) {
-        this.tablero = generarTablero(filas, columnas);
-        this.minas = generarMinas(filas, columnas, minas);
+    public Tablero(int area, int cantidadMinas) {
+        this.area = area;
+        this.tablero = generarTablero(area);
+        this.minas = generarMinas(area, cantidadMinas);
     }
 
-    private char[][] generarTablero(int filas, int columnas) {
-        char[][] matriz = new char[filas + 1][columnas + 1];
+    private char[][] generarTablero(int area) {
+        char[][] matriz = new char[area + 1][area + 1];
 
-        for (int j = 1; j <= columnas; j++) {
+        for (int j = 1; j <= area; j++) {
             matriz[0][j] = (char) ('0' + j);
         }
 
-        for (int i = 1; i <= filas; i++) {
+        for (int i = 1; i <= area; i++) {
             matriz[i][0] = (char) ('0' + i);
-            for (int j = 1; j <= columnas; j++) {
+            for (int j = 1; j <= area; j++) {
                 matriz[i][j] = '_';
             }
         }
@@ -35,8 +37,8 @@ public class Tablero {
         return true;
     }
 
-    private int[][] generarMinas(int filas, int columnas, int cantidad) {
-        if (cantidad > filas * columnas) {
+    private int[][] generarMinas(int area, int cantidad) {
+        if (cantidad > area * area) {
             return new int[0][0];
         }
 
@@ -44,8 +46,8 @@ public class Tablero {
         int count = 0;
 
         while (count < cantidad) {
-            int x = (int) (Math.random() * filas) + 1;
-            int y = (int) (Math.random() * columnas) + 1;
+            int x = (int) (Math.random() * area) + 1;
+            int y = (int) (Math.random() * area) + 1;
 
             if (casillaDisponible(minas, x, y, count)) {
                 minas[count][0] = x;
@@ -66,7 +68,7 @@ public class Tablero {
     }
 
     public boolean comprobarDerrota(int fila, int columna, char accion) {
-        if (accion == 'M') { 
+        if (accion == 'M') {
             return false;
         }
 
@@ -78,7 +80,6 @@ public class Tablero {
         return false;
     }
 
-
     public void hasPerdido() {
         for (int[] m : minas) {
             tablero[m[0]][m[1]] = '*';
@@ -89,12 +90,12 @@ public class Tablero {
         System.out.println("\n💥 ¡Mina! ¡Has perdido! 💥");
     }
 
-    public boolean comprobarVictoria(int filas, int columnas, int minas) {
+    public boolean comprobarVictoria(int cantidadMinas) {
         int totalDespejadas = 0;
-        int objetivo = (filas * columnas) - minas;
+        int objetivo = (area * area) - cantidadMinas;
 
-        for (int i = 1; i <= filas; i++) {
-            for (int j = 1; j <= columnas; j++) {
+        for (int i = 1; i <= area; i++) {
+            for (int j = 1; j <= area; j++) {
                 if (tablero[i][j] == 'D') {
                     totalDespejadas++;
                 }
@@ -107,5 +108,19 @@ public class Tablero {
     public void celebrarVictoria() {
         System.out.println("\n🎉 ¡Has ganado! 🎉");
         mostrarTablero();
+    }
+
+    public void marcarCasilla(int fila, int columna, char accion) {
+        if (accion == 'D' || accion == 'M') {
+            tablero[fila][columna] = accion;
+        }
+    }
+
+    public int getArea() {
+        return area;
+    }
+
+    public int getCantidadMinas() {
+        return minas.length;
     }
 }
