@@ -28,10 +28,6 @@ public class Tablero {
         return (ficha <= VACIO) ? '_' : fichas[ficha-1];
     }
 
-    public boolean estaOcupado(Coordenada coordenada) {
-        return tabla[coordenada.y()][coordenada.x()] != VACIO;
-    }
-
     public void ponerFicha(Coordenada coordenada, int ficha) {
         tabla[coordenada.y()][coordenada.x()] = ficha;
     }
@@ -45,7 +41,7 @@ public class Tablero {
     public boolean despejado() {
         for (int i = 0; i < tabla.length; i++) {
             for (int num : tabla[i]) {
-                if (num <= VACIO) return false;
+                if (num <= 1 || num%3 == 0) return false;
             }
         }
         return true;

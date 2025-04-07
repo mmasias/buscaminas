@@ -3,8 +3,8 @@ package delaasuncionJose.src;
 public class Buscaminas {
     private Tablero tablero;
     private Jugador jugador;
-    private char[] fichas = { 'D', 'M'};
-    private final int MINA = -1;
+    private char[] fichas = { '_', 'D' , 'M', 'M', 'D'};
+    private final int MINA = 1;
 
     public Buscaminas() {
         tablero = new Tablero(crearTableroMinas(6,6), fichas);
@@ -26,7 +26,7 @@ public class Buscaminas {
                 x = (int) (Math.random() * tablero.length);
                 y = (int) (Math.random() * tablero.length);
             } while (tablero[y][x] == MINA);
-            tablero[y][x] = -1;
+            tablero[y][x] = MINA;
         }
         return tablero;
     }
