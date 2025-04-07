@@ -1,5 +1,5 @@
 class Tablero{
-    private final int DIMENSION = 6;
+    private static final int DIMENSION = 6;
     private final char ESPACIO_EN_BALNCO = '_';
     private char[][] tablero;
 
@@ -11,6 +11,10 @@ class Tablero{
                 tablero[i][j] = ESPACIO_EN_BALNCO;
             }
         }
+    }
+
+    public Tablero(){
+        this(DIMENSION);
     }
 
     public void mostrarTablero(){
