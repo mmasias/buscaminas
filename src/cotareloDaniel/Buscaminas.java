@@ -45,8 +45,14 @@ public class Buscaminas {
                         juegoTerminado = true;
                     }
                 }
+            } else if (accion == 'M' || accion == 'm') {
+                tablero.marcar(fila, columna);
+                System.out.println("Coordenada marcada");
+                System.out.println();
+            } else {
+                System.out.println("Acción no válida. Intente de nuevo.");
+                System.out.println();
             }
-
         }
         entrada.close();
     }
