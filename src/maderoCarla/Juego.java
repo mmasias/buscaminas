@@ -1,8 +1,8 @@
 package maderoCarla;
 
-public class Juego{
-    public static void main(String[] args){
+public class Juego {
+    public static void main(String[] args) {
         Buscaminas buscaminas = new Buscaminas();
-        buscaminas.iniciar();
+        buscaminas.jugar();
     }
 }
