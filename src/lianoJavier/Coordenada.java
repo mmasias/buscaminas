@@ -28,12 +28,12 @@ public class Coordenada {
         }
 
         private int preguntarColumna() {
-                System.out.println("Elige una columna: ("+tablero.getExtremosColumna()[0]+"-"+tablero.getExtremosColumna()[1]+")");
+                System.out.println("Elige una columna: (0-"+(tablero.getDimensionesColumna()-1)+")");
                 return scanner.nextInt();
         }
 
         private int preguntarFila() {
-                System.out.println("Elige una fila: ("+tablero.getExtremosFila()[0]+"-"+tablero.getExtremosFila()[1]+")");
+                System.out.println("Elige una fila: (0-"+(tablero.getDimensionesFila()-1)+")");
                 return scanner.nextInt();
         }
 

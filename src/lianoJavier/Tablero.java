@@ -72,12 +72,12 @@ public class Tablero {
                 return true;
         }
 
-        public String[] getExtremosColumna() {
-                return new String[]{"0", String.valueOf(dimensiones - 1)};
+        public int getDimensionesColumna() {
+                return dimensiones;
         }
 
-        public String[] getExtremosFila() {
-                return new String[]{"0", String.valueOf(dimensiones - 1)};
+        public int getDimensionesFila() {
+                return dimensiones;
         }
 
         public void seleccionarCasilla(Coordenada coordenada) {
