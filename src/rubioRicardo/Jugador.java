@@ -3,12 +3,11 @@ package rubioRicardo;
 import java.util.Scanner;
 
 public class Jugador {
-    private boolean estavivo;
+    private boolean estaVivo;
 
     public Jugador() {
-        estavivo = true;
+        estaVivo = true;
     }
-
 
     public void jugar(Tablero tablero) {
         Scanner scanner = new Scanner(System.in);
@@ -22,18 +21,25 @@ public class Jugador {
         System.out.print("Ingresa columna: ");
         int columna = scanner.nextInt();
 
+        if (!tablero.esCoordenadaValida(fila, columna)) {
+            System.out.println("Coordenadas fuera de rango. Intenta de nuevo.");
+            return;
+        }
+
         if (seleccion.equals("M")) {
-            tablero.marcar(fila, columna);
+            tablero.marcarConBandera(fila, columna);
         } else if (seleccion.equals("D")) {
-            boolean resultado = tablero.despejar(fila, columna);
+            boolean resultado = tablero.despejarCasilla(fila, columna);
             if (!resultado) {
-                estavivo = false;
-                System.out.println("Pisaste una mina. Fin del juego.");
-            } 
-        } 
+                estaVivo = false;
+                System.out.println("¡BOOM! Pisaste una mina. Fin del juego.");
+            }
+        } else {
+            System.out.println("Opción inválida.");
+        }
     }
 
-    public boolean vivo() {
-        return estavivo;
+    public boolean estaVivo() {
+        return estaVivo;
     }
 }
