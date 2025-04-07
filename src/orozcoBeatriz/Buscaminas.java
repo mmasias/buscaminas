@@ -21,10 +21,11 @@ public class Buscaminas {
         while (!juegoTerminado) {
             imprimirTablero(false);
             String opcion = "";
+
             while (!opcion.equals("D") && !opcion.equals("M")) {
                 System.out.print("[D]espejar o [M]arcar mina?: ");
                 opcion = scanner.nextLine();
-            
+
                 if (!opcion.equals("D") && !opcion.equals("M")) {
                     System.out.println("Opción no válida. Escribe solo D o M en mayúscula.");
                 }
@@ -44,6 +45,10 @@ public class Buscaminas {
                         juegoTerminado = true;
                     } else {
                         tablero[fila][col].estaDescubierta = true;
+
+                        int minasCerca = contarMinasVecinas(fila, col);
+                        System.out.println("Has despejado la casilla (" + (fila + 1) + ", " + (col + 1) + "). Hay " + minasCerca + " mina(s) cerca.");
+
                         if (verificarVictoria()) {
                             imprimirTablero(true);
                             System.out.println("¡Enhorabuena! ¡Has ganado!");
@@ -115,5 +120,17 @@ public class Buscaminas {
 
     private boolean coordenadaValida(int fila, int col) {
         return fila >= 0 && fila < TAM && col >= 0 && col < TAM;
+    }
+
+    private int contarMinasVecinas(int fila, int col) {
+        int minas = 0;
+        for (int i = fila - 1; i <= fila + 1; i++) {
+            for (int j = col - 1; j <= col + 1; j++) {
+                if (coordenadaValida(i, j) && !(i == fila && j == col) && tablero[i][j].tieneMina) {
+                    minas++;
+                }
+            }
+        }
+        return minas;
     }
 }
