@@ -22,8 +22,8 @@ public class Tablero {
         int columnas = dimensiones[1];
         char[][] matriz = new char[filas][columnas];
 
-        for (int i = 0; i < filas; i++){
-            for (int j = 0; j < columnas; j++){
+        for (int i = 0; i < filas; i++) {
+            for (int j = 0; j < columnas; j++) {
                 matriz[i][j] = '_';
             }
         }
@@ -46,7 +46,6 @@ public class Tablero {
             }
         }
     }
-    
 
     public int[] dimensiones() {
         return dimensiones;
@@ -61,7 +60,7 @@ public class Tablero {
         int columnas = dimensiones[1];
 
         System.out.print("   ");
-        for (int col = 1; col <= columnas; col++){
+        for (int col = 1; col <= columnas; col++) {
             System.out.print(col + " ");
         }
         System.out.println();
@@ -73,52 +72,68 @@ public class Tablero {
             }
             System.out.println();
         }
-
     }
 
     public void actualizarTablero(char opcion, int[] coordenadas) {
         int fila = coordenadas[0] - 1;
         int columna = coordenadas[1] - 1;
-    
+
         if (fila < 0 || fila >= dimensiones[0] || columna < 0 || columna >= dimensiones[1]) {
             System.out.println("Coordenadas fuera de rango. Intenta de nuevo.");
             return;
         }
-    
+
         if (opcion == 'D') {
-            if (tablero[fila][columna] != '_') {
-                System.out.println("Esta celda ya está marcada o descubierta.");
-                return;
-            }
-    
-            if (minas[fila][columna]) {
-                tablero[fila][columna] = '*'; 
-                System.out.println("¡Has descubierto una mina!");
-                mostrarTablero();
+            if (!celdaOcupada(fila, columna)) {
+                if (minas[fila][columna]) {
+                    explotar(fila, columna);
+                } else {
+                    descubrir(fila, columna);
+                }
             } else {
-                int minasCercanas = contarMinasCercanas(fila, columna);
-                tablero[fila][columna] = (char) ('0' + minasCercanas);
+                ocupado(fila, columna);
             }
-    
         } else if (opcion == 'M') {
             if (tablero[fila][columna] == '_') {
-                tablero[fila][columna] = 'M';
+                marcar(fila, columna);
             } else {
-                System.out.println("Esta celda ya está marcada o descubierta.");
+                ocupado(fila, columna);
             }
-    
         } else if (opcion == 'R') {
             if (tablero[fila][columna] == 'M') {
                 tablero[fila][columna] = '_';
             } else {
                 System.out.println("No hay marca en esta celda para retirar.");
             }
-    
         } else {
             System.out.println("Opción no válida. Usa 'D' para descubrir, 'M' para marcar o 'R' para retirar marca.");
         }
     }
-    
+
+    public void marcar(int fila, int columna) {
+        tablero[fila][columna] = 'M';
+    }
+
+    public void descubrir(int fila, int columna) {
+        int minasCercanas = contarMinasCercanas(fila, columna);
+        tablero[fila][columna] = (char) ('0' + minasCercanas);
+    }
+
+    public void explotar(int fila, int columna) {
+        tablero[fila][columna] = '*';
+        System.out.println("¡Has descubierto una mina!");
+        mostrarTablero();
+    }
+
+    public void ocupado(int fila, int columna) {
+        if (celdaOcupada(fila, columna)) {
+            System.out.println("Esta celda ya está marcada o descubierta.");
+        }
+    }
+
+    private boolean celdaOcupada(int fila, int columna) {
+        return tablero[fila][columna] != '_';
+    }
 
     private int contarMinasCercanas(int fila, int columna) {
         int minasCercanas = 0;
@@ -160,5 +175,4 @@ public class Tablero {
 
         return tablero[fila][columna];
     }
-    
 }
