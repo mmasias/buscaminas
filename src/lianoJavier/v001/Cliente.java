@@ -1,4 +1,4 @@
-package lianoJavier;
+package lianoJavier.v001;
 
 public class Cliente {
     public static void main(String[] args) {

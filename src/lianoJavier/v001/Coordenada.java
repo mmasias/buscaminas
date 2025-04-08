@@ -1,4 +1,4 @@
-package lianoJavier;
+package lianoJavier.v001;
 
 import java.util.Scanner;
 

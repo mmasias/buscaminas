@@ -1,4 +1,4 @@
-package lianoJavier;
+package lianoJavier.v001;
 
 public class Buscaminas {
     private Tablero tablero;
