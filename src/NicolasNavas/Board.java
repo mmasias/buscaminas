@@ -1,18 +1,17 @@
 package nicolasNavas;
 
 import java.util.Random;
-import javax.swing.text.Position;
 
 public class Board {
-    
+
     private final int NUMBER_OF_ROWS = 6;
     private final int NUMBER_OF_COLUMS = 6;
     private final int NUMBER_OF_MINES = 6;
 
     private final char HIDDEN_CELL = '■';
-    private final char FLAG = '⚐';
+    private final char FLAG = 'P';
     private final char MINE = '*';
-    private final char CLEARED_CELL = '□';
+    private final char CLEARED_CELL = '0';
 
     private char[][] board;
     private boolean hiddenCell = false;
@@ -23,15 +22,15 @@ public class Board {
         placeMinesRandomly();
     }
 
-    private void initializeBoard(){
-        for (int row = 0; row < NUMBER_OF_ROWS; row++){
-            for (int column = 0; column < NUMBER_OF_COLUMS; column++){
+    private void initializeBoard() {
+        for (int row = 0; row < NUMBER_OF_ROWS; row++) {
+            for (int column = 0; column < NUMBER_OF_COLUMS; column++) {
                 board[row][column] = HIDDEN_CELL;
             }
         }
     }
 
-    private void placeMinesRandomly(){
+    private void placeMinesRandomly() {
         Random generateRandom = new Random();
         int placedMines = 0;
 
@@ -39,73 +38,71 @@ public class Board {
             int randomRow = generateRandom.nextInt(NUMBER_OF_ROWS);
             int randomColumn = generateRandom.nextInt(NUMBER_OF_COLUMS);
 
-            if (board[randomRow][randomColumn] != MINE){
+            if (board[randomRow][randomColumn] != MINE) {
                 board[randomRow][randomColumn] = MINE;
                 placedMines++;
             }
         }
     }
 
-    public void showBoard(){
-        System.out.println("   ");
-        for(int column = 1; column <= NUMBER_OF_COLUMS; column++){
-            System.out.print(column + " ");
+    public void showBoard() {
+        System.out.println();
+        for (int column = 1; column <= NUMBER_OF_COLUMS; column++) {
+            System.out.print(" " + column);
         }
         System.out.println();
 
         for (int row = 0; row < NUMBER_OF_ROWS; row++) {
-            System.err.println((row + 1) + "   ");
-            for (int column = 0; column < NUMBER_OF_COLUMS; column++){
+            System.out.print((row + 1) + "  ");
+            for (int column = 0; column < NUMBER_OF_COLUMS; column++) {
                 char actualCell = board[row][column];
 
-                if(actualCell == MINE && !hiddenCell){
+                if (actualCell == MINE && !hiddenCell) {
                     System.out.print(HIDDEN_CELL + " ");
-                } else if (actualCell == MINE && hiddenCell){
+                } else if (actualCell == MINE && hiddenCell) {
                     System.out.print(MINE + " ");
                 } else {
                     System.out.print(actualCell + " ");
                 }
             }
-            System.err.println();
+            System.out.println();
+        }
+    }
+
+    public boolean clearCell(int row, int column) {
+        if (board[row - 1][column - 1] == MINE) {
+            hiddenCell = true;
+            return false;
         }
 
-        public boolean clearCell(int row, int column) {
-            if(board[row - 1][column - 1] == MINE){
-                hiddenCell = true;
-                return false;
-            }
-
-            if(board[row - 1][column - 1] == HIDDEN_CELL){
-                board[row - 1][column - 1] = CLEARED_CELL;
-            }
-
-            return true;
+        if (board[row - 1][column - 1] == HIDDEN_CELL) {
+            board[row - 1][column - 1] = CLEARED_CELL;
         }
 
-        public void markFlag(int row, int column){
-            if(board[row - 1][column - 1] == HIDDEN_CELL){
-                board[row - 1][column - 1] = FLAG;
-            } else if (board[row - 1] [column - 1] == FLAG){
-                board[row - 1][column - 1] = HIDDEN_CELL;
-            }
-        }
+        return true;
+    }
 
-        public boolean isComplete(){
-            for(int row = 0; row < NUMBER_OF_ROWS; row++){
-                for(int column = 0; column < NUMBER_OF_COLUMS; column++){
-                    char cell = board[row][column];
-                    if (cell == HIDDEN_CELL || cell == FLAG){
-                        if(cell != MINE){
-                            return false;
-                        }
-                    }
+    public void markFlag(int row, int column) {
+        if (board[row - 1][column - 1] == HIDDEN_CELL) {
+            board[row - 1][column - 1] = FLAG;
+        } else if (board[row - 1][column - 1] == FLAG) {
+            board[row - 1][column - 1] = HIDDEN_CELL;
+        }
+    }
+
+    public boolean isComplete() {
+        for (int row = 0; row < NUMBER_OF_ROWS; row++) {
+            for (int column = 0; column < NUMBER_OF_COLUMS; column++) {
+                char cell = board[row][column];
+                if ((cell == HIDDEN_CELL || cell == FLAG) && cell != MINE) {
+                    return false;
                 }
             }
-            return true;
         }
+        return true;
+    }
 
-        public boolean hasValidCoordinates(int row, int column) {
-            return row >= 1 && column <= NUMBER_OF_ROWS && column >= 1 && column <= NUMBER_OF_COLUMS; 
-        }
+    public boolean hasValidCoordinates(int row, int column) {
+        return row >= 1 && row <= NUMBER_OF_ROWS && column >= 1 && column <= NUMBER_OF_COLUMS;
     }
 }
