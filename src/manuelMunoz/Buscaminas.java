@@ -1,3 +1,4 @@
+package manuelMunoz;
 public class Buscaminas {
     private static final int CANTIDAD_DE_MINAS = 6;
     private final int cantidadMinas;
@@ -12,17 +13,17 @@ public class Buscaminas {
         this(CANTIDAD_DE_MINAS);
     }
 
-    public void revisarEspacio(Coordenada coordenada, char[][] tablero, String accion){
+    public void revisarEspacio(Coordenada coordenada, String[][] tablero, String accion){
         if (accion.equals("D")) {
-            tablero[coordenada.coordenadaX()][coordenada.coordenadaY()] = 'D';
+            tablero[coordenada.coordenadaX()][coordenada.coordenadaY()] = "D";
         } else if (accion.equals("M")) {
-            tablero[coordenada.coordenadaX()][coordenada.coordenadaY()] = 'M';
+            tablero[coordenada.coordenadaX()][coordenada.coordenadaY()] = "M";
         }   
     }
 
-    public boolean finDePartida(char[][] tablero){
+    public boolean finDePartida(String[][] tablero){
         for (Coordenada mina : posicionMinas) {
-            if (tablero[mina.coordenadaX()][mina.coordenadaY()] == 'D') {
+            if (tablero[mina.coordenadaX()][mina.coordenadaY()] == "D") {
                 return true;
             }
         }

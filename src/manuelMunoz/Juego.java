@@ -13,16 +13,16 @@ public class Juego {
         while (!terminado) {
             tablero.mostrarTablero();
 
-            System.out.print("Ingresa coordenada X (0 a " + (tablero.dimension() - 1) + "): ");
-            int x = scanner.nextInt();
+            System.out.print("Ingresa coordenada X (1 a " + tablero.dimension()  + "): ");
+            int coordenadaX = scanner.nextInt() - 1;
 
-            System.out.print("Ingresa coordenada Y (0 a " + (tablero.dimension() - 1) + "): ");
-            int y = scanner.nextInt();
+            System.out.print("Ingresa coordenada Y (1 a " + tablero.dimension() + "): ");
+            int coordenadaY = scanner.nextInt() - 1;
 
             System.out.print("Acción (D = destapar, M = marcar): ");
             String accion = scanner.next().toUpperCase();
 
-            Coordenada seleccion = new Coordenada(x, y);
+            Coordenada seleccion = new Coordenada(coordenadaX, coordenadaY);
             buscaminas.revisarEspacio(seleccion, tablero.tablero(), accion);
 
             if (buscaminas.finDePartida(tablero.tablero())) {

@@ -1,3 +1,4 @@
+package manuelMunoz;
 class Coordenada {
     private int coordenadaX;
     private int coordenadaY;

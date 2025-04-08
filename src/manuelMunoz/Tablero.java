@@ -1,15 +1,16 @@
+package manuelMunoz;
 class Tablero{
     private static final int DIMENSION = 6;
-    private final char ESPACIO_EN_BALNCO = '_';
+    private final String ESPACIO_EN_BALNCO = "_";
     private final int dimension;
-    private char[][] tablero;
+    private String[][] tablero;
 
     public Tablero(int dimension){
         this.dimension = dimension;
-        tablero = new char[this.dimension][this.dimension];
+        tablero = new String[this.dimension][this.dimension];
 
-        for (int i = 0; i <= this.dimension; i++) {
-            for (int j = 0; j <= this.dimension; j++) {
+        for (int i = 0; i < this.dimension; i++) {
+            for (int j = 0; j < this.dimension; j++) {
                 tablero[i][j] = ESPACIO_EN_BALNCO;
             }
         }
@@ -20,10 +21,11 @@ class Tablero{
     }
 
     public void mostrarTablero(){
-        for (char[] fila : tablero) {
-            for (char columna : fila) {
-                System.out.println(columna);
+        for (int i = 0; i < tablero.length; i++) {
+            for(int j = 0; j < tablero[i].length; j++){
+                System.out.print(tablero[i][j]);
             }
+            System.out.println();
         }
     }
 
@@ -39,7 +41,7 @@ class Tablero{
         return dimension * dimension;
     }
 
-    public char[][] tablero() {
+    public String[][] tablero() {
         return tablero;
     }
 
