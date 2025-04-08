@@ -1,18 +1,18 @@
 package nicolasNavas;
 
 public class Minesweeper {
-    private Board instanceBoard;
-    private Player instancePlayer;
+    private Board board;
+    private Player player;
 
     public Minesweeper(){
-        instanceBoard = new Board();
-        instancePlayer = new Player();
+        board = new Board();
+        player = new Player();
     }
 
     public void play(){
         do {
-            instanceBoard.showBoard();
-            instancePlayer.play(instanceBoard);
-        }while(!instanceBoard.isComplete() && instancePlayer.isAlive());
+            board.showBoard();
+            player.play(board);
+        }while(!board.isComplete() && player.isAlive());
     }
 }
