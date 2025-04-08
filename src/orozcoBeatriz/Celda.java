@@ -10,4 +10,8 @@ class Celda {
         this.estaDescubierta = false;
         this.estaMarcada = false;
     }
+    
+    public tieneMina() {
+        return tieneMina;
+    }
 }
