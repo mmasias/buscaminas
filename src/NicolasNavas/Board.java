@@ -9,8 +9,8 @@ public class Board {
     private final int NUMBER_OF_COLUMS = 6;
     private final int NUMBER_OF_MINES = 6;
 
-    private final char HIDDEN_CELL = "■";
-    private final char FLAG = "⚐";
+    private final char HIDDEN_CELL = '■';
+    private final char FLAG = '⚐';
     private final char MINE = '*';
     private final char CLEARED_CELL = '□';
 
