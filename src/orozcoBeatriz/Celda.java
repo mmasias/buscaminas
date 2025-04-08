@@ -1,11 +1,11 @@
 package orozcoBeatriz;
 
 class Celda {
-    boolean tieneMina;
-    boolean estaDescubierta;
-    boolean estaMarcada;
+    private boolean tieneMina;
+    private boolean estaDescubierta;
+    private boolean estaMarcada;
 
-    public Celda() {
+    Celda() {
         this.tieneMina = false;
         this.estaDescubierta = false;
         this.estaMarcada = false;
