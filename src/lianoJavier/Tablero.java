@@ -75,7 +75,20 @@ public class Tablero {
         }
 
         public void despejarCasilla(Coordenada coordenada) {
-                matrizDescubiertos[coordenada.getFila()][coordenada.getColumna()] = 1;
+                int fila = coordenada.getFila();
+                int columna = coordenada.getColumna();
+                
+                if (matrizBombas[fila][columna] != 1) {
+                        for (int f = Math.max(0, fila-1); f <= Math.min(dimensiones[0]-1, fila+1); f++) {
+                                for (int c = Math.max(0, columna-1); c <= Math.min(dimensiones[1]-1, columna+1); c++) {
+                                        if (matrizMarcas[f][c] != 1 && matrizBombas[f][c] != 1) {
+                                                matrizDescubiertos[f][c] = 1;
+                                        }
+                                }
+                        }
+                } else {
+                        matrizDescubiertos[fila][columna] = 1;
+                }
         }
 
         public void mostar() {
