@@ -4,7 +4,11 @@ import java.util.Scanner;
 
 public class Jugador {
 
-    private boolean vivo = true;
+    private boolean vivo;
+
+    public Jugador(){
+        vivo = true;
+    }
 
     public void jugar(Tablero tablero) {
         Scanner scanner = new Scanner(System.in);
