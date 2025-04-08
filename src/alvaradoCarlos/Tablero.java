@@ -101,7 +101,7 @@ public class Tablero {
             }
         } else if (opcion == 'R') {
             if (tablero[fila][columna] == 'M') {
-                tablero[fila][columna] = '_';
+                desmarcar(fila, columna);
             } else {
                 System.out.println("No hay marca en esta celda para retirar.");
             }
@@ -112,6 +112,10 @@ public class Tablero {
 
     public void marcar(int fila, int columna) {
         tablero[fila][columna] = 'M';
+    }
+
+    public void desmarcar(int fila, int columna) {
+        tablero[fila][columna] = '_';
     }
 
     public void descubrir(int fila, int columna) {
