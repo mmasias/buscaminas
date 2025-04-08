@@ -13,7 +13,7 @@ public class Buscaminas {
         }
 
         tablero.imprimirMapaVisible();
-        if (tablero.jugadorPerdio()) {
+        if (tablero.jugadorHaPerdido()) {
             System.out.println("Has pisado una mina");
         } else {
             System.out.println("Has ganado la partida");

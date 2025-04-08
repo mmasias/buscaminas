@@ -1,27 +1,45 @@
 
 package martinezDiego;
 
-
 import java.util.Scanner;
 
 public class Jugador {
     private Scanner scanner = new Scanner(System.in);
 
     public void jugarTurno(Tablero tablero) {
-        System.out.println("¿Qué deseas hacer? (1 -> Marcar casilla, 2 -> Poner bandera):");
-        int opcion = scanner.nextInt();
+        System.out.println("¿Qué deseas hacer? (1 -> Marcar casilla, 2 -> Poner bandera, 3 -> Despejar casillas):");
 
-        System.out.println("fila:");
-        int fila = scanner.nextInt();
-        System.out.println("columna:");
-        int columna = scanner.nextInt();
+        int eleccion = scanner.nextInt();
+        int fila, columna = 0;
 
-        if (opcion == 1) {
-            tablero.revelarCasilla(fila, columna);
-        } else if (opcion == 2) {
-            tablero.colocarBandera(fila, columna);
-        } else {
-            System.out.println("Opción inválida.");
+        switch (eleccion) {
+            case 1:
+                System.out.println("fila:");
+                fila = scanner.nextInt();
+                System.out.println("columna:");
+                columna = scanner.nextInt();
+                tablero.marcarCasilla(fila, columna);
+                break;
+
+            case 2:
+                System.out.println("fila:");
+                fila = scanner.nextInt();
+                System.out.println("columna:");
+                columna = scanner.nextInt();
+                tablero.colocarBandera(fila, columna);
+                break;
+
+            case 3:
+                System.out.println("fila:");
+                fila = scanner.nextInt();
+                System.out.println("columna:");
+                columna = scanner.nextInt();
+                tablero.enseñarCasillas(fila, columna);
+                break;
+
+            default:
+                break;
         }
-    }  
+
+    }
 }

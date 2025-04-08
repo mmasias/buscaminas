@@ -2,7 +2,7 @@ package martinezDiego;
 
 public class Tablero {
     private String[][] mapaReal = new String[10][10];
-    private String[][] mapaVisible = new String[10][10];
+    private String[][] mapaUsuario = new String[10][10];
     private boolean partidaPerdida = false;
 
     public Tablero() {
@@ -11,19 +11,19 @@ public class Tablero {
         generarNumeros();
     }
 
+    
     private void inicializarMapas() {
         for (int i = 0; i < mapaReal.length; i++) {
             for (int j = 0; j < mapaReal[i].length; j++) {
-                mapaReal[i][j] = " ";
-                mapaVisible[i][j] = "#";
+                
             }
         }
     }
 
     public void imprimirMapaVisible() {
-        for (int i = 0; i < mapaVisible.length; i++) {
-            for (int j = 0; j < mapaVisible[i].length; j++) {
-                System.out.print(mapaVisible[i][j] + " ");
+        for (int i = 0; i < mapaUsuario.length; i++) {
+            for (int j = 0; j < mapaUsuario[i].length; j++) {
+                System.out.print(mapaUsuario[i][j] + " ");
             }
             System.out.println();
         }
@@ -44,7 +44,8 @@ public class Tablero {
     private void generarNumeros() {
         for (int i = 0; i < mapaReal.length; i++) {
             for (int j = 0; j < mapaReal[i].length; j++) {
-                if (mapaReal[i][j].equals("M")) continue;
+                if (mapaReal[i][j].equals("M"))
+                    continue;
 
                 int minasCerca = 0;
                 for (int x = -1; x <= 1; x++) {
@@ -55,30 +56,58 @@ public class Tablero {
                         }
                     }
                 }
-                if (minasCerca > 0) mapaReal[i][j] = String.valueOf(minasCerca);
+                if (minasCerca > 0)
+                    mapaReal[i][j] = String.valueOf(minasCerca);
             }
         }
     }
 
-    public void revelarCasilla(int fila, int columna) {
+    public void marcarCasilla(int fila, int columna) {
         if (mapaReal[fila][columna].equals("M")) {
-            mapaVisible[fila][columna] = "M";
+            mapaUsuario[fila][columna] = "M";
             partidaPerdida = true;
         } else {
-            mapaVisible[fila][columna] = mapaReal[fila][columna];
+            mapaUsuario[fila][columna] = mapaReal[fila][columna];
+        }
+    }
+
+    public boolean comprobarLimites(int fila, int columna) {
+        if (fila >= 0 && fila < mapaReal.length && columna >= 0 && columna < mapaReal[fila].length) {
+            mapaUsuario[fila][columna] = mapaReal[fila][columna];
+        }
+        return true;
+    }
+
+    public void enseñarCasillas(int fila, int columna) {
+
+        int[][] direcciones = {
+                { -1, -1 }, { -1, 0 }, { -1, 1 },
+                { 0, -1 }, { 0, 0 }, { 0, 1 },
+                { 1, -1 }, { 1, 0 }, { 1, 1 }
+        };
+
+        for (int[] direccion : direcciones) {
+
+            int nuevaFila = fila + direccion[0];
+            int nuevaColumna = columna + direccion[1];
+
+            if (comprobarLimites(nuevaFila, nuevaColumna)) {
+                mapaUsuario[nuevaFila][nuevaColumna] = mapaReal[nuevaFila][nuevaColumna];
+            }
         }
     }
 
     public void colocarBandera(int fila, int columna) {
-        mapaVisible[fila][columna] = "7";
+        mapaUsuario[fila][columna] = "B";
     }
 
     public boolean partidaTerminada() {
-        if (partidaPerdida) return true;
+        if (partidaPerdida)
+            return true;
 
-        for (int i = 0; i < mapaVisible.length; i++) {
-            for (int j = 0; j < mapaVisible[i].length; j++) {
-                if (mapaVisible[i][j].equals("#") && !mapaReal[i][j].equals("M")) {
+        for (int i = 0; i < mapaUsuario.length; i++) {
+            for (int j = 0; j < mapaUsuario[i].length; j++) {
+                if (mapaUsuario[i][j].equals("#") && !mapaReal[i][j].equals("M")) {
                     return false;
                 }
             }
@@ -86,7 +115,7 @@ public class Tablero {
         return true;
     }
 
-    public boolean jugadorPerdio() {
+    public boolean jugadorHaPerdido() {
         return partidaPerdida;
     }
 }

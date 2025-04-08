@@ -15,13 +15,17 @@ class Tablero {
   - mapaReal: String[][]
   - mapaVisible: String[][]
   - partidaPerdida: boolean
+  + Tablero()
   + inicializarMapas(): void
+  + inicializarMapaVidible(): void
   + generarMinas(): void
   + generarNumeros(): void
-  + revelarCasilla(fila: int, columna: int): void
+  + marcarCasilla(fila: int, columna: int): void
   + colocarBandera(fila: int, columna: int): void
+  + comprobarLimites(fila: int, columna: int): boolean
+  + enseñarCasillas(fila: int, columna: int): void
   + partidaTerminada(): boolean
-  + jugadorPerdio(): boolean
+  + jugadorHaPerdido(): boolean
 }
 
 class Jugador {
