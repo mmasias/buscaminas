@@ -79,7 +79,6 @@ public class Tablero {
                 int columna = coordenada.getColumna();
                 
                 if (matrizBombas[fila][columna] != 1) {
-                        // Macrodespeje - despejar celdas circundantes
                         for (int f = Math.max(0, fila-1); f <= Math.min(dimensiones[0]-1, fila+1); f++) {
                                 for (int c = Math.max(0, columna-1); c <= Math.min(dimensiones[1]-1, columna+1); c++) {
                                         if (matrizMarcas[f][c] != 1 && matrizBombas[f][c] != 1) {
