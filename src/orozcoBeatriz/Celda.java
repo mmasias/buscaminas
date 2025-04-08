@@ -11,7 +11,27 @@ class Celda {
         this.estaMarcada = false;
     }
     
-    public tieneMina() {
+    public boolean tieneMina() {
         return tieneMina;
+    }
+
+    public boolean estaDescubierta() {
+        return estaDescubierta;
+    }
+
+    public boolean estaMarcada() {
+        return estaMarcada;
+    }
+
+    public void tieneMina(boolean tieneMina) {
+        this.tieneMina = tieneMina;
+    }
+
+    public void estaMarcada(boolean estaMarcada) {
+        this.estaMarcada = estaMarcada;
+    }
+
+    public void estaDescubierta(boolean estaDescubierta) {
+        this.estaDescubierta = estaDescubierta;
     }
 }

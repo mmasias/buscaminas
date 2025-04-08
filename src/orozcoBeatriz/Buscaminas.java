@@ -39,12 +39,12 @@ public class Buscaminas {
 
             if (coordenadaValida(fila, col)) {
                 if (opcion.equals("D")) {
-                    if (tablero[fila][col].tieneMina) {
+                    if (tablero[fila][col].tieneMina()) {
                         imprimirTablero(true);
                         System.out.println("¡Has pisado una mina! DERROTA.");
                         juegoTerminado = true;
                     } else {
-                        tablero[fila][col].estaDescubierta = true;
+                        tablero[fila][col].estaDescubierta(true);
 
                         int minasCerca = contarMinasVecinas(fila, col);
                         System.out.println("Has despejado la casilla (" + (fila + 1) + ", " + (col + 1) + "). Hay " + minasCerca + " mina(s) cerca.");
@@ -56,7 +56,7 @@ public class Buscaminas {
                         }
                     }
                 } else if (opcion.equals("M")) {
-                    tablero[fila][col].estaMarcada = !tablero[fila][col].estaMarcada;
+                    tablero[fila][col].estaMarcada(!tablero[fila][col].estaMarcada());
                 }
             } else {
                 System.out.println("Las coordenadas introducidas están fuera del tablero.");
@@ -78,8 +78,8 @@ public class Buscaminas {
         while (colocadas < MINAS) {
             int f = rand.nextInt(TAM);
             int c = rand.nextInt(TAM);
-            if (!tablero[f][c].tieneMina) {
-                tablero[f][c].tieneMina = true;
+            if (!tablero[f][c].tieneMina()) {
+                tablero[f][c].tieneMina(true);
                 colocadas++;
             }
         }
@@ -94,10 +94,10 @@ public class Buscaminas {
             System.out.print((i + 1) + " ");
             for (int j = 0; j < TAM; j++) {
                 Celda celda = tablero[i][j];
-                if (celda.estaDescubierta || revelar) {
-                    if (celda.tieneMina) System.out.print("* ");
+                if (celda.estaDescubierta() || revelar) {
+                    if (celda.tieneMina()) System.out.print("* ");
                     else System.out.print("D ");
-                } else if (celda.estaMarcada) {
+                } else if (celda.estaMarcada()) {
                     System.out.print("M ");
                 } else {
                     System.out.print("_ ");
@@ -110,7 +110,7 @@ public class Buscaminas {
     private boolean verificarVictoria() {
         for (int i = 0; i < TAM; i++) {
             for (int j = 0; j < TAM; j++) {
-                if (!tablero[i][j].tieneMina && !tablero[i][j].estaDescubierta) {
+                if (!tablero[i][j].tieneMina() && !tablero[i][j].estaDescubierta()) {
                     return false;
                 }
             }
