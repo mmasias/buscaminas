@@ -8,17 +8,33 @@ class Juego {
         this.juegoTerminado = false;
         this.scanner = new Scanner(System.in);
     }
-    
+
     public void iniciar() {
         while (!juegoTerminado) {
             tablero.mostrarTablero();
-            System.out.print("Ingrese fila y columna (ejemplo: 2 3): ");
+            System.out.print("Ingrese fila, columna y acción (r: revelar, m: marcar, x: macrodespeje) (ej: 2 3 r): ");
             int x = scanner.nextInt();
             int y = scanner.nextInt();
+            String accion = scanner.next();
 
-            if (tablero.revelarCelda(x, y)) {
-                System.out.println("¡Has pisado una mina! Fin del juego.");
-                juegoTerminado = true;
+            switch (accion) {
+                case "r":
+                    if (tablero.revelarCelda(x, y)) {
+                        System.out.println("¡Has pisado una mina! Fin del juego.");
+                        juegoTerminado = true;
+                    }
+                    break;
+                case "m":
+                    tablero.marcarCelda(x, y);
+                    break;
+                case "x":
+                    if (tablero.macroDespeje(x, y)) {
+                        System.out.println("¡Has revelado una mina no marcada! Fin del juego.");
+                        juegoTerminado = true;
+                    }
+                    break;
+                default:
+                    System.out.println("Acción no válida. Use 'r', 'm' o 'x'.");
             }
         }
         scanner.close();
