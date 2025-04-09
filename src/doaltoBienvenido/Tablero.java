@@ -10,8 +10,10 @@ class Tablero {
     private final char CASILLA_VACIA = '_';
     private final char MINA = 'M';
     private final char DESPEJADA = 'D';
+    private final char MARCADA = 'M';
+    private final char SUPER_DESPEJADA = 'X';
     private char casillas[][];
-    private boolean mostrarMinas = false;
+    private boolean revelarMinas = false;
 
     public Tablero() {
         casillas = new char[NUM_FILAS][NUM_COLUMNAS];
@@ -52,7 +54,9 @@ class Tablero {
         for (int i = 0; i < NUM_FILAS; i++) {
             System.out.print((i + 1) + " ");
             for (int j = 0; j < NUM_COLUMNAS; j++) {
-                if (casillas[i][j] == MINA && !mostrarMinas) {
+                if (casillas[i][j] == MINA && revelarMinas) {
+                    System.out.print(MINA + " ");
+                } else if (casillas[i][j] == MINA) {
                     System.out.print(CASILLA_VACIA + " ");
                 } else {
                     System.out.print(casillas[i][j] + " ");
@@ -84,8 +88,61 @@ class Tablero {
         }
     }
 
+    public boolean superDespejarCasilla(int fila, int columna) {
+        boolean minaExplotada = false;
+    
+        for (int i = fila - 1; i <= fila + 1; i++) {
+            for (int j = columna - 1; j <= columna + 1; j++) {
+                if (coordenadaValida(i, j)) {
+                    if (casillas[i][j] == MINA) {
+                        minaExplotada = true;
+                    }
+                }
+            }
+        }
+    
+        for (int i = fila - 1; i <= fila + 1; i++) {
+            for (int j = columna - 1; j <= columna + 1; j++) {
+                if (coordenadaValida(i, j) && casillas[i][j] == CASILLA_VACIA) {
+                    casillas[i][j] = DESPEJADA;
+                }
+            }
+        }
+    
+        if (minaExplotada) {
+            for (int i = fila - 1; i <= fila + 1; i++) {
+                for (int j = columna - 1; j <= columna + 1; j++) {
+                    if (coordenadaValida(i, j) && casillas[i][j] == MINA) {
+                        mostrarMina(i, j);
+                    }
+                }
+            }
+        }
+    
+        return minaExplotada;
+    }
+    
+    
+
+    public void marcarCasilla(int fila, int columna) {
+        if (casillas[fila][columna] != MINA && casillas[fila][columna] != DESPEJADA) {
+            casillas[fila][columna] = MARCADA;
+        }
+    }
+
+    public void desmarcarCasilla(int fila, int columna) {
+        if (casillas[fila][columna] == MARCADA) {
+            casillas[fila][columna] = CASILLA_VACIA;
+        }
+    }
+
+    public boolean esMarcada(int fila, int columna) {
+        return casillas[fila][columna] == MARCADA;
+    }
+
     public void mostrarMina(int fila, int columna) {
-        mostrarMinas = true;
+        casillas[fila][columna] = MINA;
+        revelarMinas = true;
         mostrar();
     }
 
