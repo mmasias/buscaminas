@@ -12,7 +12,7 @@ public class Jugador {
     public void jugar(Tablero tablero) {
         Scanner scanner = new Scanner(System.in);
 
-        System.out.print("¿Quieres (D)espejar o (M)arcar una casilla? ");
+        System.out.print("¿Quieres (D)espejar, (M)arcar con bandera o usar (B)omba? ");
         String seleccion = scanner.next().toUpperCase();
 
         System.out.print("Ingresa fila: ");
@@ -28,14 +28,32 @@ public class Jugador {
 
         if (seleccion.equals("M")) {
             tablero.marcarConBandera(fila, columna);
+            System.out.println("Casilla marcada con bandera.");
         } else if (seleccion.equals("D")) {
             boolean resultado = tablero.despejarCasilla(fila, columna);
             if (!resultado) {
                 estaVivo = false;
-                System.out.println("¡BOOM! Pisaste una mina. Fin del juego.");
+                System.out.println("Has pisado una mina. Fin del juego.");
+            } else {
+                System.out.println("Casilla despejada.");
+            }
+        } else if (seleccion.equals("B")) {
+            boolean resultado = tablero.usarBomba(fila, columna);
+            if (!resultado) {
+                estaVivo = false;
+                System.out.println("La bomba detonó una mina. Fin del juego.");
+            } else {
+                System.out.println("Bomba usada. Casillas despejadas en el área.");
             }
         } else {
-            System.out.println("Opción inválida.");
+            System.out.println("Opción inválida. Intenta de nuevo.");
+        }
+
+       
+        if (estaVivo && tablero.juegoCompletado()) {
+            tablero.mostrarTablero(); 
+            System.out.println(" Has despejado todo sin pisar minas. ¡Ganaste!");
+            estaVivo = false; 
         }
     }
 

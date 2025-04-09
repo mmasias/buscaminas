@@ -107,4 +107,33 @@ public class Tablero {
     public boolean esCoordenadaValida(int fila, int columna) {
         return fila >= 1 && fila <= numeroDeFilas && columna >= 1 && columna <= numeroDeColumnas; 
     }
+
+    public boolean usarBomba(int fila, int columna) {
+        if (!esCoordenadaValida(fila, columna)) {
+            System.out.println("Coordenada inválida.");
+            return false;
+        }
+    
+        boolean juegoContinua = true;
+    
+        for (int i = -1; i <= 1; i++) {
+            for (int j = -1; j <= 1; j++) {
+                int filaAdyacente = fila + i;
+                int columnaAdyacente = columna + j;
+    
+                if (esCoordenadaValida(filaAdyacente, columnaAdyacente)) {
+                    char casilla = tablero[filaAdyacente - 1][columnaAdyacente - 1];
+    
+                    if (casilla == BANDERA) continue;
+    
+                    if (!despejarCasilla(filaAdyacente, columnaAdyacente)) {
+                        juegoContinua = false;
+                    }
+                }
+            }
+        }
+    
+        return juegoContinua;
+    }
+    
 }
