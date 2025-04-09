@@ -23,7 +23,6 @@ public class Jugador {
         }
 
         if (tablero.esMina(fila, columna)) {
-            System.out.println("BOOM!!, Explotaste una mina y perdiste!");
             tablero.mostrarMina(fila, columna);
             vivo = false;
         } else {

@@ -22,6 +22,8 @@ public class Buscaminas {
 
             if (tablero.finalizado()) {
                 System.out.println("Has despejado todas las casillas, Ganaste!!");
+            }else {
+                System.out.println("BOOM!!, Explotaste una mina y perdiste!");
             }
 
         } while (juegoNuevo());
