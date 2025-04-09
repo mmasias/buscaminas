@@ -8,8 +8,7 @@ public class Buscaminas {
     private Jugador jugador;
 
     public Buscaminas() {
-        tablero = new Tablero();
-        jugador = new Jugador();
+        reiniciar();
     }
 
     public void jugar() {
