@@ -14,7 +14,7 @@ class Tablero {
         calcularMinasCercanas();
     }
 
-     private void inicializarTablero() {
+    private void inicializarTablero() {
         for (int i = 0; i < filas; i++) {
             for (int j = 0; j < columnas; j++) {
                 celdas[i][j] = new Celda();
@@ -43,7 +43,6 @@ class Tablero {
             for (int j = 0; j < columnas; j++) {
                 if (celdas[i][j].tieneMina) continue;
                 int contador = 0;
-      
                 for (int d = 0; d < 8; d++) {
                     int ni = i + dx[d], nj = j + dy[d];
                     if (ni >= 0 && ni < filas && nj >= 0 && nj < columnas && celdas[ni][nj].tieneMina) {
@@ -56,7 +55,7 @@ class Tablero {
     }
 
     public boolean revelarCelda(int x, int y) {
-        if (x < 0 || x >= filas || y < 0 || y >= columnas || celdas[x][y].revelada) {
+        if (x < 0 || x >= filas || y < 0 || y >= columnas || celdas[x][y].revelada || celdas[x][y].marcada) {
             return false;
         }
         celdas[x][y].revelada = true;
@@ -66,10 +65,50 @@ class Tablero {
         return false;
     }
 
-     public void mostrarTablero() {
+    public boolean macroDespeje(int x, int y) {
+        if (!celdas[x][y].revelada || celdas[x][y].minasCercanas == 0) {
+            return false;
+        }
+
+        int[] dx = {-1, -1, -1, 0, 0, 1, 1, 1};
+        int[] dy = {-1, 0, 1, -1, 1, -1, 0, 1};
+        int minasMarcadas = 0;
+
+        for (int d = 0; d < 8; d++) {
+            int ni = x + dx[d];
+            int nj = y + dy[d];
+            if (ni >= 0 && ni < filas && nj >= 0 && nj < columnas && celdas[ni][nj].marcada) {
+                minasMarcadas++;
+            }
+        }
+
+        if (minasMarcadas == celdas[x][y].minasCercanas) {
+            for (int d = 0; d < 8; d++) {
+                int ni = x + dx[d];
+                int nj = y + dy[d];
+                if (ni >= 0 && ni < filas && nj >= 0 && nj < columnas && !celdas[ni][nj].marcada) {
+                    if (revelarCelda(ni, nj)) {
+                        return true; // Se reveló una mina no marcada
+                    }
+                }
+            }
+        }
+
+        return false;
+    }
+
+    public void marcarCelda(int x, int y) {
+        if (x >= 0 && x < filas && y >= 0 && y < columnas && !celdas[x][y].revelada) {
+            celdas[x][y].marcada = !celdas[x][y].marcada;
+        }
+    }
+
+    public void mostrarTablero() {
         for (int i = 0; i < filas; i++) {
             for (int j = 0; j < columnas; j++) {
-                if (!celdas[i][j].revelada) {
+                if (celdas[i][j].marcada) {
+                    System.out.print("F ");
+                } else if (!celdas[i][j].revelada) {
                     System.out.print("■ ");
                 } else if (celdas[i][j].tieneMina) {
                     System.out.print("* ");
