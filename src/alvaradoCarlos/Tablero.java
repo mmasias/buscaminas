@@ -58,8 +58,9 @@ public class Tablero {
     }
 
     public boolean estaEnRango(int fila, int columna) {
-        return fila < 0 || fila >= dimensiones[0] || columna < 0 || columna >= dimensiones[1];
+        return fila >= 0 && fila < dimensiones[0] && columna >= 0 && columna < dimensiones[1];
     }
+    
 
     public void mostrarTablero() {
         int filas = dimensiones[0];
@@ -166,14 +167,10 @@ public class Tablero {
         for (int i = 0; i < ADYACENTES_X.length; i++) {
             int nuevaFila = fila + ADYACENTES_X[i];
             int nuevaColumna = columna + ADYACENTES_Y[i];
-
-            if (estaEnRango(nuevaFila, nuevaColumna)) {
-                if (minas[nuevaFila][nuevaColumna]) {
-                    minasCercanas++;
-                }
+            if (estaEnRango(nuevaFila, nuevaColumna) && minas[nuevaFila][nuevaColumna]) {
+                minasCercanas++;
             }
         }
-
         return minasCercanas;
     }
 
