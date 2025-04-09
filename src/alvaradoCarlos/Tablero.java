@@ -8,6 +8,8 @@ public class Tablero {
     private boolean[][] minas;
     private int[] dimensiones;
     private int minasTotales;
+    private static final int[] ADYACENTES_X = {-1, -1, -1, 0, 0, 1, 1, 1};
+    private static final int[] ADYACENTES_Y = {-1, 0, 1, -1, 1, -1, 0, 1};
 
     public Tablero(int[] dimensiones, int minasTotales) {
         this.dimensiones = dimensiones;
@@ -55,6 +57,10 @@ public class Tablero {
         return minasTotales;
     }
 
+    public boolean estaEnRango(int fila, int columna) {
+        return fila < 0 || fila >= dimensiones[0] || columna < 0 || columna >= dimensiones[1];
+    }
+
     public void mostrarTablero() {
         int filas = dimensiones[0];
         int columnas = dimensiones[1];
@@ -77,9 +83,9 @@ public class Tablero {
     public void actualizarTablero(char opcion, int[] coordenadas) {
         int fila = coordenadas[0] - 1;
         int columna = coordenadas[1] - 1;
-
-        if (fila < 0 || fila >= dimensiones[0] || columna < 0 || columna >= dimensiones[1]) {
-            System.out.println("Coordenadas fuera de rango. Intenta de nuevo.");
+        
+        if (!estaEnRango(fila, columna)) {
+            System.out.println("Coordenadas fuera de rango.");
             return;
         }
 
@@ -105,8 +111,11 @@ public class Tablero {
             } else {
                 System.out.println("No hay marca en esta celda para retirar.");
             }
-        } else {
-            System.out.println("Opción no válida. Usa 'D' para descubrir, 'M' para marcar o 'R' para retirar marca.");
+        } else if (opcion == 'X') {
+            macroDescubrir(fila, columna);
+        }
+         else {
+            System.out.println("Opción no válida. Usa 'D' para descubrir 'X' para macrodescubrir, 'M' para marcar o 'R' para retirar marca.");
         }
     }
 
@@ -121,6 +130,19 @@ public class Tablero {
     public void descubrir(int fila, int columna) {
         int minasCercanas = contarMinasCercanas(fila, columna);
         tablero[fila][columna] = (char) ('0' + minasCercanas);
+    }
+
+    public void macroDescubrir(int fila, int columna) {
+        for (int i = 0; i < ADYACENTES_X.length; i++){
+            int nuevaFila = fila + ADYACENTES_X[i];
+            int nuevaColumna = columna + ADYACENTES_Y[i]; 
+
+            if (estaEnRango(nuevaFila, nuevaColumna)) {
+                if (!minas[nuevaFila][nuevaColumna]) {
+                    descubrir(nuevaFila, nuevaColumna);
+                }
+            }
+        }
     }
 
     public void explotar(int fila, int columna) {
@@ -141,14 +163,11 @@ public class Tablero {
 
     private int contarMinasCercanas(int fila, int columna) {
         int minasCercanas = 0;
-        int[] dx = {-1, -1, -1, 0, 0, 1, 1, 1};
-        int[] dy = {-1, 0, 1, -1, 1, -1, 0, 1};
+        for (int i = 0; i < ADYACENTES_X.length; i++) {
+            int nuevaFila = fila + ADYACENTES_X[i];
+            int nuevaColumna = columna + ADYACENTES_Y[i];
 
-        for (int i = 0; i < dx.length; i++) {
-            int nuevaFila = fila + dx[i];
-            int nuevaColumna = columna + dy[i];
-
-            if (nuevaFila >= 0 && nuevaFila < dimensiones[0] && nuevaColumna >= 0 && nuevaColumna < dimensiones[1]) {
+            if (estaEnRango(nuevaFila, nuevaColumna)) {
                 if (minas[nuevaFila][nuevaColumna]) {
                     minasCercanas++;
                 }
@@ -173,8 +192,8 @@ public class Tablero {
         int fila = coordenadas[0] - 1;
         int columna = coordenadas[1] - 1;
 
-        if (fila < 0 || fila >= dimensiones[0] || columna < 0 || columna >= dimensiones[1]) {
-            throw new IllegalArgumentException("Coordenadas fuera de rango.");
+        if (!estaEnRango(fila, columna)) {
+            System.out.println("Coordenadas fuera de rango.");
         }
 
         return tablero[fila][columna];

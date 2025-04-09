@@ -25,7 +25,7 @@ public class Jugador {
         System.out.println("Elige una acción: (D) Descubrir, (M) Marcar, (R) Retirar marca");
         char opcion = scanner.next().toUpperCase().charAt(0);
 
-        while (opcion != 'D' && opcion != 'M' && opcion != 'R') {
+        while (opcion != 'D' && opcion != 'M' && opcion != 'R' && opcion != 'X') {
             System.out.println("Opción no válida. Intenta de nuevo: (D) Descubrir, (M) Marcar, (R) Retirar marca");
             opcion = scanner.next().toUpperCase().charAt(0);
         }
