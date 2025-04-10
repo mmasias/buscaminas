@@ -1,3 +1,5 @@
+package buscaminas.src.vaqueroSara;
+
 public class Casilla {
 
     private boolean tieneMina;

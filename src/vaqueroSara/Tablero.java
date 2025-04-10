@@ -1,4 +1,4 @@
-
+package buscaminas.src.vaqueroSara;
 
 import java.util.Random;
 
@@ -20,6 +20,7 @@ public class Tablero {
                 tablero[i][j] = new Casilla();
             }
         }
+        
         colocarMinas();
         calcularMinasAdyacentes();
     }
