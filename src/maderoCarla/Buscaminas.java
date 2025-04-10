@@ -55,7 +55,14 @@ class Buscaminas {
 
             } else if (accion.equals("M")) {
                 tablero.marcarCasilla(coordenada);
-            }
+                
+            }else if (accion.equals("X")) {
+                tablero.macroDespejar(coord);
+                if (tablero.juegoGanado()) {
+                    tablero.mostrar();
+                    jugador.celebrar();
+                    juegoTerminado = true;
+                }
         }
 
         scanner.close(); 
