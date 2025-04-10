@@ -39,10 +39,14 @@ public class Jugador {
                 pedirCoordenada(scanner, tablero);
                 if (!tablero.esMarcada(fila, columna)) {
                     tablero.marcarCasilla(fila, columna);
+                    System.out.println();
                     System.out.println("Casilla marcada.");
+                    System.out.println();
                 } else {
                     tablero.desmarcarCasilla(fila, columna);
+                    System.out.println();
                     System.out.println("Casilla desmarcada.");
+                    System.out.println();
                 }
 
             } else {
