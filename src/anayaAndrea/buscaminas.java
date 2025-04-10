@@ -162,8 +162,13 @@ class Jugador {
         }
 
         if (opcion.equals("D")) {
-            boolean sigueVivo = tablero.descubrir(fila, col);
-            if (!sigueVivo) vivo = false;
+            int abiertas = tablero.descubrir(fila, col);
+            if (abiertas == 0) {
+                vivo = false;
+                System.out.println("¡Has pisado una mina!");
+            } else {
+                System.out.println("Casillas despejadas: " + abiertas);
+            }
         } else if (opcion.equals("M")) {
             tablero.marcar(fila, col);
         }
