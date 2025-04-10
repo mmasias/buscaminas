@@ -37,7 +37,9 @@ public class Tablero {
             return true;
         }
 
-        tablero[fila][columna].revelar();
+        if (tablero[fila][columna].obtenerMinasCercanas() == 0) {
+            despejarCeldasAdyacentes(fila, columna);
+        }
         return !tablero[fila][columna].tieneMina();
     }
 
@@ -54,8 +56,6 @@ public class Tablero {
             tablero[fila][columna].alternarMarca();
         }
     }
-
-
 
     public void mostrarTablero() {
         System.out.println("  ");
