@@ -9,5 +9,4 @@ public class Jugador {
     public void marcar(Tablero tablero, int fila, int columna) {
         tablero.marcar(fila, columna);
     }
-
 }

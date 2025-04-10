@@ -51,6 +51,9 @@ public class Tablero {
         } else if (modo == 'C') {
             despejarCuadrado(fila, columna);
             return !comprobacion();
+        } else if (modo == 'X') {
+            macroDespeje(fila, columna);
+            return !comprobacion();
         }
         return true;
     }
@@ -65,6 +68,16 @@ public class Tablero {
         for (int i = fila - 1; i <= fila + 1; i++) {
             for (int j = columna - 1; j <= columna + 1; j++) {
                 despejarCasilla(i, j);
+            }
+        }
+    }
+
+    private void macroDespeje(int fila, int columna) {
+        for (int i = fila - 1; i <= fila + 1; i++) {
+            for (int j = columna - 1; j <= columna + 1; j++) {
+                if (i >= 0 && i < size && j >= 0 && j < size && casillas[i][j] != 'M') {
+                    casillas[i][j] = 'D';
+                }
             }
         }
     }
@@ -97,6 +110,16 @@ public class Tablero {
             }
         }
         return true;
+    }
+
+    public void revelarTodo() {
+        for (int i = 0; i < size; i++) {
+            for (int j = 0; j < size; j++) {
+                if (minas[i][j]) {
+                    casillas[i][j] = '*';
+                }
+            }
+        }
     }
 
     public void mostrar() {

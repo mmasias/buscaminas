@@ -32,7 +32,7 @@ public class Buscaminas {
             char modoDespeje = 'P';
 
             if (accion == 'D') {
-                System.out.print("[P]unto o [C]uadro completo: ");
+                System.out.print("[P]unto, [C]uadro completo o ma[X]rodespeje: ");
                 modoDespeje = scanner.next().toUpperCase().charAt(0);
             }
 
