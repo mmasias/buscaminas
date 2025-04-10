@@ -32,59 +32,30 @@ public class Tablero {
         }
     }
 
-    public boolean despejarCasilla(int fila, int columna) {
-        // Verificar si la celda ya está revelada o marcada
-        if (tablero[fila][columna].casillaRevelada() || tablero[fila][columna].casillaMarcada()) {
-            return true; // No hacemos nada si ya está revelada o marcada
-        }
-
-        // Revelar la celda actual
-        tablero[fila][columna].revelar();
-
-        // Si la celda contiene una mina, devolver false (el jugador ha perdido)
-        if (tablero[fila][columna].tieneMina()) {
-            System.out.println("¡Has perdido! Has pisado una mina.");
-            return false; // El jugador ha perdido
-        }
-
-        // Si la celda no tiene minas cercanas, despejar las celdas adyacentes
-        if (tablero[fila][columna].obtenerMinasCercanas() == 0) {
-            despejarCeldasAdyacentes(fila, columna);
-        }
-
-        return true; // La celda fue despejada y no contiene mina
-    }
-
-    private void despejarCeldasAdyacentes(int fila, int columna) {
-        for (int i = -1; i <= 1; i++) {
-            for (int j = -1; j <= 1; j++) {
-                // Ignorar la celda actual
-                if (i == 0 && j == 0) continue;
-
-                int nuevaFila = fila + i;
-                int nuevaColumna = columna + j;
-
-                // Verificar que la nueva posición esté dentro de los límites
-                if (enRango(nuevaFila, nuevaColumna)) {
-                    // Verificar si la celda adyacente no ha sido revelada
-                    if (!tablero[nuevaFila][nuevaColumna].casillaRevelada()) {
-                        // Revelar la celda adyacente
-                        tablero[nuevaFila][nuevaColumna].revelar();
-
-                        // Si la celda adyacente contiene una mina, el jugador ha perdido
-                        if (tablero[nuevaFila][nuevaColumna].tieneMina()) {
-                            System.out.println("¡Has perdido! Una mina estaba en una celda adyacente.");
-                            return; // Finaliza el juego
-                        }
-
-                        // Si la celda adyacente tiene 0 minas cercanas, llama recursivamente
-                        if (tablero[nuevaFila][nuevaColumna].obtenerMinasCercanas() == 0) {
-                            despejarCeldasAdyacentes(nuevaFila, nuevaColumna);
-                        }
-                    }
+    private void calcularMinasCercanas() {
+        for (int fila = 0; fila < totalFilas; fila++) {
+            for (int columna = 0; columna < totalColumnas; columna++) {
+                if (!tablero[fila][columna].tieneMina()) {
+                    int minasCercanas = contarMinasCercanas(fila, columna);
+                    tablero[fila][columna].colocarMinasCercanas(minasCercanas);
                 }
             }
         }
+    }
+
+    private int contarMinasCercanas(int fila, int columna) {
+        int minasCercanas = 0;
+        for (int i = -1; i <= 1; i++) {
+            for (int j = -1; j <= 1; j++) {
+                if (i == 0 && j == 0) continue; // Ignorar la celda actual
+                int nuevaFila = fila + i;
+                int nuevaColumna = columna + j;
+                if (enRango(nuevaFila, nuevaColumna) && tablero[nuevaFila][nuevaColumna].tieneMina()) {
+                    minasCercanas++;
+                }
+            }
+        }
+        return minasCercanas;
     }
     
 
