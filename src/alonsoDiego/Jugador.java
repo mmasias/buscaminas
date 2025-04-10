@@ -1,4 +1,7 @@
+package alonsoDiego;
+import java.util.Scanner;
 public class Jugador {
+    
     private boolean vivo = true;
 
     public void jugar(Tablero tablero, Scanner scanner) {

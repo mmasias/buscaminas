@@ -1,3 +1,7 @@
+package alonsoDiego;
+
+import java.util.Random;
+
 public class Tablero {
     private final int NUM_FILAS = 6;
     private final int NUM_COLUMNAS = 6;
