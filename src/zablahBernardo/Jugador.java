@@ -13,7 +13,7 @@ public class Jugador {
     public void jugar(Tablero tablero) {
         Scanner scanner = new Scanner(System.in);
 
-        System.out.print("¿Deseas (D)espejar o (M)arcar una casilla? ");
+        System.out.print("¿Deseas (D)espejar, (M)arcar o (S)uperDespejar una casilla? ");
         String accion = scanner.next().toUpperCase();
 
         System.out.print("Ingresa fila: ");
@@ -30,7 +30,13 @@ public class Jugador {
                 vivo = false;
                 System.out.println("¡BOOM! Pisaste una mina!");
             } 
-        } 
+        } else if (accion.equals("S")) {
+            boolean resultado = tablero.superDespejar(fila, columna);
+            if (!resultado) {
+                vivo = false;
+                System.out.println("¡BOOM! Pisaste una mina!");
+            }
+        }
     }
 
     public boolean vivo() {

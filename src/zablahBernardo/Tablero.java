@@ -97,4 +97,24 @@ public class Tablero {
         }
     }
 
+    public boolean superDespejar(int fila, int columna) {
+
+        for (int i = -1; i <= 1; i++) {
+            for (int j = -1; j <= 1; j++) {
+                int nuevaFila = fila + i;
+                int nuevaColumna = columna + j;
+
+                if (casillas[nuevaFila][nuevaColumna] == '*') {
+                    mostrarMinas = true;
+                    return false;
+                }
+
+                if (nuevaFila >= 0 && nuevaFila < casillas.length && nuevaColumna >= 0 && nuevaColumna < casillas[0].length && casillas[nuevaFila][nuevaColumna] == '_') {
+                    casillas[nuevaFila][nuevaColumna] = '0';
+                }
+            }
+        }
+        return true;
+
+    }
 }
