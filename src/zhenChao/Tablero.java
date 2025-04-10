@@ -15,7 +15,7 @@ public class Tablero {
             }
         }
         colocarMinasAleatoriamente();
-        calcularMinasCercanas();
+       
     }
 
     private void colocarMinasAleatoriamente() {
@@ -32,33 +32,51 @@ public class Tablero {
         }
     }
 
-    private void calcularMinasCercanas() {
-        for (int fila = 0; fila < totalFilas; fila++) {
-            for (int columna = 0; columna < totalColumnas; columna++) {
-                if (!tablero[fila][columna].tieneMina()) {
-                    int minasCercanas = contarMinasCercanas(fila, columna);
-                    tablero[fila][columna].colocarMinasCercanas(minasCercanas);
-                }
-            }
+    
+    
+    
+    public boolean despejarCasilla(int fila, int columna) {
+       
+        if (tablero[fila][columna].casillaRevelada() || tablero[fila][columna].casillaMarcada()) {
+            return true;
         }
-    }
-
-    private int contarMinasCercanas(int fila, int columna) {
-        int minasCercanas = 0;
+    
+        
+        tablero[fila][columna].revelar();
+    
+        
+        if (tablero[fila][columna].tieneMina()) {
+            System.out.println("¡Has perdido! Has pisado una mina.");
+            return false;
+        }
+    
+        
         for (int i = -1; i <= 1; i++) {
             for (int j = -1; j <= 1; j++) {
-                if (i == 0 && j == 0) continue; // Ignorar la celda actual
+               
+                if (i == 0 && j == 0) continue;
+    
                 int nuevaFila = fila + i;
                 int nuevaColumna = columna + j;
-                if (enRango(nuevaFila, nuevaColumna) && tablero[nuevaFila][nuevaColumna].tieneMina()) {
-                    minasCercanas++;
+    
+                
+                if (enRango(nuevaFila, nuevaColumna)) {
+                    
+                    tablero[nuevaFila][nuevaColumna].revelar();
+    
+                    // Si tiene mina, el jugador pierde
+                    if (tablero[nuevaFila][nuevaColumna].tieneMina()) {
+                        System.out.println("¡Has perdido! Hay una mina en una celda adyacente.");
+                        return false;
+                    }
                 }
             }
         }
-        return minasCercanas;
+        
+        return true;
     }
-    
 
+    
     private boolean enRango(int fila, int columna) {
         return fila >= 0 && fila < totalFilas && columna >= 0 && columna < totalColumnas;
     }
