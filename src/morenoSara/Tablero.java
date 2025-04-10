@@ -73,5 +73,28 @@ class Tablero {
         int columna = coordenada.getColumna() - 1;
         marcadas[fila][columna] = !marcadas[fila][columna];  
     }
+
+    
+    public void macroDespejar(Coordenada coordenada) {
+        int fila = coordenada.getFila() - 1;
+        int columna = cordenada.getColumna() - 1;
+
+        for (int i = fila - 1; i <= fila + 1; i++) {
+            for (int j = columna - 1; j <= columna + 1; j++) {
+                if (i < 0 || i >= 6 || j < 0 || j >= 6) continue;
+                if (i == fila && j == columna) continue;
+                if (!marcadas[i][j] && !reveladas[i][j]) {
+                    if (minas[i][j]) {
+                        reveladas[i][j] = true;
+                        mostrar();
+                        System.out.println("¡Has pisado una mina durante el macrodespeje! Fin del juego.");
+                        System.exit(0);
+                    } else {
+                        reveladas[i][j] = true;
+                    }
+                }
+            }
+        }
+    }
 }
 
