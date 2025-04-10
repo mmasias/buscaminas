@@ -18,14 +18,16 @@ public class Buscaminas {
         while (jugador.jugando()) {
             tablero.mostrarTablero();
 
-            char opcion = jugador.actuar();
+            char opcion = jugador.actuar(scanner);
             int[] coordenadas = jugador.pedirCoordenadas(scanner);
 
             jugador.actualizarTablero(opcion, coordenadas);
 
             if (jugador.perdio()) {
+                tablero.mostrarTablero();
                 System.out.println("¡Perdiste!");
             } else if (jugador.gano()){
+                tablero.mostrarTablero();
                 System.out.println("Ganaste!");
             }
         }
