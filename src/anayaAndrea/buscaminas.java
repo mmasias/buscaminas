@@ -26,6 +26,10 @@ public class Buscaminas {
             System.out.println("\nHas pisado una mina. Derrota.");
         }
     }
+    public static void main(String[] args) {
+        Buscaminas juego = new Buscaminas();
+        juego.jugar();
+    }
 }
 
 class Tablero {
