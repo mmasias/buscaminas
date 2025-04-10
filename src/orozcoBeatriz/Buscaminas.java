@@ -1,136 +1,85 @@
 package orozcoBeatriz;
 
-import java.util.Random;
 import java.util.Scanner;
 
 public class Buscaminas {
-    private final int TAM = 6;
-    private final int MINAS = 6;
-    private Celda[][] tablero;
+    private Tablero tablero;
     private Scanner scanner;
+    private int comodinesDisponibles = 2;
 
     public Buscaminas() {
-        tablero = new Celda[TAM][TAM];
+        tablero = new Tablero();
         scanner = new Scanner(System.in);
-        inicializarTablero();
-        colocarMinas();
     }
 
     public void jugar() {
         boolean juegoTerminado = false;
         while (!juegoTerminado) {
-            imprimirTablero(false);
+            tablero.imprimir(false);
             String opcion = "";
 
-            while (!opcion.equals("D") && !opcion.equals("M")) {
-                System.out.print("[D]espejar o [M]arcar mina?: ");
+            while (!opcion.equals("D") && !opcion.equals("M") && !opcion.equals("X")) {
+                System.out.print("¿[D]espejar, [M]arcar mina? o [X]Macrodespeje (2 veces máximo): ");
                 opcion = scanner.nextLine();
 
-                if (!opcion.equals("D") && !opcion.equals("M")) {
-                    System.out.println("Opción no válida. Escribe solo D o M en mayúscula.");
+                if (!opcion.equals("D") && !opcion.equals("M") && !opcion.equals("X")) {
+                    System.out.println("Opción no válida. Escribe solo D, M o X en mayúscula.");
                 }
             }
 
             System.out.print("> Fila: ");
             int fila = scanner.nextInt() - 1;
             System.out.print("> Columna: ");
-            int col = scanner.nextInt() - 1;
+            int columna = scanner.nextInt() - 1;
             scanner.nextLine();
 
-            if (coordenadaValida(fila, col)) {
+            if (tablero.coordenadaValida(fila, columna)) {
+                Celda celda = tablero.getCelda(fila, columna);
                 if (opcion.equals("D")) {
-                    if (tablero[fila][col].tieneMina()) {
-                        imprimirTablero(true);
+                    if (celda.tieneMina()) {
+                        tablero.imprimir(true);
                         System.out.println("¡Has pisado una mina! DERROTA.");
                         juegoTerminado = true;
                     } else {
-                        tablero[fila][col].estaDescubierta(true);
+                        celda.estaDescubierta(true);
 
-                        int minasCerca = contarMinasVecinas(fila, col);
-                        System.out.println("Has despejado la casilla (" + (fila + 1) + ", " + (col + 1) + "). Hay " + minasCerca + " mina(s) cerca.");
+                        int minasCerca = tablero.contarMinasVecinas(fila, columna);
+                        System.out.println("Has despejado la casilla (" + (fila + 1) + ", " + (columna + 1) + "). Hay " + minasCerca + " mina(s) cerca.");
 
-                        if (verificarVictoria()) {
-                            imprimirTablero(true);
+                        if (tablero.verificarVictoria()) {
+                            tablero.imprimir(true);
                             System.out.println("¡Enhorabuena! ¡Has ganado!");
                             juegoTerminado = true;
                         }
                     }
                 } else if (opcion.equals("M")) {
-                    tablero[fila][col].estaMarcada(!tablero[fila][col].estaMarcada());
+                    celda.estaMarcada(!celda.estaMarcada());
+                } else if (opcion.equals("X")) {
+                    if (comodinesDisponibles == 0) {
+                        System.out.println("Ya has usado tu comodín. Solo se puede una vez.");
+                    } else {
+                        for (int i = fila - 1; i <= fila + 1; i++) {
+                            for (int j = columna - 1; j <= columna + 1; j++) {
+                                if (tablero.coordenadaValida(i, j)) {
+                                    Celda vecina = tablero.getCelda(i, j);
+                                    if (!vecina.tieneMina()) {
+                                        vecina.estaDescubierta(true);
+                                    }
+                                }
+                            }
+                        }
+                        comodinesDisponibles--;
+
+                        if (tablero.verificarVictoria()) {
+                            tablero.imprimir(true);
+                            System.out.println("¡Enhorabuena! ¡Has ganado!");
+                            juegoTerminado = true;
+                        }
+                    }
                 }
             } else {
                 System.out.println("Las coordenadas introducidas están fuera del tablero.");
             }
         }
-    }
-
-    private void inicializarTablero() {
-        for (int i = 0; i < TAM; i++) {
-            for (int j = 0; j < TAM; j++) {
-                tablero[i][j] = new Celda();
-            }
-        }
-    }
-
-    private void colocarMinas() {
-        Random rand = new Random();
-        int colocadas = 0;
-        while (colocadas < MINAS) {
-            int f = rand.nextInt(TAM);
-            int c = rand.nextInt(TAM);
-            if (!tablero[f][c].tieneMina()) {
-                tablero[f][c].tieneMina(true);
-                colocadas++;
-            }
-        }
-    }
-
-    private void imprimirTablero(boolean revelar) {
-        System.out.println("\nBUSCAMINAS");
-        System.out.print("  ");
-        for (int i = 1; i <= TAM; i++) System.out.print(i + " ");
-        System.out.println();
-        for (int i = 0; i < TAM; i++) {
-            System.out.print((i + 1) + " ");
-            for (int j = 0; j < TAM; j++) {
-                Celda celda = tablero[i][j];
-                if (celda.estaDescubierta() || revelar) {
-                    if (celda.tieneMina()) System.out.print("* ");
-                    else System.out.print("D ");
-                } else if (celda.estaMarcada()) {
-                    System.out.print("M ");
-                } else {
-                    System.out.print("_ ");
-                }
-            }
-            System.out.println();
-        }
-    }
-
-    private boolean verificarVictoria() {
-        for (int i = 0; i < TAM; i++) {
-            for (int j = 0; j < TAM; j++) {
-                if (!tablero[i][j].tieneMina() && !tablero[i][j].estaDescubierta()) {
-                    return false;
-                }
-            }
-        }
-        return true;
-    }
-
-    private boolean coordenadaValida(int fila, int col) {
-        return fila >= 0 && fila < TAM && col >= 0 && col < TAM;
-    }
-
-    private int contarMinasVecinas(int fila, int col) {
-        int minas = 0;
-        for (int i = fila - 1; i <= fila + 1; i++) {
-            for (int j = col - 1; j <= col + 1; j++) {
-                if (coordenadaValida(i, j) && !(i == fila && j == col) && tablero[i][j].tieneMina) {
-                    minas++;
-                }
-            }
-        }
-        return minas;
     }
 }

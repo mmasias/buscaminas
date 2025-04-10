@@ -5,7 +5,7 @@ class Celda {
     private boolean estaDescubierta;
     private boolean estaMarcada;
 
-    Celda() {
+    public Celda() {
         this.tieneMina = false;
         this.estaDescubierta = false;
         this.estaMarcada = false;
