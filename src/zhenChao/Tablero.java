@@ -67,6 +67,10 @@ public class Tablero {
         }
     }
 
+    private boolean enRango(int fila, int columna) {
+        return fila >= 0 && fila < totalFilas && columna >= 0 && columna < totalColumnas;
+    }
+
     public int obtenerFilas() {
         return totalFilas;
     }
