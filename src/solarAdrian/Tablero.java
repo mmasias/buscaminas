@@ -2,99 +2,135 @@ package solarAdrian;
 
 import java.util.Random;
 
-class Tablero {
+public class Tablero {
 
-    private final int NUM_FILAS = 6;
-    private final int NUM_COLUMNAS = 6;
-    private final int NUM_MINAS = 6;
-    private final char CASILLA_VACIA = '_';
-    private final char MINA = 'M';
-    private final char DESPEJADA = 'D';
-    private char[][] casillas;
-    private boolean[][] reveladas; 
+    private final int filas = 6;
+    private final int columnas = 6;
+    private final int totalMinas = 6;
+
+    private final char CASILLA_OCULTA = '_';
+    private final char MARCA = 'M';
+    private final char MINA = '*';
+    private final char CASILLA_LIBRE = 'D';
+
+    private char[][] matrizTablero;
+    private boolean revelarMinas = false;
 
     public Tablero() {
-        casillas = new char[NUM_FILAS][NUM_COLUMNAS];
-        reveladas = new boolean[NUM_FILAS][NUM_COLUMNAS]; 
-        inicializarTablero();
+        matrizTablero = new char[filas][columnas];
+        inicializar();
         colocarMinas();
     }
 
-    private void inicializarTablero() {
-        for (int i = 0; i < NUM_FILAS; i++) {
-            for (int j = 0; j < NUM_COLUMNAS; j++) {
-                casillas[i][j] = CASILLA_VACIA; 
-                reveladas[i][j] = false;
+    private void inicializar() {
+        for (int i = 0; i < filas; i++) {
+            for (int j = 0; j < columnas; j++) {
+                matrizTablero[i][j] = CASILLA_OCULTA;
             }
         }
     }
 
     private void colocarMinas() {
-        Random random = new Random();
-        int minasColocadas = 0;
+        Random aleatorio = new Random();
+        int minasActuales = 0;
 
-        while (minasColocadas < NUM_MINAS) {
-            int fila = random.nextInt(NUM_FILAS);
-            int columna = random.nextInt(NUM_COLUMNAS);
+        while (minasActuales < totalMinas) {
+            int f = aleatorio.nextInt(filas);
+            int c = aleatorio.nextInt(columnas);
 
-            if (casillas[fila][columna] != MINA) {
-                casillas[fila][columna] = MINA; 
-                minasColocadas++;
+            if (matrizTablero[f][c] != MINA) {
+                matrizTablero[f][c] = MINA;
+                minasActuales++;
             }
         }
     }
 
-    public void mostrarTablero(boolean mostrarMinas) {
-        System.out.print("  ");
-        for (int i = 1; i <= NUM_COLUMNAS; i++) {
-            System.out.print(i + " ");
+    public void mostrarTablero() {
+        System.out.print("    ");
+        for (int c = 1; c <= columnas; c++) {
+            System.out.print(c + " ");
         }
         System.out.println();
 
-        for (int i = 0; i < NUM_FILAS; i++) {
-            System.out.print((i + 1) + " ");
-            for (int j = 0; j < NUM_COLUMNAS; j++) {
-                if (reveladas[i][j]) {
-                    System.out.print(casillas[i][j] + " "); 
-                } else if (mostrarMinas && casillas[i][j] == MINA) {
-                    System.out.print(MINA + " "); 
+        for (int f = 0; f < filas; f++) {
+            System.out.print((f + 1) + "   ");
+            for (int c = 0; c < columnas; c++) {
+                char actual = matrizTablero[f][c];
+
+                if (actual == MINA && !revelarMinas) {
+                    System.out.print(CASILLA_OCULTA + " ");
+                } else if (actual == MINA && revelarMinas) {
+                    System.out.print(MINA + " ");
                 } else {
-                    System.out.print(CASILLA_VACIA + " "); 
+                    System.out.print(actual + " ");
                 }
             }
             System.out.println();
         }
-        System.out.println();
     }
 
-    public boolean juegoTerminado() {
-        for (int i = 0; i < NUM_FILAS; i++) {
-            for (int j = 0; j < NUM_COLUMNAS; j++) {
-                if (casillas[i][j] != MINA && !reveladas[i][j]) {
-                    return false; 
+    public boolean despejarCasilla(int f, int c) {
+        if (matrizTablero[f - 1][c - 1] == MINA) {
+            revelarMinas = true;
+            return false;
+        }
+
+        if (matrizTablero[f - 1][c - 1] == CASILLA_OCULTA) {
+            matrizTablero[f - 1][c - 1] = CASILLA_LIBRE;
+        }
+
+        return true;
+    }
+
+    public void alternarBandera(int f, int c) {
+        if (matrizTablero[f - 1][c - 1] == CASILLA_OCULTA) {
+            matrizTablero[f - 1][c - 1] = MARCA;
+        } else if (matrizTablero[f - 1][c - 1] == MARCA) {
+            matrizTablero[f - 1][c - 1] = CASILLA_OCULTA;
+        }
+    }
+
+    public boolean juegoCompletado() {
+        for (int i = 0; i < filas; i++) {
+            for (int j = 0; j < columnas; j++) {
+                char celda = matrizTablero[i][j];
+                if ((celda == CASILLA_OCULTA || celda == MARCA) && celda != MINA) {
+                    return false;
                 }
             }
         }
-        return true; 
+        return true;
     }
 
-    public boolean esMina(int fila, int columna) {
-        return casillas[fila][columna] == MINA;
+    public boolean coordenadaValida(int f, int c) {
+        return f >= 1 && f <= filas && c >= 1 && c <= columnas;
     }
 
-    public void despejarCasilla(int fila, int columna) {
-        if (coordenadaValida(fila, columna) && !reveladas[fila][columna]) {
-            reveladas[fila][columna] = true; 
-            casillas[fila][columna] = DESPEJADA;
+    public boolean usarBomba(int f, int c) {
+        if (!coordenadaValida(f, c)) {
+            System.out.println("Coordenada inválida. Intente nuevamente.");
+            return false;
         }
-    }
 
-    public boolean coordenadaValida(int fila, int columna) {
-        return fila >= 0 && fila < NUM_FILAS && columna >= 0 && columna < NUM_COLUMNAS; 
-    }
+        boolean seguirJugando = true;
 
-    public void mostrarMina(int fila, int columna) {
-        reveladas[fila][columna] = true;
-        casillas[fila][columna] = MINA;
+        for (int i = -1; i <= 1; i++) {
+            for (int j = -1; j <= 1; j++) {
+                int filaAdj = f + i;
+                int colAdj = c + j;
+
+                if (coordenadaValida(filaAdj, colAdj)) {
+                    char celda = matrizTablero[filaAdj - 1][colAdj - 1];
+
+                    if (celda == MARCA) continue;
+
+                    if (!despejarCasilla(filaAdj, colAdj)) {
+                        seguirJugando = false;
+                    }
+                }
+            }
+        }
+
+        return seguirJugando;
     }
 }

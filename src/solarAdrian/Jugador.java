@@ -3,29 +3,68 @@ package solarAdrian;
 import java.util.Scanner;
 
 public class Jugador {
-    private boolean vivo = true;
 
-    public void jugar(Tablero tablero, Scanner scanner) {
-        System.out.println("Ingrese coordenada (fila y columna) entre 1 y 6:");
-        int fila = scanner.nextInt() - 1; 
-        int columna = scanner.nextInt() - 1; 
+    private boolean sigueJugando;
 
-        if (!tablero.coordenadaValida(fila, columna)) {
-            System.out.println("Coordenada inválida, por favor intente de nuevo.");
-            return;
+    public Jugador() {
+        sigueJugando = true;
+    }
+
+    public void realizarMovimiento(Tablero tablero) {
+        try (Scanner entrada = new Scanner(System.in)) {
+            System.out.print("Elige acción: (D)espejar, (M)arcar o usar (B)omba: ");
+            String accion = entrada.next().trim().toUpperCase();
+
+            System.out.print("Introduce la fila: ");
+            int fila = entrada.nextInt();
+
+            System.out.print("Introduce la columna: ");
+            int columna = entrada.nextInt();
+
+            if (!tablero.coordenadaValida(fila, columna)) {
+                System.out.println(" Coordenadas fuera de rango. Intenta otra vez.");
+                return;
+            }
+
+            switch (accion) {
+                case "M":
+                    tablero.alternarBandera(fila, columna);
+                    System.out.println(" Casilla marcada/desmarcada.");
+                    break;
+
+                case "D":
+                    boolean despejeExitoso = tablero.despejarCasilla(fila, columna);
+                    if (!despejeExitoso) {
+                        sigueJugando = false;
+                        System.out.println(" ¡Oh no! Has pisado una mina. Fin del juego.");
+                    } else {
+                        System.out.println("✅ Casilla despejada.");
+                    }
+                    break;
+
+                case "B":
+                    boolean resultadoBomba = tablero.usarBomba(fila, columna);
+                    if (!resultadoBomba) {
+                        sigueJugando = false;
+                        System.out.println(" La bomba explotó sobre una mina. Fin del juego.");
+                    } else {
+                        System.out.println(" Bomba utilizada con éxito. Zona despejada.");
+                    }
+                    break;
+
+                default:
+                    System.out.println(" Opción no válida. Intenta de nuevo.");
+            }
         }
 
-        if (tablero.esMina(fila, columna)) {
-            System.out.println("¡BOOM! Has explotado una mina y has perdido.");
-            tablero.mostrarMina(fila, columna);
-            vivo = false; 
-        } else {
-            tablero.despejarCasilla(fila, columna);
-            System.out.println("Casilla despejada con éxito.");
+        if (sigueJugando && tablero.juegoCompletado()) {
+            tablero.mostrarTablero();
+            System.out.println("🎉 ¡Has despejado todas las casillas sin minas! ¡Ganaste!");
+            sigueJugando = false;
         }
     }
 
-    public boolean sigueVivo() {
-        return vivo;
+    public boolean estaVivo() {
+        return sigueJugando;
     }
 }
