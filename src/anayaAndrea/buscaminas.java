@@ -142,11 +142,13 @@ class Jugador {
 
     public void jugar(Tablero tablero) {
         String opcion = "";
-        while (!opcion.equals("D") && !opcion.equals("M")) {
-            System.out.print("[D]espejar o [M]arcar mina?: ");
+        while (!opcion.equals("D") && !opcion.equals("M") && !opcion.equals("X")) {
+            System.out.print("[D]espejar ");
+            System.out.print("[M]arcar mina ");
+            System.out.print("e[X]pander?: ");
             opcion = scanner.nextLine();
-            if (!opcion.equals("D") && !opcion.equals("M")) {
-                System.out.println("Opcion no valida. Solo D o M en mayuscula.");
+            if (!opcion.equals("D") && !opcion.equals("M") && !opcion.equals("X")) {
+                System.out.println("Opcion no valida. Solo D, M o X en mayuscula.");
             }
         }
 
@@ -169,8 +171,9 @@ class Jugador {
             } else {
                 System.out.println("Casillas despejadas: " + abiertas);
             }
-        } else if (opcion.equals("M")) {
-            tablero.marcar(fila, col);
+        } else if (opcion.equals("X")) {
+            int abiertas = tablero.despejarVecinas(fila, col);
+            System.out.println("Casillas despejadas: " + abiertas);
         }
     }
 
