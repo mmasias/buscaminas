@@ -12,7 +12,7 @@ public class Buscaminas {
         jugador = new Jugador();
     }
 
-    public void jugar(){
+    public void jugar() {
         do {
             tablero.mostrar();
             jugador.jugar(tablero);
@@ -50,6 +50,7 @@ class Tablero {
             }
         }
     }
+
     private void colocarMinas() {
         Random rand = new Random();
         int colocadas = 0;
@@ -62,6 +63,7 @@ class Tablero {
             }
         }
     }
+
     public void mostrar() {
         System.out.println("\nBUSCAMINAS");
         System.out.print("  ");
@@ -83,6 +85,11 @@ class Tablero {
             System.out.println();
         }
     }
+
+    public boolean coordenadaValida(int f, int c) {
+        return f >= 0 && f < filas && c >= 0 && c < columnas;
+    }
+
     public boolean despejado() {
         for (int i = 0; i < filas; i++) {
             for (int j = 0; j < columnas; j++) {
@@ -94,13 +101,16 @@ class Tablero {
         return true;
     }
 
-    public boolean descubrir(int f, int c) {
+    public int descubrir(int f, int c) {
         if (celdas[f][c].tieneMina) {
             celdas[f][c].estaDescubierta = true;
-            return false;
+            return 0;
         }
-        celdas[f][c].estaDescubierta = true;
-        return true;
+        if (!celdas[f][c].estaDescubierta) {
+            celdas[f][c].estaDescubierta = true;
+            return 1;
+        }
+        return 0;
     }
 
     public void marcar(int f, int c) {
@@ -119,6 +129,7 @@ class Tablero {
         return minasCerca;
     }
 }
+
 class Celda {
     public boolean tieneMina = false;
     public boolean estaDescubierta = false;
@@ -162,3 +173,4 @@ class Jugador {
         return vivo;
     }
 }
+
