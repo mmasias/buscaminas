@@ -91,35 +91,58 @@ public class Tablero {
     }
 
     public boolean descubrirCelda(int filaObjetivo, int columnaObjetivo) {
-        if (!coordenadaValida(filaObjetivo, columnaObjetivo) || celdas[filaObjetivo][columnaObjetivo].estaDescubierta()) {
+        if (!coordenadaValida(filaObjetivo, columnaObjetivo) || 
+            celdas[filaObjetivo][columnaObjetivo].estaDescubierta()) {
             return false;
         }
-
+ 
         celdas[filaObjetivo][columnaObjetivo].descubrir();
 
         if (celdas[filaObjetivo][columnaObjetivo].tieneMina()) {
+            revelarMinasAdyacentes(filaObjetivo, columnaObjetivo);
             return true;
         }
 
-        int minasAlrededor = celdas[filaObjetivo][columnaObjetivo].obtenerCantidadMinasAlrededor();
+        boolean minaEncontrada = false;
+        
+        for (int desplazamientoFila = CELDA_ADYACENTE_MIN; desplazamientoFila <= CELDA_ADYACENTE_MAX; desplazamientoFila++) {
+            for (int desplazamientoColumna = CELDA_ADYACENTE_MIN; desplazamientoColumna <= CELDA_ADYACENTE_MAX; desplazamientoColumna++) {
+                int filaVecina = filaObjetivo + desplazamientoFila;
+                int columnaVecina = columnaObjetivo + desplazamientoColumna;
+    
+                if (coordenadaValida(filaVecina, columnaVecina) && 
+                    !(filaVecina == filaObjetivo && columnaVecina == columnaObjetivo)) {
+                    
+                    celdas[filaVecina][columnaVecina].descubrir();
 
-        if (minasAlrededor == 0) {
-            for (int desplazamientoFila = CELDA_ADYACENTE_MIN; desplazamientoFila <= CELDA_ADYACENTE_MAX; desplazamientoFila++) {
-                for (int desplazamientoColumna = CELDA_ADYACENTE_MIN; desplazamientoColumna <= CELDA_ADYACENTE_MAX; desplazamientoColumna++) {
-                    int filaVecina = filaObjetivo + desplazamientoFila;
-                    int columnaVecina = columnaObjetivo + desplazamientoColumna;
-
-                    boolean noEsLaMismaCelda = filaVecina != filaObjetivo || columnaVecina != columnaObjetivo;
-                    boolean esCoordenadaValida = coordenadaValida(filaVecina, columnaVecina);
-
-                    if (noEsLaMismaCelda && esCoordenadaValida) {
-                        descubrirCelda(filaVecina, columnaVecina);
+                    if (celdas[filaVecina][columnaVecina].tieneMina()) {
+                        minaEncontrada = true;
                     }
                 }
             }
         }
-
+    
+        if (minaEncontrada) {
+            revelarMinasAdyacentes(filaObjetivo, columnaObjetivo);
+            return true;
+        }
+    
         return false;
+    }
+    
+    private void revelarMinasAdyacentes(int filaCentral, int columnaCentral) {
+        for (int desplazamientoFila = CELDA_ADYACENTE_MIN; desplazamientoFila <= CELDA_ADYACENTE_MAX; desplazamientoFila++) {
+            for (int desplazamientoColumna = CELDA_ADYACENTE_MIN; desplazamientoColumna <= CELDA_ADYACENTE_MAX; desplazamientoColumna++) {
+                int fila = filaCentral + desplazamientoFila;
+                int columna = columnaCentral + desplazamientoColumna;
+    
+                if (coordenadaValida(fila, columna) && 
+                    celdas[fila][columna].tieneMina()) {
+                    
+                    celdas[fila][columna].descubrir();
+                }
+            }
+        }
     }
 
     public void marcarCelda(int fila, int columna) {
