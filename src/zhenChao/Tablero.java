@@ -32,9 +32,6 @@ public class Tablero {
         }
     }
 
-    
-    
-    
     public boolean despejarCasilla(int fila, int columna) {
        
         if (tablero[fila][columna].casillaRevelada() || tablero[fila][columna].casillaMarcada()) {
