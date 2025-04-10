@@ -44,7 +44,7 @@ public class Jugador {
     public void actualizarTablero(char opcion, int[] coordenadas) {
         tablero.actualizarTablero(opcion, coordenadas);
 
-        if (opcion == 'D' && tablero.mostrarCelda(coordenadas) == '*') {
+        if (tablero.mostrarCelda(coordenadas) == '*' || tablero.minasEnCeldasAdyacentes(coordenadas)) {
             perdio = true;
             jugando = false;
         }

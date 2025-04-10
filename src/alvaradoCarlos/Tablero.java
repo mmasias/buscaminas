@@ -46,6 +46,7 @@ public class Tablero {
                 minas[fila][columna] = true;
                 minasColocadas++;
             }
+            System.out.println("Mina colocada en: Fila " + (fila + 1) + ", Columna " + (columna + 1) + " Con un total de: " + minasTotales);
         }
     }
 
@@ -134,22 +135,26 @@ public class Tablero {
     }
 
     public void macroDescubrir(int fila, int columna) {
-        for (int i = 0; i < ADYACENTES_X.length; i++){
+        for (int i = 0; i < ADYACENTES_X.length; i++) {
             int nuevaFila = fila + ADYACENTES_X[i];
-            int nuevaColumna = columna + ADYACENTES_Y[i]; 
-
+            int nuevaColumna = columna + ADYACENTES_Y[i];
+    
             if (estaEnRango(nuevaFila, nuevaColumna)) {
-                if (!minas[nuevaFila][nuevaColumna]) {
+                if (minas[nuevaFila][nuevaColumna]){
+                    explotar(nuevaFila, nuevaColumna);
+                } else {
                     descubrir(nuevaFila, nuevaColumna);
                 }
             }
         }
+        mostrarTablero();
     }
+    
+    
 
     public void explotar(int fila, int columna) {
         tablero[fila][columna] = '*';
         System.out.println("¡Has descubierto una mina!");
-        mostrarTablero();
     }
 
     public void ocupado(int fila, int columna) {
@@ -184,6 +189,7 @@ public class Tablero {
         }
         return true;
     }
+    
 
     public char mostrarCelda(int[] coordenadas) {
         int fila = coordenadas[0] - 1;
@@ -194,5 +200,22 @@ public class Tablero {
         }
 
         return tablero[fila][columna];
+    }
+
+    public boolean minasEnCeldasAdyacentes(int[] coordenadas) {
+        int fila = coordenadas[0] - 1;
+        int columna = coordenadas[1] - 1;
+        
+        for (int i = 0; i < ADYACENTES_X.length; i++) {
+            int nuevaFila = fila + ADYACENTES_X[i];
+            int nuevaColumna = columna + ADYACENTES_Y[i];
+    
+            if (estaEnRango(nuevaFila, nuevaColumna)) {
+                if (minas[nuevaFila][nuevaColumna]){
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 }
