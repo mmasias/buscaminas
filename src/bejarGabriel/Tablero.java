@@ -77,7 +77,29 @@ public class Tablero {
     public void seleccionarCasilla(Coordenada coordenada) {
         int fila = coordenada.getFila();
         int columna = coordenada.getColumna();
+        
+        if (tableroMinas[fila][columna] == 1) {
+            return;
+        }
+        
         tableroEstado[fila][columna] = 0;
+        despejarCasillasAdyacentes(fila, columna);
+    }
+
+    private void despejarCasillasAdyacentes(int fila, int columna) {
+        for (int i = -1; i <= 1; i++) {
+            for (int j = -1; j <= 1; j++) {
+                int nuevaFila = fila + i;
+                int nuevaColumna = columna + j;
+
+                if (nuevaFila >= 0 && nuevaFila < dimensiones && nuevaColumna >= 0 && nuevaColumna < dimensiones) {
+                    if (tableroEstado[nuevaFila][nuevaColumna] == -1 && tableroMinas[nuevaFila][nuevaColumna] != 1) {
+                        tableroEstado[nuevaFila][nuevaColumna] = 0;
+                        despejarCasillasAdyacentes(nuevaFila, nuevaColumna);
+                    }
+                }
+            }
+        }
     }
 
     public boolean hayBomba() {
