@@ -1,3 +1,5 @@
+package morenoSara;
+
 class Jugador {
 
     private String nombre;

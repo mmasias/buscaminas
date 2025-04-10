@@ -1,3 +1,5 @@
+package morenoSara;
+
 import java.util.Random;
 
 class Tablero {
