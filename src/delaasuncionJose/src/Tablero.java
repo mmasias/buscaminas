@@ -17,7 +17,7 @@ public class Tablero {
 
     public void mostrar() {
         for (int i = 0;i<tabla.length;i++) {
-            for (int j = 0; j<tabla.length;j++) {
+            for (int j = 0; j<tabla[i].length;j++) {
                 System.out.print(parse(tabla[i][j]) + " ");
             }
             System.out.println();
@@ -33,9 +33,13 @@ public class Tablero {
     }
 
     public int sacarFicha(Coordenada coordenada) {
-        int fichaSacada = tabla[coordenada.y()][coordenada.x()];
+        int fichaSacada = obtenerFicha(coordenada);
         tabla[coordenada.y()][coordenada.x()] = VACIO;
         return fichaSacada;
+    }
+
+    public int obtenerFicha (Coordenada coordenada) {
+        return tabla[coordenada.y()][coordenada.x()];
     }
 
     public boolean despejado() {
@@ -45,5 +49,14 @@ public class Tablero {
             }
         }
         return true;
+    }
+
+    public int[] obtenerAdyacentes(Coordenada coordenada) {
+        Coordenada[] coordenadas = coordenada.adyacente();
+        int[] adyacentes = new int[coordenadas.length];
+        for (int i = 0; i < adyacentes.length; i++) {
+            adyacentes[i] = obtenerFicha(coordenadas[i]);
+        }
+        return adyacentes;
     }
 }

@@ -27,10 +27,13 @@ public class Jugador {
     }
 
     private void despejar(Tablero tablero) {
-        final int DESPEJADO = 2;
         Coordenada coordenada = new Coordenada(tablero.tamaño());
         coordenada.pedir();
-
+        despejarCoordenada(tablero, coordenada);
+    }
+    
+    private void despejarCoordenada(Tablero tablero, Coordenada coordenada) {
+        final int DESPEJADO = 2;
         int casilla = tablero.sacarFicha(coordenada);
 
         if (casilla%3 == 1) {
@@ -38,6 +41,20 @@ public class Jugador {
             vivo = false;
         } else {
             tablero.ponerFicha(coordenada, DESPEJADO);
+        }
+
+        int minasAdyacentes = 0;
+        int[] adyacentes = tablero.obtenerAdyacentes(coordenada);
+        for (int adyacente : adyacentes) {
+            if (adyacente%3 == 1) minasAdyacentes++;
+        }
+
+        if (minasAdyacentes == 0) {
+            for (Coordenada nuevCoordenada : coordenada.adyacente()) {
+                if (tablero.obtenerFicha(nuevCoordenada)%3 != 2) {
+                    despejarCoordenada(tablero, nuevCoordenada);
+                }
+            }
         }
     }
 
