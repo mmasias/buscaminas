@@ -1,9 +1,4 @@
-package alonsoDiego;
-
-import java.util.Random;
-
-class Tablero {
-
+public class Tablero {
     private final int NUM_FILAS = 6;
     private final int NUM_COLUMNAS = 6;
     private final int NUM_MINAS = 6;
@@ -11,11 +6,11 @@ class Tablero {
     private final char MINA = 'M';
     private final char DESPEJADA = 'D';
     private char[][] casillas;
-    private boolean[][] reveladas; 
+    private boolean[][] reveladas;
 
     public Tablero() {
         casillas = new char[NUM_FILAS][NUM_COLUMNAS];
-        reveladas = new boolean[NUM_FILAS][NUM_COLUMNAS]; 
+        reveladas = new boolean[NUM_FILAS][NUM_COLUMNAS];
         inicializarTablero();
         colocarMinas();
     }
@@ -23,7 +18,7 @@ class Tablero {
     private void inicializarTablero() {
         for (int i = 0; i < NUM_FILAS; i++) {
             for (int j = 0; j < NUM_COLUMNAS; j++) {
-                casillas[i][j] = CASILLA_VACIA; 
+                casillas[i][j] = CASILLA_VACIA;
                 reveladas[i][j] = false;
             }
         }
@@ -38,8 +33,18 @@ class Tablero {
             int columna = random.nextInt(NUM_COLUMNAS);
 
             if (casillas[fila][columna] != MINA) {
-                casillas[fila][columna] = MINA; 
+                casillas[fila][columna] = MINA;
                 minasColocadas++;
+            }
+        }
+    }
+
+    public void macroDespeje(int fila, int columna) {
+        for (int i = fila - 1; i <= fila + 1; i++) {
+            for (int j = columna - 1; j <= columna + 1; j++) {
+                if (coordenadaValida(i, j) && !(i == fila && j == columna)) {
+                    despejarCasilla(i, j);
+                }
             }
         }
     }
@@ -55,11 +60,11 @@ class Tablero {
             System.out.print((i + 1) + " ");
             for (int j = 0; j < NUM_COLUMNAS; j++) {
                 if (reveladas[i][j]) {
-                    System.out.print(casillas[i][j] + " "); 
+                    System.out.print(casillas[i][j] + " ");
                 } else if (mostrarMinas && casillas[i][j] == MINA) {
-                    System.out.print(MINA + " "); 
+                    System.out.print(MINA + " ");
                 } else {
-                    System.out.print(CASILLA_VACIA + " "); 
+                    System.out.print(CASILLA_VACIA + " ");
                 }
             }
             System.out.println();
@@ -71,11 +76,11 @@ class Tablero {
         for (int i = 0; i < NUM_FILAS; i++) {
             for (int j = 0; j < NUM_COLUMNAS; j++) {
                 if (casillas[i][j] != MINA && !reveladas[i][j]) {
-                    return false; 
+                    return false;
                 }
             }
         }
-        return true; 
+        return true;
     }
 
     public boolean esMina(int fila, int columna) {
@@ -84,13 +89,13 @@ class Tablero {
 
     public void despejarCasilla(int fila, int columna) {
         if (coordenadaValida(fila, columna) && !reveladas[fila][columna]) {
-            reveladas[fila][columna] = true; 
+            reveladas[fila][columna] = true;
             casillas[fila][columna] = DESPEJADA;
         }
     }
 
     public boolean coordenadaValida(int fila, int columna) {
-        return fila >= 0 && fila < NUM_FILAS && columna >= 0 && columna < NUM_COLUMNAS; 
+        return fila >= 0 && fila < NUM_FILAS && columna >= 0 && columna < NUM_COLUMNAS;
     }
 
     public void mostrarMina(int fila, int columna) {
