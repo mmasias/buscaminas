@@ -1,82 +1,118 @@
 package coboIsmael;
 
 import java.util.Random;
-
 public class Tablero {
+    private final int TAMANO = 6;
+    private final int NUM_MINAS = 6;
 
-    private String[][] casillas;
+    private char[][] estado;
     private boolean[][] minas;
-    private boolean juegoTerminado;
+
     private int casillasDespejadas;
+    private boolean explotado;
 
     public Tablero() {
-        casillas = new String[6][6]; 
-        minas = new boolean[6][6];   
-        juegoTerminado = false;
+        estado = new char[TAMANO][TAMANO];
+        minas = new boolean[TAMANO][TAMANO];
         casillasDespejadas = 0;
-
+        explotado = false;
         inicializarTablero();
         colocarMinas();
     }
 
     private void inicializarTablero() {
-        for (int fila = 0; fila < 6; fila++) {
-            for (int col = 0; col < 6; col++) {
-                casillas[fila][col] = "_";
-                minas[fila][col] = false;
+        for (int i = 0; i < TAMANO; i++) {
+            for (int j = 0; j < TAMANO; j++) {
+                estado[i][j] = '_';
             }
         }
     }
 
     private void colocarMinas() {
-        Random rand = new Random();
+        Random random = new Random();
         int minasColocadas = 0;
-
-        while (minasColocadas < 6) {
-            int fila = rand.nextInt(6);
-            int col = rand.nextInt(6);
-            if (!minas[fila][col]) {
-                minas[fila][col] = true;
+        while (minasColocadas < NUM_MINAS) {
+            int fila = random.nextInt(TAMANO);
+            int columna = random.nextInt(TAMANO);
+            if (!minas[fila][columna]) {
+                minas[fila][columna] = true;
                 minasColocadas++;
             }
         }
     }
 
     public void mostrar() {
-        System.out.println("\nBUSCAMINAS");
-        System.out.println("  1 2 3 4 5 6");
-        for (int fila = 0; fila < 6; fila++) {
-            System.out.print((fila + 1) + " ");
-            for (int col = 0; col < 6; col++) {
-                System.out.print(casillas[fila][col] + " ");
+        System.out.print("   ");
+        for (int col = 1; col <= TAMANO; col++) {
+            System.out.print(col + " ");
+        }
+        System.out.println();
+
+        for (int i = 0; i < TAMANO; i++) {
+            System.out.print((i + 1) + "  ");
+            for (int j = 0; j < TAMANO; j++) {
+                System.out.print(estado[i][j] + " ");
             }
             System.out.println();
         }
     }
 
-    public void despejar(int fila, int col) {
-        if (!casillas[fila][col].equals("_")) return;
-
-        if (minas[fila][col]) {
-            casillas[fila][col] = "X";  
-            juegoTerminado = true;
+    public void despejar(int fila, int columna) {
+        if (fila < 0 || fila >= TAMANO || columna < 0 || columna >= TAMANO) {
+            System.out.println("Coordenadas fuera de rango.");
+            return;
+        }
+        if (estado[fila][columna] != '_') {
+            System.out.println("Esta casilla ya está despejada o marcada.");
+            return;
+        }
+        if (minas[fila][columna]) {
+            estado[fila][columna] = '*';
+            explotado = true;
         } else {
-            casillas[fila][col] = "D";
+            estado[fila][columna] = 'D';
             casillasDespejadas++;
         }
     }
 
-    public void marcar(int fila, int col) {
-        if (casillas[fila][col].equals("_")) {
-            casillas[fila][col] = "M";
+    public void marcar(int fila, int columna) {
+        if (fila < 0 || fila >= TAMANO || columna < 0 || columna >= TAMANO) {
+            System.out.println("Coordenadas fuera de rango.");
+            return;
         }
+        if (estado[fila][columna] == 'D') {
+            System.out.println("Esta casilla ya fue despejada.");
+            return;
+        }
+        if (estado[fila][columna] == 'M') {
+            System.out.println("Esta casilla ya está marcada.");
+            return;
+        }
+        estado[fila][columna] = 'M';
     }
 
     public boolean juegoTerminado() {
-        return juegoTerminado || casillasDespejadas == (36 - 6);
+        return explotado || (casillasDespejadas == (TAMANO * TAMANO - NUM_MINAS));
     }
 
     public boolean gano() {
-        return casillasDespejadas == (36 - 6);
+        return casillasDespejadas == (TAMANO * TAMANO - NUM_MINAS);
+    }
+
+    public boolean hayMina(int fila, int columna) {
+        if (fila < 0 || fila >= TAMANO || columna < 0 || columna >= TAMANO) {
+            return false;
+        }
+        return minas[fila][columna];
+    }
+
+    public void forzarDespeje(int fila, int columna) {
+        if (fila < 0 || fila >= TAMANO || columna < 0 || columna >= TAMANO) {
+            return;
+        }
+        if (estado[fila][columna] == '_') {
+            estado[fila][columna] = 'D';
+            casillasDespejadas++;
+        }
     }
 }
