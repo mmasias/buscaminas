@@ -43,6 +43,30 @@ public class Tablero {
         return !tablero[fila][columna].tieneMina();
     }
 
+    private void despejarCeldasAdyacentes(int fila, int columna) {
+        for (int i = -1; i <= 1; i++) {
+            for (int j = -1; j <= 1; j++) {
+                
+                if (i == 0 && j == 0) continue;
+    
+                int nuevaFila = fila + i;
+                int nuevaColumna = columna + j;
+    
+               
+                if (enRango(nuevaFila, nuevaColumna)) {
+                    
+                    if (!tablero[nuevaFila][nuevaColumna].casillaRevelada()) {
+                        tablero[nuevaFila][nuevaColumna].revelar();
+                       
+                        if (tablero[nuevaFila][nuevaColumna].obtenerMinasCercanas() == 0) {
+                            despejarCeldasAdyacentes(nuevaFila, nuevaColumna);
+                        }
+                    }
+                }
+            }
+        }
+    }
+
     public int obtenerFilas() {
         return totalFilas;
     }
