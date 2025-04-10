@@ -48,7 +48,25 @@ public class Tablero {
         if (esPosicionValida(fila, columna)) {
             Celda celda = celdas[fila][columna];
             celda.revelar();
-            return !celda.tieneMina();
+            boolean noTieneMina = !celda.tieneMina();
+    
+            if (noTieneMina) {
+                for (int df = -1; df <= 1; df++) {
+                    for (int dc = -1; dc <= 1; dc++) {
+                        if (df == 0 && dc == 0) continue; 
+                        int nuevaFila = fila + df;
+                        int nuevaColumna = columna + dc;
+                        if (esPosicionValida(nuevaFila, nuevaColumna)) {
+                            Celda adyacente = celdas[nuevaFila][nuevaColumna];
+                            if (!adyacente.tieneMina() && !adyacente.estaRevelada() && !adyacente.estaMarcada()) {
+                                adyacente.revelar();
+                            }
+                        }
+                    }
+                }
+            }
+    
+            return noTieneMina;
         }
         return true;
     }
