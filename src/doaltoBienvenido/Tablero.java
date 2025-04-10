@@ -11,7 +11,6 @@ class Tablero {
     private final char MINA = 'M';
     private final char DESPEJADA = 'D';
     private final char MARCADA = 'M';
-    private final char SUPER_DESPEJADA = 'X';
     private char casillas[][];
     private boolean revelarMinas = false;
 
