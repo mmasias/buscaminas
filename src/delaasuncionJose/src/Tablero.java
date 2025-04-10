@@ -39,7 +39,7 @@ public class Tablero {
     }
 
     public int obtenerFicha (Coordenada coordenada) {
-        return tabla[coordenada.y()][coordenada.x()];
+        return coordenada == null ? 0 : tabla[coordenada.y()][coordenada.x()];
     }
 
     public boolean despejado() {

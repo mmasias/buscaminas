@@ -51,7 +51,7 @@ public class Jugador {
 
         if (minasAdyacentes == 0) {
             for (Coordenada nuevCoordenada : coordenada.adyacente()) {
-                if (tablero.obtenerFicha(nuevCoordenada)%3 != 2) {
+                if (tablero.obtenerFicha(nuevCoordenada)%3 != 2 && nuevCoordenada != null) {
                     despejarCoordenada(tablero, nuevCoordenada);
                 }
             }

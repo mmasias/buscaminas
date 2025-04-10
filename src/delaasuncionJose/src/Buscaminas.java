@@ -3,7 +3,7 @@ package delaasuncionJose.src;
 public class Buscaminas {
     private Tablero tablero;
     private Jugador jugador;
-    private char[] fichas = { '_', 'D' , 'M', 'M', 'D'};
+    private char[] fichas = { '*', 'D' , 'M', 'M', 'D'};
     private final int MINA = 1;
 
     public Buscaminas() {
