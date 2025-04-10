@@ -15,7 +15,6 @@ public class Buscaminas {
         do {
             reiniciar();
             do {
-                tablero.mostrar();
                 jugador.jugar(tablero);
             } while (!tablero.finalizado() && jugador.sigueVivo());
 
