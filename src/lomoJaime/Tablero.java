@@ -5,6 +5,7 @@ public class Tablero {
     private boolean[][] minas;
     private final int size = 6;
     private final int numMinas = 6;
+
     public Tablero() {
         casillas = new char[size][size];
         minas = new boolean[size][size];
@@ -36,10 +37,49 @@ public class Tablero {
 
     public boolean despejar(int fila, int columna) {
         if (minas[fila][columna]) {
-            return false;
+            return false; 
         }
-        casillas[fila][columna] = 'D';
+        despejarRecursivo(fila, columna);
         return true;
+    }
+
+    private void despejarRecursivo(int fila, int columna) {
+        if (fila < 0 || fila >= size || columna < 0 || columna >= size) {
+            return;
+        }
+
+        if (casillas[fila][columna] == 'D' || casillas[fila][columna] == 'M') {
+            return;
+        }
+
+        casillas[fila][columna] = 'D';
+        if (contarMinasAdyacentes(fila, columna) > 0) {
+            return;
+        }
+        for (int i = -1; i <= 1; i++) {
+            for (int j = -1; j <= 1; j++) {
+                if (i != 0 || j != 0) {
+                    despejarRecursivo(fila + i, columna + j);
+                }
+            }
+        }
+    }
+
+    private int contarMinasAdyacentes(int fila, int columna) {
+        int contador = 0;
+        for (int i = -1; i <= 1; i++) {
+            for (int j = -1; j <= 1; j++) {
+                int nuevaFila = fila + i;
+                int nuevaCol = columna + j;
+
+                if (nuevaFila >= 0 && nuevaFila < size && nuevaCol >= 0 && nuevaCol < size) {
+                    if (minas[nuevaFila][nuevaCol]) {
+                        contador++;
+                    }
+                }
+            }
+        }
+        return contador;
     }
 
     public void marcar(int fila, int columna) {
@@ -69,9 +109,4 @@ public class Tablero {
         }
     }
 
-    private void limpiarPantalla() {
-        System.out.print("\033[H\033[2J");
-        System.out.flush();
-    }
 }
-   
