@@ -10,7 +10,8 @@ class Tablero {
     private final char CASILLA_VACIA = '_';
     private final char MINA = 'M';
     private final char DESPEJADA = 'D';
-    private final char MARCADA = 'M';
+    private final char MARCADA = 'F';
+
     private char casillas[][];
     private boolean revelarMinas = false;
 
@@ -55,6 +56,8 @@ class Tablero {
             for (int j = 0; j < NUM_COLUMNAS; j++) {
                 if (casillas[i][j] == MINA && revelarMinas) {
                     System.out.print(MINA + " ");
+                } else if (casillas[i][j] == MARCADA) {
+                    System.out.print(MARCADA + " ");
                 } else if (casillas[i][j] == MINA) {
                     System.out.print(CASILLA_VACIA + " ");
                 } else {
@@ -89,7 +92,7 @@ class Tablero {
 
     public boolean superDespejarCasilla(int fila, int columna) {
         boolean minaExplotada = false;
-    
+
         for (int i = fila - 1; i <= fila + 1; i++) {
             for (int j = columna - 1; j <= columna + 1; j++) {
                 if (coordenadaValida(i, j)) {
@@ -99,7 +102,7 @@ class Tablero {
                 }
             }
         }
-    
+
         for (int i = fila - 1; i <= fila + 1; i++) {
             for (int j = columna - 1; j <= columna + 1; j++) {
                 if (coordenadaValida(i, j) && casillas[i][j] == CASILLA_VACIA) {
@@ -107,7 +110,7 @@ class Tablero {
                 }
             }
         }
-    
+
         if (minaExplotada) {
             for (int i = fila - 1; i <= fila + 1; i++) {
                 for (int j = columna - 1; j <= columna + 1; j++) {
@@ -117,11 +120,9 @@ class Tablero {
                 }
             }
         }
-    
+
         return minaExplotada;
     }
-    
-    
 
     public void marcarCasilla(int fila, int columna) {
         if (casillas[fila][columna] != MINA && casillas[fila][columna] != DESPEJADA) {
