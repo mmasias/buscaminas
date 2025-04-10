@@ -1,5 +1,3 @@
-package orejaPaula;
-
 public class Celda {
     boolean esMina;
     boolean estaRevelada;
@@ -11,3 +9,4 @@ public class Celda {
         this.minasAdyacentes = 0;
     }
 }
+

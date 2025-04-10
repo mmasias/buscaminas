@@ -1,5 +1,3 @@
-package orejaPaula;
-
 import java.util.Random;
 
 public class Tablero {
@@ -82,6 +80,24 @@ public class Tablero {
         }
     }
 
+    public void macroDespeje(int r, int c) {
+        if (r < 0 || r >= filas || c < 0 || c >= columnas || !cuadricula[r][c].estaRevelada) {
+            System.out.println("No se puede hacer macrodespeje en esta celda.");
+            return;
+        }
+
+        int[] dr = {-1, -1, -1, 0, 0, 1, 1, 1};
+        int[] dc = {-1, 0, 1, -1, 1, -1, 0, 1};
+
+        for (int i = 0; i < 8; i++) {
+            int nr = r + dr[i];
+            int nc = c + dc[i];
+            if (nr >= 0 && nr < filas && nc >= 0 && nc < columnas && !cuadricula[nr][nc].estaRevelada) {
+                revelarCelda(nr, nc);
+            }
+        }
+    }
+
     public void imprimirTablero() {
         System.out.println("Tablero:");
         for (int i = 0; i < filas; i++) {
@@ -102,6 +118,8 @@ public class Tablero {
         return juegoTerminado;
     }
 }
+
+
 
 
 
