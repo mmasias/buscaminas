@@ -4,7 +4,7 @@ import java.util.Random;
 
 public class Tablero {
 
-    private char[][] casillas;
+    public char[][] casillas;
     private boolean[][] minas;
     private int size = 2;
     private int numMinas = 0;

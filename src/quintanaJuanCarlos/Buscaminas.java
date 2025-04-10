@@ -4,8 +4,8 @@ import java.util.Scanner;
 
 public class Buscaminas {
 
-    private Tablero tablero;
-    private Jugador jugador;
+    public Tablero tablero;
+    public Jugador jugador;
     boolean juegoTerminado = false;
 
     public Buscaminas() {
