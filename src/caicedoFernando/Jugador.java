@@ -12,13 +12,15 @@ public class Jugador {
 
     public char pedirAccion() {
         while (true) {
-            System.out.println("[D]espejar o [M]arcar mina?");
+            System.out.println("[D]espejar o [M]arcar mina o o [X] Macrodespeje?");
             String entrada = scanner.nextLine().toUpperCase();
 
             if (entrada.equals("D")) {
                 return 'D';
             } else if (entrada.equals("M")) {
                 return 'M';
+            } else if (entrada.equals("X")) {
+                return 'X';
             } else {
                 System.out.println("Acción inválida.");
             }
