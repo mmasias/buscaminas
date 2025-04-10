@@ -7,6 +7,7 @@ public class Tablero {
     private boolean[][] minas;
     private final int size = 6;
     private final int numMinas = 6;
+
     public Tablero() {
         casillas = new char[size][size];
         minas = new boolean[size][size];
@@ -37,15 +38,29 @@ public class Tablero {
     }
 
     public boolean despejar(int fila, int columna) {
+        if (!esCoordenadaValida(fila, columna)) {
+            return true; 
+        }
+
+        if (casillas[fila][columna] == 'M' || casillas[fila][columna] == 'D') {
+            return true; 
+        }
+
         if (minas[fila][columna]) {
+            casillas[fila][columna] = 'X'; 
             return false;
         }
+
         casillas[fila][columna] = 'D';
         return true;
     }
 
     public void marcar(int fila, int columna) {
-        casillas[fila][columna] = casillas[fila][columna] == 'M' ? '_' : 'M';
+        if (casillas[fila][columna] == 'M') {
+            casillas[fila][columna] = '_';
+        } else if (casillas[fila][columna] == '_') {
+            casillas[fila][columna] = 'M';
+        }
     }
 
     public boolean haGanado() {
@@ -74,5 +89,9 @@ public class Tablero {
     private void limpiarPantalla() {
         System.out.print("\033[H\033[2J");
         System.out.flush();
+    }
+
+    public boolean esCoordenadaValida(int fila, int columna) {
+        return fila >= 0 && fila < size && columna >= 0 && columna < size;
     }
 }
