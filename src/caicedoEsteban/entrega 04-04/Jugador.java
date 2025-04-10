@@ -10,17 +10,19 @@ public class Jugador {
 
     public void juega(Mapa mapa) {
         Pedir pedir = new Pedir();
-        System.out.println("¿D = Despejar o M = Marcar mina?");
+        System.out.println("¿D = Despejar, M = Marcar mina o X = Macrodespejar?");
         char caracter;
 
         do {
             caracter = Character.toUpperCase(pedir.pedirCaracter());
-        } while (!(caracter == 'D' || caracter == 'M'));
+        } while (!(caracter == 'D' || caracter == 'M' || caracter == 'X'));
 
         if (caracter == 'D') {
             despejar(mapa);
-        } else {
+        } else if (caracter == 'M') {
             marcar(mapa);
+        } else {
+            macrodespejar(mapa);
         }
     }
 
@@ -44,6 +46,18 @@ public class Jugador {
 
         int valor = mapa.quitarFicha(coordenada);
         mapa.colocarFicha(coordenada, valor + MARCADO);
+    }
+
+    private void macrodespejar(Mapa mapa) {
+        Coordenada coordenada = new Coordenada();
+        coordenada.pedir();
+
+        boolean exploto = mapa.ejecutarMacrodespeje(coordenada);
+
+        if (exploto) {
+            System.out.println("¡KABOOM en macrodespeje!");
+            vivo = false;
+        }
     }
 
     public boolean vivo() {

@@ -4,6 +4,38 @@ public class Mapa {
 
     private final int VACIO = 0;
 
+    public boolean ejecutarMacrodespeje(Coordenada centro) {
+        int[][] direcciones = {
+                { -1, -1 }, { -1, 0 }, { -1, 1 },
+                { 0, -1 }, { 0, 1 },
+                { 1, -1 }, { 1, 0 }, { 1, 1 }
+        };
+
+        boolean exploto = false;
+
+        for (int[] dir : direcciones) {
+            int nuevaCoordenadaY = centro.getY() + dir[0];
+            int nuevaCoordenadaX = centro.getX() + dir[1];
+
+            if (nuevaCoordenadaY >= 0 && nuevaCoordenadaY < mapa.length && nuevaCoordenadaX >= 0
+                    && nuevaCoordenadaX < mapa[0].length) {
+                int fichaActual = mapa[nuevaCoordenadaY][nuevaCoordenadaX];
+
+                if (fichaActual == 4)
+                    continue;
+
+                if (fichaActual == 1) {
+                    exploto = true;
+                    mapa[nuevaCoordenadaY][nuevaCoordenadaX] = 0;
+                } else if (fichaActual == 0) {
+                    mapa[nuevaCoordenadaY][nuevaCoordenadaX] = 2;
+                }
+            }
+        }
+
+        return exploto;
+    }
+
     public Mapa(int[][] mapa, char[] fichas) {
         this.mapa = mapa;
         this.fichas = fichas;
