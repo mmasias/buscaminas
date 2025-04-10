@@ -64,7 +64,7 @@ public class Tablero {
                     
                     tablero[nuevaFila][nuevaColumna].revelar();
     
-                    // Si tiene mina, el jugador pierde
+                   
                     if (tablero[nuevaFila][nuevaColumna].tieneMina()) {
                         System.out.println("¡Has perdido! Hay una mina en una celda adyacente.");
                         return false;
