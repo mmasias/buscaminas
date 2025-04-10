@@ -25,11 +25,11 @@ public class jugador {
         }
 
         if (selection.equals("M")) {
-            instancetablero.markFlag(row, column); // ✅ Fixed method name
+            instancetablero.markFlag(row, column); 
         } else if (selection.equals("D")) {
             boolean result = instancetablero.clearCell(row, column);
             if (!result) {
-                isAlive = false; // ✅ jugador dies if stepped on mine
+                isAlive = false; 
                 System.out.println("Mina pisada. Fin del juego.");
             }
         } else {

@@ -103,4 +103,28 @@ public class tablero {
     public boolean hasValidCoordinates(int row, int column) {
         return row >= 1 && row <= NUMBER_OF_ROWS && column >= 1 && column <= NUMBER_OF_COLUMS;
     }
+
+    public void macroDespeje(int row, int column) {
+        int fila = row - 1;
+        int columna = column - 1;
+
+        for (int i = -1; i <= 1; i++) {
+            for (int j = -1; j <= 1; j++) {
+                int nuevaFila = fila + i;
+                int nuevaColumna = columna + j;
+
+                if (i == 0 && j == 0) continue;
+
+                if (nuevaFila >= 0 && nuevaFila < NUMBER_OF_ROWS &&
+                    nuevaColumna >= 0 && nuevaColumna < NUMBER_OF_COLUMS) {
+
+                    char celda = tablero[nuevaFila][nuevaColumna];
+
+                    if (celda == HIDDEN_CELL) {
+                        tablero[nuevaFila][nuevaColumna] = CLEARED_CELL;
+                    }
+                }
+            }
+        }
+    }
 }
