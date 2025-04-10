@@ -1,45 +1,64 @@
 package uretaAaron;
+
 import java.util.Scanner;
 
-public class BuscaMinas {
-    public static void main(String[] args) {
-        Tablero tablero = new Tablero(6, 6, 6);
-        Scanner scanner = new Scanner(System.in);
+public class Buscaminas {
 
-        while (true) {
-            tablero.imprimirTablero();
-            System.out.println("[D]espejar o [M]arcar mina?");
-            String accion = scanner.nextLine().toUpperCase();
+    public Tablero tablero;
+    public Jugador jugador;
+    private boolean juegoTerminado = false;
+
+    public Buscaminas() {
+        tablero = new Tablero();
+        jugador = new Jugador();
+    }
+
+    public void jugar() {
+        Scanner scanner = new Scanner(System.in);
+        juegoTerminado = false;
+
+        System.out.print("Selecciona tamaño del tablero: ");
+        int size = scanner.nextInt();
+        System.out.print("Selecciona número de minas: ");
+        int minas = scanner.nextInt();
+
+        tablero.asignarTablero(size);
+        tablero.asignarNumMinas(minas);
+
+        while (!juegoTerminado) {
+            tablero.mostrar();
+            System.out.print("[D]espejar o [M]arcar mina? ");
+            char accion = scanner.next().toUpperCase().charAt(0);
+            char modoDespeje = 'P';
+
+            if (accion == 'D') {
+                System.out.print("[P]unto o [C]uadro completo: ");
+                modoDespeje = scanner.next().toUpperCase().charAt(0);
+            }
 
             System.out.println("Elija coordenada:");
             System.out.print("> Fila: ");
             int fila = scanner.nextInt() - 1;
             System.out.print("> Columna: ");
             int columna = scanner.nextInt() - 1;
-            scanner.nextLine(); 
 
-            if (fila < 0 || fila >= tablero.getFilas() || columna < 0 || columna >= tablero.getColumnas()) {
-                System.out.println("Coordenadas inválidas. Intente de nuevo.");
-                continue;
-            }
-
-            if (accion.equals("D")) {
-                if (tablero.despejarCasilla(fila, columna)) {
-                    System.out.println("¡Has perdido! Había una mina.");
+            if (accion == 'D') {
+                if (!jugador.despejar(tablero, fila, columna, modoDespeje)) {
+                    System.out.println("💥 ¡Boom! Has pisado una mina.");
                     tablero.revelarTodo();
-                    tablero.imprimirTablero();
-                    break;
+                    tablero.mostrar();
+                    juegoTerminado = true;
                 }
-            } else if (accion.equals("M")) {
-                tablero.marcarCasilla(fila, columna);
+            } else if (accion == 'M') {
+                jugador.marcar(tablero, fila, columna);
             } else {
-                System.out.println("Acción inválida. Intente de nuevo.");
+                System.out.println("Acción no reconocida.");
             }
 
-            if (tablero.esVictoria()) {
-                System.out.println("¡Felicidades! Has despejado todas las casillas sin minas.");
-                tablero.imprimirTablero();
-                break;
+            if (tablero.haGanado()) {
+                System.out.println("🎉 ¡Felicidades! Has ganado.");
+                tablero.mostrar();
+                juegoTerminado = true;
             }
         }
 

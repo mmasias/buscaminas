@@ -1,69 +1,97 @@
 package uretaAaron;
+
 import java.util.Random;
 
 public class Tablero {
-    private Casilla[][] casillas;
-    private int filas;
-    private int columnas;
-    private int minas;
+    public char[][] casillas;
+    private boolean[][] minas;
+    private int size = 6;
+    private int numMinas = 6;
 
-    public Tablero(int filas, int columnas, int minas) {
-        this.filas = filas;
-        this.columnas = columnas;
-        this.minas = minas;
-        this.casillas = new Casilla[filas][columnas];
+    public Tablero() {}
+
+    public void asignarTablero(int size) {
+        this.size = size;
+        casillas = new char[size][size];
+        minas = new boolean[size][size];
         inicializarTablero();
+    }
+
+    public void asignarNumMinas(int numMinas) {
+        this.numMinas = numMinas;
         colocarMinas();
     }
 
     private void inicializarTablero() {
-        for (int i = 0; i < filas; i++) {
-            for (int j = 0; j < columnas; j++) {
-                casillas[i][j] = new Casilla();
+        for (int i = 0; i < size; i++) {
+            for (int j = 0; j < size; j++) {
+                casillas[i][j] = '_';
+                minas[i][j] = false;
             }
         }
     }
 
     private void colocarMinas() {
-        Random random = new Random();
+        Random rand = new Random();
         int colocadas = 0;
-        while (colocadas < minas) {
-            int fila = random.nextInt(filas);
-            int columna = random.nextInt(columnas);
-            if (!casillas[fila][columna].tieneMina()) {
-                casillas[fila][columna].colocarMina();
+        while (colocadas < numMinas) {
+            int fila = rand.nextInt(size);
+            int columna = rand.nextInt(size);
+            if (!minas[fila][columna]) {
+                minas[fila][columna] = true;
                 colocadas++;
             }
         }
     }
 
-    public void imprimirTablero() {
-        System.out.println("  1 2 3 4 5 6");
-        for (int i = 0; i < filas; i++) {
-            System.out.print((i + 1) + " ");
-            for (int j = 0; j < columnas; j++) {
-                System.out.print(casillas[i][j].mostrar() + " ");
-            }
-            System.out.println();
+    public boolean despejar(int fila, int columna, char modo) {
+        if (modo == 'P') {
+            despejarCasilla(fila, columna);
+            return !minas[fila][columna];
+        } else if (modo == 'C') {
+            despejarCuadrado(fila, columna);
+            return !comprobacion();
+        }
+        return true;
+    }
+
+    private void despejarCasilla(int fila, int columna) {
+        if (fila >= 0 && fila < size && columna >= 0 && columna < size) {
+            casillas[fila][columna] = 'D';
         }
     }
 
-    public boolean despejarCasilla(int fila, int columna) {
-        if (casillas[fila][columna].tieneMina()) {
-            return true; // El jugador pierde
+    private void despejarCuadrado(int fila, int columna) {
+        for (int i = fila - 1; i <= fila + 1; i++) {
+            for (int j = columna - 1; j <= columna + 1; j++) {
+                despejarCasilla(i, j);
+            }
         }
-        casillas[fila][columna].revelar();
+    }
+
+    private boolean comprobacion() {
+        for (int i = 0; i < size; i++) {
+            for (int j = 0; j < size; j++) {
+                if (minas[i][j] && casillas[i][j] == 'D') {
+                    return true;
+                }
+            }
+        }
         return false;
     }
 
-    public void marcarCasilla(int fila, int columna) {
-        casillas[fila][columna].marcar();
+    public void marcar(int fila, int columna) {
+        if (casillas[fila][columna] == 'M') {
+            casillas[fila][columna] = '_';
+        } else {
+            casillas[fila][columna] = 'M';
+        }
     }
 
-    public boolean esVictoria() {
-        for (int i = 0; i < filas; i++) {
-            for (int j = 0; j < columnas; j++) {
-                if (!casillas[i][j].tieneMina() && !casillas[i][j].estaRevelada()) {
+    public boolean haGanado() {
+        for (int i = 0; i < size; i++) {
+            for (int j = 0; j < size; j++) {
+                if (!minas[i][j] && casillas[i][j] == '_') {
                     return false;
                 }
             }
@@ -71,20 +99,19 @@ public class Tablero {
         return true;
     }
 
-    public void revelarTodo() {
-        for (int i = 0; i < filas; i++) {
-            for (int j = 0; j < columnas; j++) {
-                casillas[i][j].revelar();
+    public void mostrar() {
+        System.out.print("   ");
+        for (int j = 0; j < size; j++) {
+            System.out.print((j + 1) + " ");
+        }
+        System.out.println();
+
+        for (int i = 0; i < size; i++) {
+            System.out.printf("%2d ", i + 1);
+            for (int j = 0; j < size; j++) {
+                System.out.print(casillas[i][j] + " ");
             }
+            System.out.println();
         }
     }
-
-    public int getFilas() {
-        return filas;
-    }
-
-    public int getColumnas() {
-        return columnas;
-    }
 }
-
