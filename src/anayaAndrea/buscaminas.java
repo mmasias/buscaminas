@@ -112,6 +112,22 @@ class Tablero {
         }
         return 0;
     }
+    public int despejarVecinas(int f, int c) {
+        int abiertas = 0;
+        for (int i = f - 1; i <= f + 1; i++) {
+            for (int j = c - 1; j <= c + 1; j++) {
+                if (coordenadaValida(i, j)) {
+                    if (!(i == f && j == c)) {
+                        if (!celdas[i][j].estaMarcada && !celdas[i][j].estaDescubierta) {
+                            celdas[i][j].estaDescubierta = true;
+                            abiertas++;
+                        }
+                    }
+                }
+            }
+        }
+        return abiertas;
+    }
 
     public void marcar(int f, int c) {
         celdas[f][c].estaMarcada = !celdas[f][c].estaMarcada;
