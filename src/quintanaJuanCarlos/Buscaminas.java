@@ -18,15 +18,22 @@ public class Buscaminas {
             tablero.mostrar();
             System.out.print("[D]espejar o [M]arcar mina? ");
             char accion = scanner.next().charAt(0);
+            char despejar = 'P';
 
+            if( accion == 'D' || accion == 'd'){
+                System.out.print("[C] Despejar Cuadrado o [P] Despejar punto");
+                despejar = scanner.next().charAt(0);   
+            }
+            
             System.out.println("\nElija coordenada:");
             System.out.print("> Fila: ");
             int fila = scanner.nextInt() - 1;
             System.out.print("> Columna: ");
             int columna = scanner.nextInt() - 1;
+            
 
             if (accion == 'D' || accion == 'd') {
-                if (!jugador.despejar(tablero, fila, columna)) {
+                if (!jugador.despejar(tablero, fila, columna,despejar)) {
                     System.out.println(" Has pisado una mina. ¡Juego terminado!");
                     juegoTerminado = true;
                 }

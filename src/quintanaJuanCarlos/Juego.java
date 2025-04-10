@@ -6,3 +6,7 @@ public class Juego{
         buscaminas.jugar();
     }
 }
+
+
+
+
