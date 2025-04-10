@@ -28,10 +28,10 @@ class Tablero {
     }
 
     private void colocarMinas() {
-        Random rand = new Random();
+        Random random = new Random();
         for (int i = 0; i < 6; i++) {
-            int fila = rand.nextInt(6);
-            int columna = rand.nextInt(6);
+            int fila = random.nextInt(6);
+            int columna = random.nextInt(6);
             minas[fila][columna] = true;
         }
     }

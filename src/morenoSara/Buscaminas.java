@@ -27,16 +27,16 @@ class Buscaminas {
                 accion = sc.nextLine().trim().toUpperCase();
             }
 
-            Coordenada coord = new Coordenada();
-            coord.pedir();
+            Coordenada coordenada = new Coordenada();
+            coordenada.pedir();
 
             if (accion.equals("D")) {
-                if (tablero.yaRevelada(coord)) {
+                if (tablero.yaRevelada(coordenada)) {
                     System.out.println("¡Esa casilla ya fue despejada!");
                     continue;
                 }
 
-                boolean esMina = tablero.revelarCasilla(coord);
+                boolean esMina = tablero.revelarCasilla(coordenada);
 
                 if (esMina) {
                     tablero.mostrar();
@@ -49,9 +49,9 @@ class Buscaminas {
                 }
 
             } else if (accion.equals("M")) {
-                tablero.marcar(coord);
+                tablero.marcar(coordenada);
             } else if (accion.equals("X")){
-                tablero.macroDespejar(coord)
+                tablero.macroDespejar(coordenada);
             }
         }
 
