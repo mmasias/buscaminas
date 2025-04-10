@@ -17,7 +17,7 @@ public class Buscaminas {
         while (!juegoTerminado) {
             tablero.mostrarTableroVisible();
 
-            System.out.print("[D]espejar o [M]arcar mina? ");
+            System.out.print("[D]espejar, [M]arcar mina, [X] Macrodespeje: ");
             char accion = entrada.next().charAt(0);
             System.out.println();
 
@@ -49,6 +49,21 @@ public class Buscaminas {
                 tablero.marcar(fila, columna);
                 System.out.println("Coordenada marcada");
                 System.out.println();
+            } else if (accion == 'X' || accion == 'x') {
+                boolean minaDetonada = tablero.macroDespeje(fila, columna);
+                System.out.println("Macrodespeje realizado");
+                System.out.println();
+                if (minaDetonada) {
+                    System.out.println("¡BOOM! Pisaste una mina durante el macrodespeje. Has perdido.");
+                    System.out.println();
+                    tablero.mostrarTableroMinas();
+                    juegoTerminado = true;
+                } else if (tablero.verificarVictoria()) {
+                    System.out.println("¡Felicidades! Has despejado todas las casillas. Has ganado.");
+                    System.out.println();
+                    tablero.mostrarTableroVisible();
+                    juegoTerminado = true;
+                }
             } else {
                 System.out.println("Acción no válida. Intente de nuevo.");
                 System.out.println();

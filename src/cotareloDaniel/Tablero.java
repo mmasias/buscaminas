@@ -91,4 +91,26 @@ public class Tablero {
         return true;
     }
 
+    public boolean macroDespeje(int fila, int columna) {
+        boolean minaDetonada = false;
+
+        for (int i = fila - 1; i <= fila + 1; i++) {
+            for (int j = columna - 1; j <= columna + 1; j++) {
+
+                if (i >= 0 && i < tamaño && j >= 0 && j < tamaño) {
+
+                    if (tableroVisible[i][j] != 'M') {
+
+                        if (tableroMinas[i][j] == 'M') {
+                            minaDetonada = true;
+                        }
+
+                        tableroVisible[i][j] = 'D';
+                    }
+                }
+            }
+        }
+
+        return minaDetonada;
+    }
 }
