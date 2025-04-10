@@ -3,16 +3,26 @@ package quintanaJuanCarlos;
 import java.util.Scanner;
 
 public class Buscaminas {
+
     private Tablero tablero;
     private Jugador jugador;
+    boolean juegoTerminado = false;
 
     public Buscaminas() {
         tablero = new Tablero();
         jugador = new Jugador();
     }
+
     public void jugar() {
         Scanner scanner = new Scanner(System.in);
-        boolean juegoTerminado = false;
+        juegoTerminado = false;
+
+        System.out.print("Selecciona tamaño tablero");
+        int sizeelegido = scanner.nextInt();
+        System.out.println("Selecciona numero de minas");
+        int numeroelegido = scanner.nextInt();
+        tablero.asignarTablero(sizeelegido);
+        tablero.asignarNumMinas(numeroelegido);
 
         do {
             tablero.mostrar();
@@ -20,20 +30,19 @@ public class Buscaminas {
             char accion = scanner.next().charAt(0);
             char despejar = 'P';
 
-            if( accion == 'D' || accion == 'd'){
+            if (accion == 'D' || accion == 'd') {
                 System.out.print("[C] Despejar Cuadrado o [P] Despejar punto");
-                despejar = scanner.next().charAt(0);   
+                despejar = scanner.next().charAt(0);
             }
-            
+
             System.out.println("\nElija coordenada:");
             System.out.print("> Fila: ");
             int fila = scanner.nextInt() - 1;
             System.out.print("> Columna: ");
             int columna = scanner.nextInt() - 1;
-            
 
             if (accion == 'D' || accion == 'd') {
-                if (!jugador.despejar(tablero, fila, columna,despejar)) {
+                if (!jugador.despejar(tablero, fila, columna, despejar)) {
                     System.out.println(" Has pisado una mina. ¡Juego terminado!");
                     juegoTerminado = true;
                 }

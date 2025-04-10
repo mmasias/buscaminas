@@ -3,14 +3,24 @@ package quintanaJuanCarlos;
 import java.util.Random;
 
 public class Tablero {
+
     private char[][] casillas;
     private boolean[][] minas;
-    private final int size = 6;
-    private final int numMinas = 6;
+    private int size = 2;
+    private int numMinas = 0;
+
     public Tablero() {
+    }
+
+    public void asignarTablero(int num) {
+        this.size = num;
         casillas = new char[size][size];
         minas = new boolean[size][size];
         inicializarTablero();
+    }
+
+    public void asignarNumMinas(int num) {
+        this.numMinas = num;
         colocarMinas();
     }
 
@@ -36,42 +46,50 @@ public class Tablero {
         }
     }
 
-    public boolean despejar(int fila, int columna,char despejar) {
+    public boolean despejar(int fila, int columna, char despejar) {
 
-        if(despejar == 'P')  {
-            casillas[fila][columna] = 'D';
+        if (despejar == 'P') {
+            despejarCasilla(casillas, fila, columna);
 
             if (minas[fila][columna]) {
                 return false;
             }
-            
+
             return true;
 
-        }else if(despejar =='C'){
+        } else if (despejar == 'C') {
 
-            casillas[fila][columna] = 'D';
-            casillas[fila+1][columna] = 'D';
-            casillas[fila-1][columna] = 'D';
-            casillas[fila-1][columna-1] = 'D';
-            casillas[fila-1][columna+1] = 'D';
-            casillas[fila+1][columna+1] = 'D';
-            casillas[fila-1][columna-1] = 'D';
-            casillas[fila][columna+1] = 'D';
-            casillas[fila][columna-1] = 'D';
+            despejarCasilla(casillas, fila, columna);
+            despejarCasilla(casillas, fila, columna - 1);
+            despejarCasilla(casillas, fila, columna + 1);
+            despejarCasilla(casillas, fila + 1, columna - 1);
+            despejarCasilla(casillas, fila + 1, columna + 1);
+            despejarCasilla(casillas, fila + 1, columna);
+            despejarCasilla(casillas, fila - 1, columna - 1);
+            despejarCasilla(casillas, fila - 1, columna + 1);
+            despejarCasilla(casillas, fila - 1, columna);
 
-            if( comprobaccion(casillas,minas)){
+            if (comprobaccion(casillas, minas)) {
                 return false;
-            }
-            else{
+            } else {
                 return true;
             }
-            
+
         }
         return false;
 
     }
 
-    public boolean  comprobaccion(char[][] casillas , boolean[][] minas){
+    void despejarCasilla(char[][] casillas, int fila, int columna) {
+        int alto = casillas.length;
+        int ancho = casillas[0].length;
+
+        if (fila >= 0 && fila < alto && columna >= 0 && columna < ancho) {
+            casillas[fila][columna] = 'D';
+        }
+    }
+
+    public boolean comprobaccion(char[][] casillas, boolean[][] minas) {
 
         for (int i = 0; i < casillas.length; i++) {
             for (int j = 0; j < casillas[i].length; j++) {
@@ -101,11 +119,26 @@ public class Tablero {
 
     public void mostrar() {
         limpiarPantalla();
-        System.out.println("  1 2 3 4 5 6");
-        for (int i = 0; i < size; i++) {
-            System.out.print((i + 1) + " ");
-            for (int j = 0; j < size; j++) {
-                System.out.print(" " + casillas[i][j]);
+
+        int filas = casillas.length;
+        int columnas = casillas[0].length;
+
+        // Mostrar encabezado de columnas
+        System.out.print("   "); // espacio para alinear con números de fila
+        for (int j = 0; j < columnas; j++) {
+            System.out.print((j + 1) + " ");
+        }
+        System.out.println();
+
+        // Mostrar filas con contenido
+        for (int i = 0; i < filas; i++) {
+            System.out.print((i + 1) + " "); // número de fila
+            if (i + 1 < 10) {
+                System.out.print(" "); // alineación si hay más de 9 filas
+
+            }
+            for (int j = 0; j < columnas; j++) {
+                System.out.print(casillas[i][j] + " ");
             }
             System.out.println();
         }
@@ -115,5 +148,5 @@ public class Tablero {
         System.out.print("\033[H\033[2J");
         System.out.flush();
     }
-    
+
 }
