@@ -1,44 +1,63 @@
+
+
 import java.util.Scanner;
 
 public class PartidaBuscaminas {
-    private Tablero tablero;
-    private Scanner sc;
+    private boolean estaVivo;
 
     public PartidaBuscaminas() {
-        tablero = new Tablero();
-        sc = new Scanner(System.in);
+        estaVivo = true;
     }
 
-    public void iniciar() {
-        while (true) {
-            tablero.imprimirVisible();
-            System.out.print("¿[D]espejar o [M]arcar mina?: ");
-            char accion = sc.next().toUpperCase().charAt(0);
+    public void jugar(Tablero tablero) {
+        Scanner scanner = new Scanner(System.in);
 
-            System.out.print("Fila (1-6): ");
-            int fila = sc.nextInt() - 1;
-            System.out.print("Columna (1-6): ");
-            int col = sc.nextInt() - 1;
+        System.out.print("¿Quieres (D)espejar, (M)arcar con bandera o usar (B)omba? ");
+        String seleccion = scanner.next().toUpperCase();
 
-            if (accion == 'D') {
-                boolean seguir = tablero.despejar(fila, col);
-                if (!seguir) {
-                    tablero.descubrirTodo();
-                    tablero.imprimirVisible();
-                    System.out.println("¡Ups, ya perdiste!");
-                    return;
-                }
-                if (tablero.verificarVictoria()) {
-                    tablero.descubrirTodo();
-                    tablero.imprimirVisible();
-                    System.out.println("¡Ganaste! Lograste despejar todo el tablero.");
-                    return;
-                }
-            } else if (accion == 'M') {
-                tablero.marcar(fila, col);
-            } else {
-                System.out.println("Acción inválida.");
-            }
+        System.out.print("Ingresa fila: ");
+        int fila = scanner.nextInt();
+
+        System.out.print("Ingresa columna: ");
+        int columna = scanner.nextInt();
+
+        if (!tablero.esCoordenadaValida(fila, columna)) {
+            System.out.println("Coordenadas fuera de rango. Intenta de nuevo.");
+            return;
         }
+
+        if (seleccion.equals("M")) {
+            tablero.marcarConBandera(fila, columna);
+            System.out.println("Casilla marcada con bandera.");
+        } else if (seleccion.equals("D")) {
+            boolean resultado = tablero.despejarCasilla(fila, columna);
+            if (!resultado) {
+                estaVivo = false;
+                System.out.println("Has pisado una mina. Fin del juego.");
+            } else {
+                System.out.println("Casilla despejada.");
+            }
+        } else if (seleccion.equals("B")) {
+            boolean resultado = tablero.usarBomba(fila, columna);
+            if (!resultado) {
+                estaVivo = false;
+                System.out.println("La bomba detonó una mina. Fin del juego.");
+            } else {
+                System.out.println("Bomba usada. Casillas despejadas en el área.");
+            }
+        } else {
+            System.out.println("Opción inválida. Intenta de nuevo.");
+        }
+
+
+        if (estaVivo && tablero.juegoCompletado()) {
+            tablero.mostrarTablero(); 
+            System.out.println(" Has despejado todo sin pisar minas. ¡Ganaste!");
+            estaVivo = false; 
+        }
+    }
+
+    public boolean estaVivo() {
+        return estaVivo;
     }
 }
