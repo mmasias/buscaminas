@@ -10,7 +10,7 @@ public class jugador {
     public void play(tablero instancetablero) {
         Scanner input = new Scanner(System.in);
 
-        System.out.print("Quieres (D)espejar o (M)arcar una casilla: ");
+        System.out.print("¿Quieres (D)espejar, (M)arcar o (X) macrodespejar?: ");
         String selection = input.next().toUpperCase();
 
         System.out.print("Ingresar fila: ");
@@ -24,16 +24,23 @@ public class jugador {
             return;
         }
 
-        if (selection.equals("M")) {
-            instancetablero.markFlag(row, column); 
-        } else if (selection.equals("D")) {
-            boolean result = instancetablero.clearCell(row, column);
-            if (!result) {
-                isAlive = false; 
-                System.out.println("Mina pisada. Fin del juego.");
-            }
-        } else {
-            System.out.println("Opción inválida.");
+        switch (selection) {
+            case "M":
+                instancetablero.markFlag(row, column);
+                break;
+            case "D":
+                boolean result = instancetablero.clearCell(row, column);
+                if (!result) {
+                    isAlive = false;
+                    System.out.println("Mina pisada. Fin del juego.");
+                }
+                break;
+            case "X":
+                instancetablero.macroDespeje(row, column);
+                break;
+            default:
+                System.out.println("Opción inválida.");
+                break;
         }
     }
 
