@@ -17,10 +17,10 @@ class Buscaminas {
         while (!juegoTerminado) {
             tablero.mostrar();
 
-            System.out.print("[D]espejar o [M]arcar mina? ");
+            System.out.print("[D]espejar o [M]arcar mina o e[X]pander? ");
             String accion = sc.nextLine().trim().toUpperCase();
 
-            while (!accion.equals("D") && !accion.equals("M")) {
+            while (!accion.equals("D") && !accion.equals("M") && !accion.equals("X")) {
                 System.out.print("> Acción inválida. Usa D o M: ");
                 accion = sc.nextLine().trim().toUpperCase();
             }
@@ -47,7 +47,9 @@ class Buscaminas {
                 }
 
             } else if (accion.equals("M")) {
-                tablero.marcarCasilla(coord);
+                tablero.marcar(coord);
+            } else if (accion.equals("X")){
+                tablero.macroDespejar(coord)
             }
         }
 
