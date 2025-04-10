@@ -63,6 +63,24 @@ public class Tablero {
         return minas;
     }
 
+    public void macrodespeje(int fila, int col) {
+        for (int i = fila - 1; i <= fila + 1; i++) {
+            for (int j = col - 1; j <= col + 1; j++) {
+                if (i >= 0 && i < TAMANIO && j >= 0 && j < TAMANIO && !(i == fila && j == col)) {
+                    Celda celda = celdas[i][j];
+                    if (!celda.estaRevelada() && !celda.estaMarcada() && !celda.tieneMina()) {
+                        celda.revelar();
+                        
+                        if (celda.getNumeroAlrededor() == 0) {
+                            macrodespeje(i, j);  
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+
     public void mostrar() {
         System.out.println("BUSCAMINAS");
         System.out.print("  ");

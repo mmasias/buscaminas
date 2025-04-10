@@ -18,13 +18,14 @@ public class Jugador {
     public char elegirAccion() {
         char accion;
         do {
-            System.out.println("\n[" + nombre + "] ¿[D]espejar o [M]arcar mina?");
+            System.out.println("\n[" + nombre + "] ¿[D]espejar, [M]arcar mina o [X] Macrodespeje?");
             String entrada = scanner.nextLine().toUpperCase();
             accion = entrada.length() > 0 ? entrada.charAt(0) : ' ';
-        } while (accion != 'D' && accion != 'M');
-
+        } while (accion != 'D' && accion != 'M' && accion != 'X');
+    
         return accion;
     }
+    
 
     public Coordenadas pedirCoordenadas() {
         int fila = -1;

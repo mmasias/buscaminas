@@ -17,10 +17,10 @@ public class Buscaminas {
             tablero.mostrar();
             char accion = jugador.elegirAccion();
             Coordenadas coordenadas = jugador.pedirCoordenadas();
-
-            int fila = coordenadas.getFila() - 1;     
+    
+            int fila = coordenadas.getFila() - 1;
             int columna = coordenadas.getColumna() - 1;
-
+    
             if (accion == 'D') {
                 Celda celda = tablero.celdas[fila][columna];
                 if (celda.estaRevelada()) {
@@ -46,9 +46,17 @@ public class Buscaminas {
                     celda.marcar(!celda.estaMarcada());
                     System.out.println(" Casilla " + (celda.estaMarcada() ? "marcada" : "desmarcada") + ".");
                 }
+            } else if (accion == 'X') {
+                Celda celda = tablero.celdas[fila][columna];
+                if (celda.estaRevelada() && !celda.tieneMina()) {
+                    tablero.macrodespeje(fila, columna);
+                } else {
+                    System.out.println(" No se puede realizar el macrodespeje en esta casilla.");
+                }
             }
         }
     }
+    
 
     private boolean partidaGanada() {
         for (int i = 0; i < 6; i++) {
