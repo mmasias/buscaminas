@@ -6,7 +6,7 @@ public class Board {
 
     private final int NUMBER_OF_ROWS = 6;
     private final int NUMBER_OF_COLUMS = 6;
-    private final int NUMBER_OF_MINES = 6;
+    private final int NUMBER_OF_MINES = 0;
 
     private final char HIDDEN_CELL = '■';
     private final char FLAG = 'P';
@@ -85,32 +85,21 @@ public class Board {
     public boolean clearFullCell(int row, int column) {
         for (int i = row - 1; i <= row + 1; i++) {
             for (int j = column - 1; j <= column + 1; j++) {
-                if (isInBounds(i, j)) {
-                    if (board[i - 1][j - 1] == FLAG) {
-                        hiddenCell = true;
-                        return false;
-                    }
-                }
-            }
-        }
-    
-        for (int i = row - 1; i <= row + 1; i++) {
-            for (int j = column - 1; j <= column + 1; j++) {
-                if (isInBounds(i, j)) {
+                if (hasValidCoordinates(i, j)) {
                     if (board[i - 1][j - 1] == HIDDEN_CELL) {
                         board[i - 1][j - 1] = CLEARED_CELL;
+                    } else if (board[i - 1][j - 1] == MINE){
+                        hiddenCell = true;
+                        return false;
+                    } else if (board[i - 1][j - 1] == FLAG) {
+                        hiddenCell = true;
                     }
                 }
             }
         }
     
         return true;
-    }
-    
-    private boolean isInBounds(int row, int col) {
-        return row >= 1 && row <= board.length && col >= 1 && col <= board[0].length;
-    }
-    
+    }    
 
     public void markFlag(int row, int column) {
         if (board[row - 1][column - 1] == HIDDEN_CELL) {
