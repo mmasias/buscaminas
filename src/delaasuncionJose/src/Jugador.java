@@ -43,13 +43,7 @@ public class Jugador {
             tablero.ponerFicha(coordenada, DESPEJADO);
         }
 
-        int minasAdyacentes = 0;
-        int[] adyacentes = tablero.obtenerAdyacentes(coordenada);
-        for (int adyacente : adyacentes) {
-            if (adyacente%3 == 1) minasAdyacentes++;
-        }
-
-        if (minasAdyacentes == 0) {
+        if (tablero.minasAdyacentes(coordenada) == 0) {
             for (Coordenada nuevCoordenada : coordenada.adyacente()) {
                 if (tablero.obtenerFicha(nuevCoordenada)%3 != 2 && nuevCoordenada != null) {
                     despejarCoordenada(tablero, nuevCoordenada);

@@ -16,9 +16,13 @@ public class Tablero {
     }
 
     public void mostrar() {
-        for (int i = 0;i<tabla.length;i++) {
-            for (int j = 0; j<tabla[i].length;j++) {
-                System.out.print(parse(tabla[i][j]) + " ");
+        for (int j = 0;j<tabla.length;j++) {
+            for (int i = 0; i<tabla[j].length;i++) {
+                if (tabla[j][i] % 3 == 2) {
+                    System.out.print(minasAdyacentes(new Coordenada(tamaño(),i+1,tabla.length-j))+ " ");
+                } else {
+                    System.out.print(parse(tabla[j][i]) + " ");
+                }
             }
             System.out.println();
         }
@@ -58,5 +62,13 @@ public class Tablero {
             adyacentes[i] = obtenerFicha(coordenadas[i]);
         }
         return adyacentes;
+    }
+
+    public int minasAdyacentes(Coordenada coordenada) {
+        int minasAdyacentes = 0;
+        for (int adyacente : obtenerAdyacentes(coordenada)) {
+            if (adyacente%3 == 1) minasAdyacentes++;
+        }
+        return minasAdyacentes;
     }
 }
