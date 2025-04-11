@@ -162,7 +162,10 @@ public class Tablero {
     }
     
     private void manejarMacroDescubrir(int fila, int columna) {
-        if (celdaOcupada(fila, columna)) return;
+        if (celdaOcupada(fila, columna)){
+            System.out.println("Esta celda ya está marcada o descubierta.");
+            return;
+        } 
     
         if (minas[fila][columna]) {
             explotar(fila, columna);
