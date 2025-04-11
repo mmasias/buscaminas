@@ -12,7 +12,7 @@ public class Player {
     public void play(Board instanceBoard) {
         Scanner input = new Scanner(System.in);
 
-        System.out.print("Quieres (D)espejar o (M)arcar una casilla: ");
+        System.out.print("Quieres (D)espejar una casilla, (C)larificar un espacio 3x3 o (M)arcar una casilla: ");
         String selection = input.next().toUpperCase();
 
         System.out.print("Ingresar fila: ");
@@ -27,11 +27,17 @@ public class Player {
         }
 
         if (selection.equals("M")) {
-            instanceBoard.markFlag(row, column); // ✅ Fixed method name
+            instanceBoard.markFlag(row, column); 
         } else if (selection.equals("D")) {
             boolean result = instanceBoard.clearCell(row, column);
             if (!result) {
-                isAlive = false; // ✅ Player dies if stepped on mine
+                isAlive = false;
+                System.out.println("Mina pisada. Fin del juego.");
+            }
+        } else if (selection.equals("C")) {
+            boolean result = instanceBoard.clearFullCell(row, column);
+            if (!result) {
+                isAlive = false;
                 System.out.println("Mina pisada. Fin del juego.");
             }
         } else {
